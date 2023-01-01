@@ -1,0 +1,72 @@
+.navbar {
+    height: 70px;
+    border-bottom: 0.5px solid rgb(231, 228, 228);
+    .wrapper {
+        width: 100%;
+        padding: 0 50px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .search {
+            width: 500px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            border: 0.5px solid lightgray;
+            border-radius: 7px;
+            padding: 3px;
+            &:hover {
+                border-color: var(--primary);
+            }
+            input {
+                border: none;
+                outline: none;
+                background: transparent;
+                height: 100%;
+                font-size: 1.6rem;
+                &::placeholder {
+                    font-size: 1.4rem;
+                }
+            }
+            .icon-search {
+                height: 40px;
+                width: 40px;
+                border-left: 0.5px solid lightgray;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: lightgrey;
+                cursor: pointer;
+            }
+        }
+        .items {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .item {
+                font-size: 1.6rem;
+                padding: 5px 16px;
+                border-radius: 5px;
+                &:hover {
+                    color: var(--primary);
+                    background-color: var(--hover);
+                }
+                .avatar {
+                    width: 40px;
+                    height: 40px;
+                    border: 3px solid var(--primary);
+                    border-radius: 50%;
+                    img {
+                        border-radius: 50%;
+                    }
+                }
+                .dropdown-account {
+                    font-size: 1.6rem;
+                    .dropdown-item {
+                        min-width: 160px;
+                    }
+                }
+            }
+        }
+    }
+}

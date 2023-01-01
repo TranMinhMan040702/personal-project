@@ -1,0 +1,31 @@
+.sidebar {
+    flex: 1;
+    border-right: 0.5px solid rgb(230, 227, 227);
+    min-height: 100vh;
+    background-color: white;
+    .top {
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        margin-top: 20px;
+        padding-left: 20px;
+    }
+    .center {
+        // margin-top: 0px;
+        ul {
+            font-size: 1.8rem;
+            font-weight: 700;
+            padding: 20px;
+
+            li {
+                color: var(--text-sidebar);
+                display: flex;
+                justify-content: space-between;
+                .sidebar-icon {
+                    margin-right: 10px;
+                }
+            }
+        }
+    }
+}
