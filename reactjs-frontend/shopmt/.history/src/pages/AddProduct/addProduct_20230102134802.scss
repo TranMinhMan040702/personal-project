@@ -1,0 +1,14 @@
+.product {
+    .top {
+        font-size: 2rem;
+        margin-bottom: 20px;
+    }
+    .product-form {
+        width: 670px;
+        font-size: 1.6rem;
+        background-color: var(--white);
+        padding: 15px;
+        border: 1px solid var(--border-form);
+        border-radius: var(--border-radius-form);
+    }
+}

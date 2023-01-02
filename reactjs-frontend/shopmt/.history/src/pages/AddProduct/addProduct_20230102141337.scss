@@ -1,0 +1,27 @@
+.product {
+    .top {
+        .title {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+    }
+    .product-form {
+        width: 670px;
+        font-size: 1.6rem;
+        background-color: var(--white);
+        padding: 15px;
+        border: 1px solid var(--border-form);
+        border-radius: var(--border-radius-form);
+        input,
+        textarea {
+            outline: none;
+            background: transparent;
+            height: 100%;
+            font-size: 1.6rem;
+            &::placeholder {
+                font-size: 1.4rem;
+            }
+        }
+    }
+}
