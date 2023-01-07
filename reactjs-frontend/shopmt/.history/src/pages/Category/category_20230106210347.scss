@@ -1,0 +1,11 @@
+.title {
+}
+.content {
+    display: flex;
+    background-color: var(--white);
+    .create-category {
+    }
+    .list-category {
+        flex: 6;
+    }
+}

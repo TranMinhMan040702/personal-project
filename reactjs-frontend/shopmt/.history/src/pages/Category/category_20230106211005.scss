@@ -1,0 +1,15 @@
+.title {
+}
+.category-content {
+    display: flex;
+    background-color: var(--white);
+    border: 1px solid var(--border-form);
+    border-radius: var(--border-radius-form);
+    padding: 10px;
+    .create-category {
+        flex: 1;
+    }
+    .list-category {
+        flex: 6;
+    }
+}
