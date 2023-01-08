@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mantm.dto.CategoryDto;
-import com.mantm.entiy.Category;
+import com.mantm.entity.Category;
 import com.mantm.exception.IllegalAccessAndInvocationTargetException;
 import com.mantm.exception.ResourceNotFoundException;
 import com.mantm.repository.CategoryRepository;

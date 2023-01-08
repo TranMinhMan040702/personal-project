@@ -2,7 +2,7 @@ package com.mantm.dto;
 
 import java.util.List;
 
-import com.mantm.entiy.Product;
+import com.mantm.entity.Product;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
