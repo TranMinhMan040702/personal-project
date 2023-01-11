@@ -1,0 +1,22 @@
+.icontext {
+    display: flex;
+    align-items: center;
+    .icon {
+        position: relative;
+        flex-shrink: 0;
+        margin-right: 20px;
+        margin-bottom: 0;
+        width: 48px;
+        height: 48px;
+        line-height: 48px !important;
+        font-size: 1.25rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .text {
+        h6 {
+            font-weight: 700;
+        }
+    }
+}

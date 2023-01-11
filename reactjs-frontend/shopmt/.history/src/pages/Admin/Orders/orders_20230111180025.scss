@@ -1,0 +1,12 @@
+.content-main {
+    .top {
+        display: flex;
+        justify-content: space-between;
+        .filter {
+            display: flex;
+            .status {
+                margin-right: 10px;
+            }
+        }
+    }
+}

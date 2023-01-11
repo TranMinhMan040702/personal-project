@@ -1,0 +1,17 @@
+.icontext {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    .icon {
+        position: relative;
+        flex-shrink: 0;
+        margin-right: 10px;
+        width: 48px;
+        height: 48px;
+        line-height: 48px !important;
+        font-size: 20px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+}

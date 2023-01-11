@@ -1,0 +1,10 @@
+.icontext {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    .icon {
+        position: relative;
+        flex-shrink: 0;
+        margin-right: 10px;
+    }
+}

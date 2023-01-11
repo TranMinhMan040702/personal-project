@@ -1,0 +1,14 @@
+.card-user {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 100%;
+    .card-header-user {
+        background-color: #c3f19d;
+        .img-avatar {
+            width: 112px;
+            height: 112px;
+            border-radius: 100%;
+            border: 3px solid #fff;
+        }
+    }
+}

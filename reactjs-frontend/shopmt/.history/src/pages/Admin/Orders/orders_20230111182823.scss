@@ -1,0 +1,15 @@
+.content-main {
+    .top {
+        display: flex;
+        justify-content: space-between;
+        input {
+            width: 320px;
+        }
+        .filter {
+            display: flex;
+            .status {
+                margin-right: 10px;
+            }
+        }
+    }
+}

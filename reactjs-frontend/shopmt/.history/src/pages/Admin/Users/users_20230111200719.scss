@@ -1,0 +1,18 @@
+.card-user {
+    margin-bottom: 20px;
+    .card-header-user {
+        position: relative;
+        height: 100px;
+        background-color: #c3f19d !important;
+        text-align: center;
+        .img-avatar {
+            width: 112px;
+            height: 112px;
+            border-radius: 100%;
+            border: 3px solid #fff;
+            position: absolute;
+            transform: translate(-50%, -50%);
+            top: 100%;
+        }
+    }
+}
