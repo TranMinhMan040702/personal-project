@@ -1,0 +1,45 @@
+.card {
+    .card-body {
+        .img-wrap {
+            padding: 10px 0;
+            height: 220px;
+            text-align: center;
+            display: block;
+            overflow: hidden;
+            position: relative;
+            img {
+                max-width: 100%;
+                width: auto;
+                height: 100%;
+                display: inline-block;
+                object-fit: cover;
+            }
+        }
+        .info-wrap {
+            padding: 10px;
+
+            .title {
+                display: block;
+                font-size: 1.25rem;
+                font-weight: 700;
+                text-decoration: none;
+                color: var(--text);
+                margin-bottom: 10px;
+            }
+            .price {
+                display: flex;
+                justify-content: start;
+                align-items: center;
+                .original-price {
+                    margin-right: 10px;
+                    font-size: 14px;
+                    color: #868282;
+                    text-decoration: line-through;
+                }
+                .discount-price {
+                    font-weight: 700;
+                }
+            }
+        }
+    }
+}

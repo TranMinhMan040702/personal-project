@@ -1,0 +1,35 @@
+.content-header {
+    margin-bottom: 30px;
+}
+.card {
+    .header-bg {
+        background-color: #4fa607;
+    }
+    .card-header {
+        .row {
+            select {
+                max-width: 200px;
+            }
+        }
+    }
+    .card-body {
+        article {
+            padding: 5px;
+            .icon {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 48px;
+                height: 48px;
+                position: relative;
+                margin-right: 10px;
+                font-size: 20px;
+            }
+        }
+        .row {
+            .box {
+                padding: 5px;
+            }
+        }
+    }
+}

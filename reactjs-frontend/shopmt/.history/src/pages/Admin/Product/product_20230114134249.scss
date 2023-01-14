@@ -1,0 +1,38 @@
+.card {
+    .card-body {
+        .img-wrap {
+            padding: 10px 0;
+            height: 220px;
+            text-align: center;
+            display: block;
+            overflow: hidden;
+            position: relative;
+            img {
+                max-width: 100%;
+                width: auto;
+                height: 100%;
+                display: inline-block;
+                object-fit: cover;
+            }
+        }
+        .info-wrap {
+            padding: 10px;
+            .title {
+                font-size: 1rem;
+                font-weight: 700;
+                text-decoration: none;
+                color: var(--text);
+            }
+            .price {
+                display: flex;
+                justify-content: start;
+                align-items: center;
+                .discount-price {
+                    margin-right: 10px;
+                    font-size: 14px;
+                    color: #eee;
+                }
+            }
+        }
+    }
+}

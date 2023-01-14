@@ -1,0 +1,23 @@
+.content-header {
+    margin-bottom: 30px;
+}
+.card {
+    .header-bg {
+        background-color: #4fa607;
+    }
+    .card-header {
+        .row {
+            select {
+                max-width: 200px;
+            }
+        }
+    }
+    .card-body {
+        article {
+            .icon {
+                width: 48px;
+                height: 48px;
+            }
+        }
+    }
+}

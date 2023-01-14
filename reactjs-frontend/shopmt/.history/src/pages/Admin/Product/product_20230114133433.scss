@@ -1,0 +1,19 @@
+.card {
+    .card-body {
+        .img-wrap {
+            height: 220px;
+            padding: 10px;
+            text-align: center;
+            display: block;
+            overflow: hidden;
+            position: relative;
+            img {
+                max-width: 100%;
+                width: auto;
+                height: 100%;
+                display: inline-block;
+                object-fit: cover;
+            }
+        }
+    }
+}
