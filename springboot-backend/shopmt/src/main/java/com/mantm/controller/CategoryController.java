@@ -49,8 +49,8 @@ public class CategoryController {
 		return categoryService.save(categoryDto);
 	}
 	
-	@DeleteMapping("/categorise")
-	public ResponseEntity<Map<String, String>> deleteCategory(@RequestBody long[] ids) {
+	@DeleteMapping("/categorise/{ids}")
+	public ResponseEntity<Map<String, String>> deleteCategory(@PathVariable List<String> ids) {
 		return ResponseEntity.ok(categoryService.deleteCategory(ids));
 	}
 	

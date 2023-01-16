@@ -68,10 +68,10 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public Map<String, String> deleteCategory(long[] ids) {
+	public Map<String, String> deleteCategory(List<String>  ids) {
 		Map<String, String> resp = new HashMap<>();
-		for (long item : ids) {
-			categoryRepository.deleteById(item);
+		for (String item : ids) {
+			categoryRepository.deleteById(Long.parseLong(item));
 		}
 		resp.put("delete", "Success");
 		return resp;

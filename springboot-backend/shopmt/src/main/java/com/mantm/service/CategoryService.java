@@ -19,7 +19,7 @@ public interface CategoryService {
 
 	List<CategoryDto> findAll();
 
-	Map<String, String> deleteCategory(long[] ids);
+	Map<String, String> deleteCategory(List<String>  ids);
 
 	Map<String, String> deleteSoftCategory(long[] ids) throws ResourceNotFoundException;
 

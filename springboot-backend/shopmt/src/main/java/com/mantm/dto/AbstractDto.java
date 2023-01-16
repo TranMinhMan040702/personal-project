@@ -1,8 +1,6 @@
 package com.mantm.dto;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import lombok.Data;
 
@@ -14,6 +12,6 @@ public class AbstractDto<T> {
 	private Date createdAt;
 	private String updatedBy;
 	private Date updatedAt;
-	private List<T> listResult = new ArrayList<>();
+//	private List<T> listResult = new ArrayList<>();
 
 }

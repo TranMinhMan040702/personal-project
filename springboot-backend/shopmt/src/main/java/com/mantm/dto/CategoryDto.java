@@ -1,9 +1,5 @@
 package com.mantm.dto;
 
-import java.util.List;
-
-import com.mantm.entity.Product;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -15,5 +11,4 @@ public class CategoryDto extends AbstractDto<CategoryDto>{
 	
 	private boolean isDeleted = false;
 	
-	private List<Product> products;
 }
