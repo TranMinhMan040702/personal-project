@@ -1,6 +1,5 @@
 package com.mantm.service.impl;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,14 +8,13 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mantm.dto.CategoryDto;
 import com.mantm.entity.Category;
-import com.mantm.exception.IllegalAccessAndInvocationTargetException;
 import com.mantm.exception.ResourceNotFoundException;
 import com.mantm.repository.CategoryRepository;
 import com.mantm.service.CategoryService;
@@ -50,21 +48,17 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public CategoryDto save(CategoryDto categoryDto) throws IllegalAccessAndInvocationTargetException{
+	public CategoryDto save(CategoryDto categoryDto) {
 		Category entity = new Category();
-		try {
-			if (categoryDto.getId() != null) {
-				Optional<Category> oldEntity = categoryRepository.findById(categoryDto.getId());
-				BeanUtils.copyProperties(entity, oldEntity);
-				entity.setName(categoryDto.getName());
-			} else {
-				BeanUtils.copyProperties(entity, categoryDto);
-			}
-			entity = categoryRepository.save(entity);
-			return mapper.map(entity, CategoryDto.class);
-		} catch (IllegalAccessException | InvocationTargetException e) {
-			throw new IllegalAccessAndInvocationTargetException("Access Illegal");
+		if (categoryDto.getId() != null) {
+			Optional<Category> oldEntity = categoryRepository.findById(categoryDto.getId());
+			BeanUtils.copyProperties(oldEntity, entity);
+			BeanUtils.copyProperties(categoryDto, entity);
+		} else {
+			BeanUtils.copyProperties(categoryDto, entity);
 		}
+		entity = categoryRepository.save(entity);
+		return mapper.map(entity, CategoryDto.class);
 	}
 
 	@Override
