@@ -11,7 +11,7 @@ import com.mantm.exception.ResourceNotFoundException;
 
 
 @Service
-public interface CategoryService {
+public interface ICategoryService {
 
 	CategoryDto save(CategoryDto categoryDto) throws Exception;
 

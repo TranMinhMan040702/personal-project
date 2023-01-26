@@ -9,7 +9,7 @@ import com.mantm.dto.DeliveryDto;
 import com.mantm.exception.ResourceNotFoundException;
 
 @Service
-public interface DeliveryService {
+public interface IDeliveryService {
 	DeliveryDto save(DeliveryDto deliveryDto) throws Exception;
 
 	DeliveryDto findDeliveryById(long id);

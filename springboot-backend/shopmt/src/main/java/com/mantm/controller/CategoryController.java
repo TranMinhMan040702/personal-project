@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mantm.dto.CategoryDto;
 import com.mantm.exception.ResourceNotFoundException;
-import com.mantm.service.CategoryService;
+import com.mantm.service.ICategoryService;
 
 @CrossOrigin("http://localhost:3000")
 @RestController
@@ -25,7 +25,7 @@ import com.mantm.service.CategoryService;
 public class CategoryController {
 
 	@Autowired
-	CategoryService categoryService;
+	ICategoryService categoryService;
 	
 
 	@GetMapping("categorise")

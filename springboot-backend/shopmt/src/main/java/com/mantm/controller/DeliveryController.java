@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mantm.dto.DeliveryDto;
-import com.mantm.service.DeliveryService;
+import com.mantm.service.IDeliveryService;
 
 @CrossOrigin("http://localhost:3000")
 @RestController
@@ -26,7 +26,7 @@ import com.mantm.service.DeliveryService;
 public class DeliveryController {
 
 	@Autowired
-	DeliveryService deliveryService;
+	IDeliveryService deliveryService;
 	
 	@GetMapping("deliverise")
 	public ResponseEntity<List<DeliveryDto>> findAllDelivery() {

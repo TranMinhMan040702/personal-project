@@ -15,10 +15,10 @@ import com.mantm.dto.DeliveryDto;
 import com.mantm.entity.Delivery;
 import com.mantm.exception.ResourceNotFoundException;
 import com.mantm.repository.DeliveryRepository;
-import com.mantm.service.DeliveryService;
+import com.mantm.service.IDeliveryService;
 
 @Component
-public class DeliveryServiceImpl implements DeliveryService{
+public class DeliveryServiceImpl implements IDeliveryService{
 
 	@Autowired
 	ModelMapper mapper;

@@ -17,12 +17,12 @@ import com.mantm.dto.CategoryDto;
 import com.mantm.entity.Category;
 import com.mantm.exception.ResourceNotFoundException;
 import com.mantm.repository.CategoryRepository;
-import com.mantm.service.CategoryService;
+import com.mantm.service.ICategoryService;
 
 
 
 @Component
-public class CategoryServiceImpl implements CategoryService {
+public class CategoryServiceImpl implements ICategoryService {
 
 	@Autowired
 	ModelMapper mapper;
@@ -62,7 +62,7 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public Map<String, String> deleteCategory(List<String>  ids) {
+	public Map<String, String> deleteCategory(List<String> ids) {
 		Map<String, String> resp = new HashMap<>();
 		for (String item : ids) {
 			categoryRepository.deleteById(Long.parseLong(item));
