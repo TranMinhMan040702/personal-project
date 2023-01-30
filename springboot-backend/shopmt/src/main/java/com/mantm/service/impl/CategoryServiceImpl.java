@@ -41,8 +41,9 @@ public class CategoryServiceImpl implements ICategoryService {
 	}
 
 	@Override
-	public CategoryDto findCategoryById(long id) {
-		Optional<Category> entity = categoryRepository.findById(id);
+	public CategoryDto findCategoryById(long id) throws ResourceNotFoundException {
+		Category entity = categoryRepository.findById(id)
+				.orElseThrow(()-> new ResourceNotFoundException("Category not exist with id: " + id));
 		CategoryDto result = mapper.map(entity, CategoryDto.class);
 		return result;
 	}
@@ -77,7 +78,7 @@ public class CategoryServiceImpl implements ICategoryService {
 		Map<String, String> resp = new HashMap<>();
 		for (long item : ids) {
 			Category entity = categoryRepository.findById(item)
-					.orElseThrow(()-> new ResourceNotFoundException("Category not exist with id:" + item));
+					.orElseThrow(()-> new ResourceNotFoundException("Category not exist with id: " + item));
 			entity.setDeleted(true);
 			categoryRepository.save(entity);
 		}

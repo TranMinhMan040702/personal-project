@@ -18,4 +18,6 @@ public interface IProductService {
 
 	Map<String, String> deleteProduct(long id);
 
+	ProductDto findProductById(long id) throws ResourceNotFoundException;
+
 }

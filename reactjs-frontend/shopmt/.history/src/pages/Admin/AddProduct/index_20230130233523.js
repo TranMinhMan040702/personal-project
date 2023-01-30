@@ -18,9 +18,6 @@ function AddProduct() {
         category: '',
     });
     const [categorise, setCategory] = useState([]);
-    const [categoryState, setCategoryState] = useState({
-        id: '',
-    });
 
     useEffect(() => {
         CategoryService.getAllCategories()
@@ -36,7 +33,6 @@ function AddProduct() {
                 .then((resp) => {
                     console.log(resp.data);
                     setProduct({ ...resp.data });
-                    setCategoryState({ id: resp.data.category });
                 })
                 .catch((err) => {
                     console.log(err.response.data);
@@ -45,9 +41,8 @@ function AddProduct() {
     }, []);
     const handleChange = (e) => {
         setProduct({ ...product, [e.target.name]: e.target.value });
-        setCategoryState(e.target.value);
     };
-    console.log(categoryState);
+
     const handleUploadClick = (e) => {
         setImages((prev) => {
             if (prev.length === 0 || !prev.find((item) => item.name === e.target.name)) {
@@ -124,11 +119,7 @@ function AddProduct() {
                                 <select onChange={(e) => handleChange(e)} class="form-select" name="category">
                                     <option selected>Chọn thể loại</option>
                                     {categorise.map((category) => {
-                                        return (
-                                            <option selected={category.id === categoryState.id} value={category.id}>
-                                                {category.name}
-                                            </option>
-                                        );
+                                        return <option {product.category ? "slected" : ""} value={category.id}>{category.name}</option>;
                                     })}
                                 </select>
                             </div>

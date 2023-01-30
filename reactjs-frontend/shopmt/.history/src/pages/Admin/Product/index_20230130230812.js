@@ -88,7 +88,7 @@ function Product() {
                                             </div>
                                             <div className="row d-flex">
                                                 <Link
-                                                    to={config.routes.admin.product + '/' + product.id + '/edit'}
+                                                    to={config.routes.admin.product + '/:id' + product.id + 'edit'}
                                                     data={product.id}
                                                     // onClick={(e) => EditProduct(e)}
                                                     className="btn btn-outline-success p-2 col-6"

@@ -34,8 +34,8 @@ public class CategoryController {
 	}
 	
 	@GetMapping("/categorise/{id}") 
-	public CategoryDto findCategoryById(@PathVariable long id) {
-		return categoryService.findCategoryById(id);
+	public ResponseEntity<?> findCategoryById(@PathVariable long id) throws ResourceNotFoundException {
+		return ResponseEntity.ok(categoryService.findCategoryById(id));
 	}
 	
 	@PostMapping("categorise")

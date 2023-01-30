@@ -36,7 +36,6 @@ function AddProduct() {
                 .then((resp) => {
                     console.log(resp.data);
                     setProduct({ ...resp.data });
-                    setCategoryState({ id: resp.data.category });
                 })
                 .catch((err) => {
                     console.log(err.response.data);
@@ -121,14 +120,15 @@ function AddProduct() {
                                 <label for="categoryid" class="form-label">
                                     Category
                                 </label>
-                                <select onChange={(e) => handleChange(e)} class="form-select" name="category">
+                                <select
+                                    onChange={(e) => handleChange(e)}
+                                    class="form-select"
+                                    value={categoryState.id}
+                                    name="category"
+                                >
                                     <option selected>Chọn thể loại</option>
                                     {categorise.map((category) => {
-                                        return (
-                                            <option selected={category.id === categoryState.id} value={category.id}>
-                                                {category.name}
-                                            </option>
-                                        );
+                                        return <option value={category.id}>{category.name}</option>;
                                     })}
                                 </select>
                             </div>

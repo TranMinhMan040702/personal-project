@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -47,24 +48,25 @@ public class ProductController {
 	public ResponseEntity<Resource> serverFiles(@PathVariable String filename, HttpServletRequest request) {
 		Resource file = storageService.loadAsResource(filename);
 		String contentType = null;
-
 		try {
 			contentType = request.getServletContext().getMimeType(file.getFile().getAbsolutePath());
 		} catch (IOException ex) {
 			System.out.println("Could not determine fileType");
 		}
-
 		if (contentType == null) {
 			contentType = "application/octet-stream";
 		}
-
 		return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType)).body(file);
-
 	}
-	
+
 	@GetMapping("products")
 	public ResponseEntity<List<ProductDto>> getProduct() {
 		return ResponseEntity.ok(productService.findAll());
+	}
+	
+	@GetMapping("product")
+	public ResponseEntity<?> getProductById(@RequestParam long id) throws ResourceNotFoundException {
+		return ResponseEntity.ok(productService.findProductById(id));
 	}
 
 	@PostMapping("products")
@@ -77,11 +79,18 @@ public class ProductController {
 
 		return ResponseEntity.ok(productService.save(product, files));
 	}
+	
+	@PutMapping("products/{id}") 
+	public ResponseEntity<?> updateProduct(@PathVariable long id) {
+		
+		
+		return null;
+	}
 
 	@DeleteMapping("products/{id}")
 	public ResponseEntity<Map<String, String>> deleteProduct(@PathVariable long id) {
 		return ResponseEntity.ok(productService.deleteProduct(id));
-		
 	}
 
+	
 }

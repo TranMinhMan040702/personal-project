@@ -10,9 +10,7 @@ class ProductService {
     getImage(image) {
         return axios.get(image);
     }
-    getProductById(id) {
-        return axios.get(PRODUCT_API_GET_ONE_URL + '?id=' + id);
-    }
+    getProductById(id) {}
     addProduct(product) {
         return axios.post(PRODUCT_API_URL, product);
     }

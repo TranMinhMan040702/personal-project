@@ -36,7 +36,6 @@ function AddProduct() {
                 .then((resp) => {
                     console.log(resp.data);
                     setProduct({ ...resp.data });
-                    setCategoryState({ id: resp.data.category });
                 })
                 .catch((err) => {
                     console.log(err.response.data);

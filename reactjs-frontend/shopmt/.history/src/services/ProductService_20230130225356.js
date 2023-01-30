@@ -11,6 +11,7 @@ class ProductService {
         return axios.get(image);
     }
     getProductById(id) {
+        console.log(id);
         return axios.get(PRODUCT_API_GET_ONE_URL + '?id=' + id);
     }
     addProduct(product) {

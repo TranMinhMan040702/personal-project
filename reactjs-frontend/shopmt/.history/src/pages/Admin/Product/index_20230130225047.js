@@ -5,7 +5,6 @@ import './product.scss';
 import images from '../../../assets/images';
 import { useEffect, useState } from 'react';
 import ProductService from '../../../services/ProductService';
-import config from '../../../config';
 function Product() {
     const [checked, setChecked] = useState(true);
     const [products, setProducts] = useState([]);
@@ -22,13 +21,7 @@ function Product() {
     const EditProduct = (e) => {
         e.preventDefault();
         const id = e.target.attributes[0].value;
-        ProductService.getProductById(id)
-            .then((resp) => {
-                console.log(resp.data);
-            })
-            .catch((err) => {
-                console.log(err.response.data);
-            });
+        console.log(id);
     };
 
     const DeleteProduct = (e) => {
@@ -87,14 +80,13 @@ function Product() {
                                                 <span className="discount-price">{product.promotionalPrice}</span>
                                             </div>
                                             <div className="row d-flex">
-                                                <Link
-                                                    to={config.routes.admin.product + '/' + product.id + '/edit'}
+                                                <button
                                                     data={product.id}
-                                                    // onClick={(e) => EditProduct(e)}
+                                                    onClick={(e) => EditProduct(e)}
                                                     className="btn btn-outline-success p-2 col-6"
                                                 >
                                                     <FontAwesomeIcon icon={faPenAlt} />
-                                                </Link>
+                                                </button>
                                                 <button
                                                     data={product.id}
                                                     onClick={(e) => DeleteProduct(e)}

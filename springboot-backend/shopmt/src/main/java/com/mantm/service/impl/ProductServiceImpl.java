@@ -93,6 +93,22 @@ public class ProductServiceImpl implements IProductService {
 	}
 	
 	@Override
+	public ProductDto findProductById(long id) throws ResourceNotFoundException {
+		ProductDto dto = new ProductDto();
+		List<String> images = new ArrayList<>();
+		Product entity = productRepository.findById(id)
+				.orElseThrow(()-> new ResourceNotFoundException("Not found product with id: " + id));
+		BeanUtils.copyProperties(entity, dto);
+		for (Image_Product image : entity.getImages()) {
+			images.add(image.getPath());
+		}
+		dto.setImages(images);
+		dto.setCategory(entity.getCategory().getId());
+		return dto;
+	}
+	
+	
+	@Override
 	public Map<String, String> deleteProduct(long id) {
 		Map<String, String> resp = new HashMap<>();
 		productRepository.deleteById(id);

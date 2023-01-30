@@ -6,7 +6,6 @@ import ProductService from '../../../services/ProductService';
 import { useEffect } from 'react';
 import CategoryService from '../../../services/CategoryService';
 function AddProduct() {
-    let { id } = useParams();
     const [images, setImages] = useState([]);
     const [preview, setPreview] = useState(null);
     const [product, setProduct] = useState({
@@ -18,11 +17,11 @@ function AddProduct() {
         category: '',
     });
     const [categorise, setCategory] = useState([]);
-    const [categoryState, setCategoryState] = useState({
-        id: '',
-    });
+
+    let { id } = useParams();
 
     useEffect(() => {
+        console.log(slug);
         CategoryService.getAllCategories()
             .then((resp) => {
                 setCategory(resp.data);
@@ -30,24 +29,11 @@ function AddProduct() {
             .catch((err) => {
                 console.log(err);
             });
-        if (id) {
-            console.log(id);
-            ProductService.getProductById(id)
-                .then((resp) => {
-                    console.log(resp.data);
-                    setProduct({ ...resp.data });
-                    setCategoryState({ id: resp.data.category });
-                })
-                .catch((err) => {
-                    console.log(err.response.data);
-                });
-        }
     }, []);
     const handleChange = (e) => {
         setProduct({ ...product, [e.target.name]: e.target.value });
-        setCategoryState(e.target.value);
     };
-    console.log(categoryState);
+
     const handleUploadClick = (e) => {
         setImages((prev) => {
             if (prev.length === 0 || !prev.find((item) => item.name === e.target.name)) {
@@ -89,7 +75,6 @@ function AddProduct() {
                 console.log(err);
             });
     };
-
     return (
         <div className="product">
             <div className="content-header d-flex justify-content-between align-items-center">
@@ -124,11 +109,7 @@ function AddProduct() {
                                 <select onChange={(e) => handleChange(e)} class="form-select" name="category">
                                     <option selected>Chọn thể loại</option>
                                     {categorise.map((category) => {
-                                        return (
-                                            <option selected={category.id === categoryState.id} value={category.id}>
-                                                {category.name}
-                                            </option>
-                                        );
+                                        return <option value={category.id}>{category.name}</option>;
                                     })}
                                 </select>
                             </div>

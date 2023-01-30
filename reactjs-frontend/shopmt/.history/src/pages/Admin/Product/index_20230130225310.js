@@ -5,7 +5,6 @@ import './product.scss';
 import images from '../../../assets/images';
 import { useEffect, useState } from 'react';
 import ProductService from '../../../services/ProductService';
-import config from '../../../config';
 function Product() {
     const [checked, setChecked] = useState(true);
     const [products, setProducts] = useState([]);
@@ -87,14 +86,13 @@ function Product() {
                                                 <span className="discount-price">{product.promotionalPrice}</span>
                                             </div>
                                             <div className="row d-flex">
-                                                <Link
-                                                    to={config.routes.admin.product + '/' + product.id + '/edit'}
+                                                <button
                                                     data={product.id}
-                                                    // onClick={(e) => EditProduct(e)}
+                                                    onClick={(e) => EditProduct(e)}
                                                     className="btn btn-outline-success p-2 col-6"
                                                 >
                                                     <FontAwesomeIcon icon={faPenAlt} />
-                                                </Link>
+                                                </button>
                                                 <button
                                                     data={product.id}
                                                     onClick={(e) => DeleteProduct(e)}

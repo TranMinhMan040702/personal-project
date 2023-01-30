@@ -15,7 +15,7 @@ public interface ICategoryService {
 
 	CategoryDto save(CategoryDto categoryDto) throws Exception;
 
-	CategoryDto findCategoryById(long id);
+	CategoryDto findCategoryById(long id) throws ResourceNotFoundException;
 
 	List<CategoryDto> findAll();
 
