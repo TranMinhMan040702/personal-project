@@ -12,11 +12,11 @@ import com.mantm.exception.ResourceNotFoundException;
 @Service
 public interface IProductService {
 
-	ProductDto save(ProductDto productRequest, MultipartFile[] files) throws ResourceNotFoundException;
+	ProductDto save(ProductDto productRequest, MultipartFile[] files) throws ResourceNotFoundException, Exception;
 
 	List<ProductDto> findAll();
 
-	Map<String, String> deleteProduct(long id);
+	Map<String, String> deleteProduct(long id) throws ResourceNotFoundException, Exception;
 
 	ProductDto findProductById(long id) throws ResourceNotFoundException;
 

@@ -22,15 +22,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mantm.dto.ProductDto;
 import com.mantm.exception.ResourceNotFoundException;
 import com.mantm.service.IProductService;
 import com.mantm.service.IStorageService;
 
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin("http://localhost:3000/")
 @RestController
 @RequestMapping("/api/v1/")
 public class ProductController {
@@ -72,7 +70,7 @@ public class ProductController {
 	@PostMapping("products")
 	public ResponseEntity<?> createProduct(@RequestParam("model") String JsonObject,
 			@RequestParam("files") MultipartFile[] files)
-			throws JsonMappingException, JsonProcessingException, ResourceNotFoundException {
+			throws Exception {
 
 		ProductDto product = new ProductDto();
 		product = objectMapper.readValue(JsonObject, ProductDto.class);
@@ -80,15 +78,18 @@ public class ProductController {
 		return ResponseEntity.ok(productService.save(product, files));
 	}
 	
-	@PutMapping("products/{id}") 
-	public ResponseEntity<?> updateProduct(@PathVariable long id) {
+	@PostMapping("products/{id}") 
+	public ResponseEntity<?> updateProduct(@PathVariable long id, 
+			@RequestParam("model") String JsonObject,
+			@RequestParam("files") MultipartFile[] files) throws Exception {
 		
-		
-		return null;
+		ProductDto product = new ProductDto();
+		product = objectMapper.readValue(JsonObject, ProductDto.class);
+		return ResponseEntity.ok(productService.save(product, files));
 	}
 
 	@DeleteMapping("products/{id}")
-	public ResponseEntity<Map<String, String>> deleteProduct(@PathVariable long id) {
+	public ResponseEntity<Map<String, String>> deleteProduct(@PathVariable long id) throws Exception {
 		return ResponseEntity.ok(productService.deleteProduct(id));
 	}
 
