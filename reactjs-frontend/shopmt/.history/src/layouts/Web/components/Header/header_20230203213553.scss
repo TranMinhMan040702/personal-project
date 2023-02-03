@@ -1,0 +1,42 @@
+.header {
+    width: 100%;
+    min-height: 70px;
+    padding: 10px 0;
+    background: linear-gradient(0deg, rgba(45, 253, 170, 1) 0%, rgba(43, 207, 48, 1) 100%);
+    .announcement {
+        color: var(--white);
+        p {
+            margin-right: 6rem;
+        }
+        ul {
+            font-size: 1.2rem;
+            list-style: none;
+            a {
+                text-decoration: none;
+                color: var(--white);
+                margin-right: 2rem;
+            }
+        }
+    }
+    .pc-header {
+        .search-button {
+            background-color: #2ac4ea;
+            border: 0;
+            color: var(--white);
+            width: 15%;
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+        .register-login-cart {
+            a {
+                text-decoration: none;
+                color: var(--white);
+                margin-right: 2rem;
+                font-size: 15px;
+                .cart {
+                    font-size: 1.2rem;
+                }
+            }
+        }
+    }
+}

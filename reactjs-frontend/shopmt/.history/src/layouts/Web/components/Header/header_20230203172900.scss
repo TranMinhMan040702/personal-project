@@ -1,0 +1,21 @@
+.header {
+    width: 100%;
+    min-height: 70px;
+    padding: 10px 0;
+    background: linear-gradient(0deg, rgba(45, 253, 170, 1) 0%, rgba(40, 195, 44, 1) 51%);
+    .announcement {
+        color: var(--white);
+        p {
+            margin-right: 6rem;
+        }
+        ul {
+            font-size: 1.2rem;
+            list-style: none;
+            a {
+                text-decoration: none;
+                color: var(--white);
+                margin-right: 2rem;
+            }
+        }
+    }
+}

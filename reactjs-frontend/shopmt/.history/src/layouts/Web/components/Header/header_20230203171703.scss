@@ -1,0 +1,9 @@
+.header {
+    width: 100%;
+    min-height: 70px;
+    padding: 10px 0;
+    background: linear-gradient(0deg, rgba(45, 253, 170, 1) 0%, rgba(19, 138, 96, 1) 100%);
+    .announcement {
+        color: var(--white);
+    }
+}

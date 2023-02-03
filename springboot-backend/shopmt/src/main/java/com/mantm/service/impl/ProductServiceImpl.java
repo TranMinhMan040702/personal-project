@@ -18,6 +18,7 @@ import com.mantm.entity.Image_Product;
 import com.mantm.entity.Product;
 import com.mantm.exception.ResourceNotFoundException;
 import com.mantm.repository.CategoryRepository;
+import com.mantm.repository.ImageProductRepository;
 import com.mantm.repository.ProductRepository;
 import com.mantm.service.IProductService;
 import com.mantm.service.IStorageService;
@@ -28,11 +29,13 @@ public class ProductServiceImpl implements IProductService {
 	@Autowired
 	ModelMapper mapper;
 	@Autowired
+	IStorageService storageService;
+	@Autowired
 	ProductRepository productRepository;
 	@Autowired
 	CategoryRepository categoryRepository;
 	@Autowired
-	IStorageService storageService;
+	ImageProductRepository imageProductRepository;
 
 	@Override
 	public ProductDto save(ProductDto productReq, MultipartFile[] files) throws Exception {
@@ -52,7 +55,7 @@ public class ProductServiceImpl implements IProductService {
 				image_Product.setPath(path);
 				images.add(image_Product);
 			}
-			
+
 		} else {
 			entity = productRepository.findById(productReq.getId()).orElseThrow(
 					() -> new ResourceNotFoundException("Product not exist with id: " + productReq.getId()));
@@ -62,7 +65,8 @@ public class ProductServiceImpl implements IProductService {
 			for (int i = 0; i < files.length; i++) {
 				Image_Product imageOld = entity.getImages().get(i);
 				MultipartFile imageNew = files[i];
-				if (imageOld.getPath() != imageNew.getOriginalFilename()) {
+
+				if (!imageOld.getPath().equals(imageNew.getOriginalFilename())) {
 					storageService.delete(imageOld.getPath());
 
 					// lưu ảnh mới
@@ -79,10 +83,14 @@ public class ProductServiceImpl implements IProductService {
 					images.add(imageOld);
 				}
 			}
+			entity.getImages().clear();
+			imageProductRepository.deleteByProductId(productReq.getId());
 		}
 		
+
 		Category category = categoryRepository.findById(productReq.getCategory()).orElseThrow(
 				() -> new ResourceNotFoundException("Category not exist with id: " + productReq.getCategory()));
+		
 		entity.setCategory(category);
 		entity.setImages(images);
 		entity = productRepository.save(entity);
