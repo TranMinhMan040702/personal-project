@@ -1,0 +1,78 @@
+.home {
+    margin-top: 20px;
+    .category {
+        box-shadow: rgb(43 52 69 / 10%) 0px 4px 16px;
+        background-color: #fff;
+        width: 20%;
+        padding: 15px 0;
+        border-radius: 5px;
+        .h6 {
+            padding: 5px 20px;
+            margin: 0;
+        }
+        .box {
+            transition: 0.5s;
+            padding: 5px 20px;
+            span {
+                text-transform: capitalize;
+            }
+            &:hover {
+                background-color: #ffe1e6;
+                cursor: pointer;
+            }
+        }
+    }
+    .homeSlide {
+        box-shadow: rgb(43 52 69 / 10%) 0px 4px 16px;
+        background-color: #fff;
+        width: 78%;
+        height: 70vh;
+        padding: 10px;
+        .box {
+            .left {
+                h1 {
+                    font-size: 45px;
+                    line-height: 55px;
+                    margin: 50px 0 20px 0;
+                }
+                p {
+                    margin: 20px 0;
+                }
+                .btn-primary {
+                    background: #e94560;
+                    padding: 8px 40px;
+                    font-weight: bold;
+                    color: #fff;
+                    border-radius: 5px;
+                }
+            }
+            .right {
+                width: 100%;
+                img {
+                    width: 100%;
+                }
+            }
+        }
+        ul {
+            position: absolute;
+            bottom: -20px;
+            li {
+                border: 2px solid #b8b7b7;
+                border-radius: 50%;
+                padding: 10px;
+                button {
+                    background: transparent !important;
+                    color: transparent !important;
+                    &::before {
+                        font-size: 15px !important;
+                        color: #0f3460;
+                        position: absolute;
+                        top: 2px;
+                        left: 0;
+                        margin: auto;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,81 @@
+.shop {
+    .category {
+        box-shadow: rgb(43 52 69 / 10%) 0px 4px 16px;
+        background-color: #fff;
+        width: 25%;
+        height: 480px;
+        padding: 15px 0;
+        border-radius: 5px;
+        h6 {
+            padding: 5px 15px;
+            margin: 0 0 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            border-bottom: 2px solid #eef1f5;
+        }
+        .box {
+            transition: 0.5s;
+            padding: 8px 30px;
+            span {
+                font-size: 15px;
+                text-transform: capitalize;
+            }
+            &:hover {
+                background-color: #ffe1e6;
+                cursor: pointer;
+            }
+        }
+    }
+    .shopcarts {
+        width: 73%;
+        h4 {
+            font-weight: 700;
+        }
+        .content {
+            .card {
+                .card-body {
+                    .img-wrap {
+                        padding: 10px 0;
+                        height: 220px;
+                        text-align: center;
+                        display: block;
+                        overflow: hidden;
+                        position: relative;
+                        img {
+                            max-width: 100%;
+                            width: auto;
+                            height: 100%;
+                            display: inline-block;
+                            object-fit: cover;
+                        }
+                    }
+                    .info-wrap {
+                        padding: 1rem;
+                        .title {
+                            display: block;
+                            font-size: 1.1rem;
+                            font-weight: 700;
+                            text-decoration: none;
+                            color: var(--text);
+                            margin-bottom: 10px;
+                        }
+                        .price {
+                            display: flex;
+                            justify-content: start;
+                            align-items: center;
+                            .original-price {
+                                margin-right: 10px;
+                                font-size: 14px;
+                                color: #868282;
+                                text-decoration: line-through;
+                            }
+                            .discount-price {
+                                font-weight: 700;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
