@@ -6,7 +6,7 @@
     --primary-color-web: #e94560;
     --black: #000;
     --white: #fff;
-    --star-color: #f6a500;
+    --star-color: #ffcd4e;
     --text-color: #161823;
     --hover: #e9ecef;
     --text-sidebar: #29335d;
@@ -69,10 +69,6 @@ input {
         margin: 0;
     }
 }
-/// background
-.background {
-    background: #f6f9fc;
-}
 ///////// Card product
 .product {
     background: #fff;
@@ -122,7 +118,7 @@ input {
             font-size: 13px;
             .icon {
                 margin-right: 4px;
-                color: var(--star-color);
+                color: #ffcd4e;
             }
         }
         .price {

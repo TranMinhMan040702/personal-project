@@ -1,0 +1,21 @@
+.policy {
+    padding: 20px 0 50px 0;
+    .product {
+        margin: 0 auto;
+    }
+    .item {
+        text-transform: capitalize;
+        h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #646464;
+            margin: 4px 0 0 10px;
+        }
+        &:hover {
+            h3 {
+                color: var(--primary-color-web);
+                transition: 0.7s;
+            }
+        }
+    }
+}

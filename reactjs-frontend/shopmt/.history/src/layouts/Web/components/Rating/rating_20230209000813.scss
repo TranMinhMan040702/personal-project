@@ -1,0 +1,40 @@
+.product-rating {
+    background: #f6f9fc;
+    .product {
+        margin: 0 auto;
+    }
+    .rating-top {
+        h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+        .rating-statistics {
+            width: 500px;
+            .left {
+                margin-left: 46px;
+                h2 {
+                    text-align: center;
+                    font-size: 3rem;
+                    font-weight: 800;
+                    span {
+                        font-size: 1.8rem;
+                        font-weight: 600;
+                    }
+                }
+                .rating-star {
+                    color: var(--star-color);
+                }
+                p {
+                    text-align: center;
+                    font-size: 14px;
+                    color: #7a7e7f;
+                }
+            }
+            .right {
+                span {
+                    font-size: 1.2rem;
+                }
+            }
+        }
+    }
+}

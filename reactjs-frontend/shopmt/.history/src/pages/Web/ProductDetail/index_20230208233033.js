@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import images from '../../../assets/images';
 import './productdetail.scss';
+import Rating from '../../../layouts/Web/components/Rating';
 function ProductDetail() {
     const [image, setImage] = useState(null);
     useEffect(() => {
@@ -85,6 +86,9 @@ function ProductDetail() {
                     </div>
                 </div>
             </div>
+        </div>
+        <div className="product-rating">
+
         </div>
     );
 }
