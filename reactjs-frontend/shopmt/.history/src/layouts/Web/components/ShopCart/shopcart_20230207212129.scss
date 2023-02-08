@@ -1,0 +1,14 @@
+.cart-items {
+    .cart-list {
+        width: 70%;
+        .cart-item {
+            .cart-image {
+                width: 150px;
+                height: 150px;
+            }
+        }
+    }
+    .cart-total {
+        width: 30%;
+    }
+}
