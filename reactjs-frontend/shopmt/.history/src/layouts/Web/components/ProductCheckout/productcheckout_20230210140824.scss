@@ -1,0 +1,27 @@
+.productCheckout {
+    padding: 5px 0;
+    .product {
+        margin: 0;
+    }
+    .cart-list {
+        width: 100%;
+        .cart-details {
+            margin-bottom: 5px;
+            .name {
+                h4 {
+                    font-size: 20px;
+                    font-weight: 700;
+                    margin-left: 20px;
+                }
+            }
+            span {
+                font-size: 16px;
+                color: grey;
+            }
+            h5 {
+                font-size: 16px;
+                color: var(--primary-color-web);
+            }
+        }
+    }
+}

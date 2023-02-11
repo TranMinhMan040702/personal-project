@@ -1,0 +1,196 @@
+.account {
+    padding: 50px 0;
+    .nav {
+        width: 20%;
+        .top {
+            height: 80px;
+            border-bottom: 1px solid #e3e3e3;
+            .img {
+                height: 50px;
+                width: 50px;
+                img {
+                    height: 100%;
+                    width: 100%;
+                    object-fit: contain;
+                    border-radius: 50%;
+                }
+            }
+            .name {
+                margin-left: 20px;
+                h6 {
+                    margin: 0;
+                    font-weight: 600;
+                }
+                a {
+                    font-size: 14px;
+                    color: #949393;
+                    span {
+                        margin-left: 5px;
+                    }
+                }
+            }
+        }
+        ul {
+            margin: 30px 0 0 0;
+            padding: 0;
+            li {
+                margin-bottom: 20px;
+                a {
+                    color: var(--text);
+                    display: flex;
+                    align-items: center;
+                    font-size: 16px;
+                    .icon {
+                        font-size: 20px;
+                        width: 20px;
+                        margin-right: 10px;
+                    }
+                    span {
+                        margin-top: 3px;
+                    }
+                }
+                li {
+                    margin-left: 40px;
+                    margin-top: 20px;
+                }
+            }
+        }
+        a {
+            &:hover {
+                color: var(--primary-color-web);
+            }
+        }
+    }
+    .wapper {
+        background-color: #ffff;
+        padding: 20px;
+        box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+    }
+    .main {
+        width: 80%;
+        .header {
+            border-bottom: 1px solid #e3e3e3;
+            padding-bottom: 12px;
+            h5 {
+                text-transform: capitalize;
+                font-size: 20px;
+                margin: 0;
+            }
+            p {
+                color: #333232;
+                font-size: 16px;
+                margin: 0;
+            }
+        }
+        .account {
+            margin-top: 30px;
+            label {
+                color: rgb(114, 114, 114);
+                font-size: 16px;
+                width: 200px;
+                text-align: end;
+                margin-right: 30px;
+            }
+            input[type='text'] {
+                width: 300px;
+            }
+            textarea {
+                width: 300px;
+                height: 100px;
+            }
+            .profile-info {
+                border-right: 1px solid #e3e3e3;
+                width: 70%;
+                span {
+                    label {
+                        width: 20px;
+                    }
+                    input {
+                        margin-right: 5px;
+                    }
+                }
+            }
+
+            .profile-img {
+                width: 30%;
+                .img {
+                    width: 150px;
+                    height: 150px;
+                    img {
+                        height: 100%;
+                        width: 100%;
+                        border-radius: 50%;
+                    }
+                }
+                label {
+                    padding: 10px 20px;
+                    border: 1px solid #e3e3e3;
+                    text-transform: capitalize;
+                    border-radius: 3px;
+                    cursor: pointer;
+                    text-align: center;
+                    margin-right: 0;
+                }
+            }
+            button {
+                border: none;
+                background-color: var(--primary-color-web);
+                padding: 5px 40px;
+                border-radius: 5px;
+                color: var(--white);
+                font-size: 18px;
+                margin-left: 230px;
+                margin-top: 30px;
+            }
+        }
+        .nav-purchase {
+            border-bottom: 1px solid #b8b6b6;
+            padding: 0;
+            ul {
+                margin: 0;
+                padding: 0;
+                li {
+                    cursor: pointer;
+                    padding: 14px 20px;
+                    &:hover {
+                        a {
+                            color: var(--primary-color-web);
+                        }
+                    }
+                }
+            }
+            .active {
+                a {
+                    color: var(--primary-color-web);
+                }
+                border-bottom: 2px solid var(--primary-color-web);
+            }
+        }
+        .cart-list {
+            width: 100%;
+            .cart-item {
+                margin-bottom: 10px;
+            }
+            .cart-details {
+                margin-bottom: 5px;
+                .name {
+                    h4 {
+                        font-size: 20px;
+                        font-weight: 700;
+                        margin-left: 20px;
+                    }
+                }
+                span {
+                    display: block;
+                    font-size: 16px;
+                    color: grey;
+                    margin-bottom: 40px;
+                }
+                h5 {
+                    font-size: 16px;
+                    text-align: end;
+                }
+            }
+        }
+    }
+}

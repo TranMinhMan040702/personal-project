@@ -1,0 +1,41 @@
+.location {
+    padding: 50px 0;
+
+    .product {
+        margin: 0 auto;
+        border-top-right-radius: 0px;
+        border-top-left-radius: 0px;
+    }
+    .top {
+        height: 3px;
+        width: 100%;
+        background-position-x: -30px;
+        background-size: 116px 3px;
+        background-image: repeating-linear-gradient(
+            45deg,
+            #6fa6d6,
+            #6fa6d6 33px,
+            transparent 0,
+            transparent 41px,
+            #f18d9b 0,
+            #f18d9b 74px,
+            transparent 0,
+            transparent 82px
+        );
+    }
+    .header {
+        color: var(--primary-color-web);
+        font-size: 20px;
+        margin-bottom: 20px;
+        h4 {
+            font-size: 20px;
+            margin: 3px 0 0 10px;
+        }
+    }
+    .address {
+        font-size: 16px;
+        span {
+            font-weight: 600;
+        }
+    }
+}

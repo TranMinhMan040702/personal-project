@@ -1,0 +1,64 @@
+import images from '../../../../assets/images';
+
+function Profile() {
+    return (
+        <>
+            <div className="header">
+                <h5>Hồ sơ của tôi</h5>
+                <p>Quản lý hồ sơ để bảo mật tài khoản</p>
+            </div>
+            <div className="profile">
+                <form action="" className="d-flex justify-content-between">
+                    <div className="profile-info">
+                        <div className="mb-3">
+                            <label htmlFor="">Tên đăng nhập</label>
+                            <span>man0407</span>
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="">Tên</label>
+                            <input className="input-control" type="text" value="Trần Minh Mẫn" />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="">Email</label>
+                            <input className="input-control" type="text" value="mantm040702@gmail.com" />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="">Số điện thoại</label>
+                            <input className="input-control" type="text" value="0964294799" />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="">Giới tính</label>
+
+                            <span>
+                                <input id="male" name="gender" className="input-control" type="radio" value="male" />
+
+                                <label htmlFor="male">Nam</label>
+                            </span>
+
+                            <span>
+                                <input id="female" name="gender" className="input-control" type="radio" value="male" />
+                                <label htmlFor="female">Nữ</label>
+                            </span>
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="">Ngày sinh</label>
+                            <input className="input-control" type="date" />
+                        </div>
+                        <button>Lưu</button>
+                    </div>
+                    <div className="profile-img d-flex flex-column justify-content-center align-items-center">
+                        <div className="img">
+                            <img src={images.noAvatar} alt="" />
+                        </div>
+                        <label htmlFor="image">
+                            <input type="file" id="image" hidden />
+                            Chọn ảnh
+                        </label>
+                    </div>
+                </form>
+            </div>
+        </>
+    );
+}
+
+export default Profile;

@@ -1,0 +1,25 @@
+.account {
+    padding: 50px 0;
+    .nav {
+        width: 20%;
+        ul {
+            margin: 0;
+            padding: 0;
+            li {
+                margin-bottom: 20px;
+                a {
+                    color: var(--text);
+                    li {
+                        margin-top: 20px;
+                    }
+                }
+            }
+        }
+    }
+    .main {
+        width: 75%;
+        background-color: #ffff;
+        padding: 20px;
+        box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+    }
+}

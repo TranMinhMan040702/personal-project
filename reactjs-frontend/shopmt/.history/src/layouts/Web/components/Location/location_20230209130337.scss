@@ -1,0 +1,34 @@
+.location {
+    padding: 50px 0;
+
+    .product {
+        margin: 0 auto;
+        // padding: 0 20px 20px 20px;
+    }
+    .top {
+        height: 3px;
+        width: 100%;
+        margin-bottom: 20px;
+        // background-position-x: -30px;
+        // background-size: 116px 3px;
+        background-image: repeating-linear-gradient(
+            45deg,
+            #6fa6d6,
+            #6fa6d6 33px,
+            transparent 0,
+            transparent 41px,
+            #f18d9b 0,
+            #f18d9b 74px,
+            transparent 0,
+            transparent 82px
+        );
+    }
+    .header {
+        color: var(--primary-color-web);
+        font-size: 20px;
+        h4 {
+            font-size: 20px;
+            margin: 3px 0 0 10px;
+        }
+    }
+}

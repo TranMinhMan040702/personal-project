@@ -1,0 +1,126 @@
+.account {
+    padding: 50px 0;
+    .nav {
+        width: 20%;
+        .top {
+            padding: 10px 0 20px 0;
+            border-bottom: 1px solid #e3e3e3;
+            .img {
+                height: 50px;
+                width: 50px;
+                img {
+                    height: 100%;
+                    width: 100%;
+                    object-fit: contain;
+                    border-radius: 50%;
+                }
+            }
+            .name {
+                margin-left: 20px;
+                h6 {
+                    margin: 0;
+                    font-weight: 600;
+                }
+                a {
+                    font-size: 14px;
+                    color: #949393;
+                    span {
+                        margin-left: 5px;
+                    }
+                }
+            }
+            margin-bottom: 30px;
+        }
+        ul {
+            margin: 0;
+            padding: 0;
+            li {
+                margin-bottom: 20px;
+                a {
+                    color: var(--text);
+                    display: flex;
+                    align-items: center;
+                    font-size: 16px;
+                    .icon {
+                        font-size: 20px;
+                        width: 20px;
+                        margin-right: 10px;
+                    }
+                    span {
+                        margin-top: 3px;
+                    }
+                }
+                li {
+                    margin-left: 40px;
+                    margin-top: 20px;
+                }
+            }
+        }
+        a {
+            &:hover {
+                color: var(--primary-color-web);
+            }
+        }
+    }
+    .main {
+        width: 80%;
+        background-color: #ffff;
+        padding: 20px;
+        box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+        .header {
+            border-bottom: 1px solid #e3e3e3;
+            padding-bottom: 12px;
+            h5 {
+                text-transform: capitalize;
+                font-size: 20px;
+                margin: 0;
+            }
+            p {
+                color: #333232;
+                font-size: 16px;
+                margin: 0;
+            }
+        }
+        .profile {
+            margin-top: 30px;
+            .profile-info {
+                border-right: 1px solid #e3e3e3;
+                width: 60%;
+                label {
+                    color: rgb(114, 114, 114);
+                    font-size: 16px;
+                    width: 200px;
+                    text-align: end;
+                    margin-right: 30px;
+                }
+                span {
+                    label {
+                        width: 20px;
+                    }
+                    input {
+                        margin-right: 5px;
+                    }
+                }
+            }
+            .profile-img {
+                width: 35%;
+                .img {
+                    width: 150px;
+                    height: 150px;
+                    img {
+                        height: 100%;
+                        width: 100%;
+                        border-radius: 50%;
+                    }
+                }
+                label {
+                    padding: 10px 20px;
+                    border: 1px solid #e3e3e3;
+                    text-transform: capitalize;
+                    border-radius: 3px;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}
