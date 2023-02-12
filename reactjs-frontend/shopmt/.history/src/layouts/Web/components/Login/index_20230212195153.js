@@ -1,43 +1,48 @@
-import { Link } from 'react-router-dom';
+import './login.scss';
 import images from '../../../../assets/images';
-function RegisterForm() {
+import { Link } from 'react-router-dom';
+function LoginForm() {
     return (
-        <div className="login-register background">
+        <div className="login background">
             <div className="wapper">
                 <header className="d-flex justify-content-between align-items-center">
-                    <h3>Đăng ký</h3>
+                    <h3>Đăng nhập</h3>
                     <div className="img">
                         <img src={images.logoweb} alt="" />
                     </div>
                 </header>
                 <form action="">
                     <div className="d-flex flex-column mb-3">
-                        <input type="text" placeholder="Số điện thoại" />
+                        <label htmlFor="">Số điện thoại</label>
+                        <input type="text" />
                     </div>
-                    <button>Đăng ký</button>
+                    <div className="d-flex flex-column mb-5">
+                        <label htmlFor="">Mật khẩu</label>
+                        <input type="text" />
+                    </div>
+                    <button>Đăng nhập</button>
                 </form>
+                <div className="forget-pass d-flex justify-content-end">
+                    <Link>Quên mật khẩu</Link>
+                </div>
                 <span>HOẶC</span>
-                <div className="face-google d-flex justify-content-between align-items-center">
+                <div className="face-google d-flex justify-content-between">
                     <Link className="face">
                         <div className="img">
-                            <img src={images.facebook} alt="" />
+                            <img src="" alt="" />
                         </div>
                         Facebook
                     </Link>
                     <Link className="google">
                         <div className="img">
-                            <img src={images.google} alt="" />
+                            <img src="" alt="" />
                         </div>
                         Google
                     </Link>
                 </div>
-                <footer className="text-center">
-                    <h6>Bằng việc đăng kí, bạn đã đồng ý với ShopMT về</h6>
-                    <Link>Điều khoản dịch vụ</Link>&<Link>Chính sách bảo mật</Link>
-                </footer>
             </div>
         </div>
     );
 }
 
-export default RegisterForm;
+export default LoginForm;

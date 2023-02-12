@@ -15,7 +15,6 @@ import ProductDetail from '../pages/Web/Product';
 import Checkout from '../pages/Web/Checkout';
 import User from '../pages/Web/User';
 import Login from '../pages/Web/Login';
-import Register from '../pages/Web/Register';
 const publicRoutes = [
     // Route Admin
     {
@@ -95,7 +94,7 @@ const publicRoutes = [
     },
     {
         path: config.routes.web.register,
-        component: Register,
+        component: Login,
         layout: WebLayout,
     },
 ];

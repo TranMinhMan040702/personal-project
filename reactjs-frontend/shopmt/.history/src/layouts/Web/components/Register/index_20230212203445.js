@@ -31,10 +31,7 @@ function RegisterForm() {
                         Google
                     </Link>
                 </div>
-                <footer className="text-center">
-                    <h6>Bằng việc đăng kí, bạn đã đồng ý với ShopMT về</h6>
-                    <Link>Điều khoản dịch vụ</Link>&<Link>Chính sách bảo mật</Link>
-                </footer>
+                <footer></footer>
             </div>
         </div>
     );

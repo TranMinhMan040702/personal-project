@@ -241,12 +241,6 @@ input {
         }
         form {
             margin-top: 30px;
-            input {
-                padding: 5px 14px;
-                &::placeholder {
-                    font-size: 14px;
-                }
-            }
             button {
                 border: none;
                 width: 100%;
@@ -266,7 +260,6 @@ input {
         span {
             display: block;
             padding: 10px 30px;
-            margin-bottom: 10px;
             text-align: center;
             color: #94877e;
             font-size: 12px;
@@ -321,12 +314,9 @@ input {
                 color: #c5c1bf;
             }
             a {
-                margin: 0 5px;
+                margin-left: 5px;
                 font-size: 14px;
                 color: var(--primary-color-web);
-            }
-            h6 {
-                font-size: 14px;
             }
         }
     }

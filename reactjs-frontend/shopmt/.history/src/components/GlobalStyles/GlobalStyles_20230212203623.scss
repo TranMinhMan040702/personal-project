@@ -244,7 +244,7 @@ input {
             input {
                 padding: 5px 14px;
                 &::placeholder {
-                    font-size: 14px;
+                    font-size: 13px;
                 }
             }
             button {
@@ -321,12 +321,9 @@ input {
                 color: #c5c1bf;
             }
             a {
-                margin: 0 5px;
+                margin-left: 5px;
                 font-size: 14px;
                 color: var(--primary-color-web);
-            }
-            h6 {
-                font-size: 14px;
             }
         }
     }

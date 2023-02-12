@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import './register.scss';
 import images from '../../../../assets/images';
 function RegisterForm() {
     return (
@@ -12,7 +13,8 @@ function RegisterForm() {
                 </header>
                 <form action="">
                     <div className="d-flex flex-column mb-3">
-                        <input type="text" placeholder="Số điện thoại" />
+                        <label htmlFor="">Số điện thoại</label>
+                        <input type="text" />
                     </div>
                     <button>Đăng ký</button>
                 </form>
@@ -31,10 +33,7 @@ function RegisterForm() {
                         Google
                     </Link>
                 </div>
-                <footer className="text-center">
-                    <h6>Bằng việc đăng kí, bạn đã đồng ý với ShopMT về</h6>
-                    <Link>Điều khoản dịch vụ</Link>&<Link>Chính sách bảo mật</Link>
-                </footer>
+                <footer></footer>
             </div>
         </div>
     );

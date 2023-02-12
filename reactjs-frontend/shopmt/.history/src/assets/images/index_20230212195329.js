@@ -24,7 +24,6 @@ const images = {
         qc3: require('../../../src/assets/images/qc3.png'),
     },
     facebook: require('../../../src/assets/images/fb.png'),
-    google: require('../../../src/assets/images/gg.png'),
 };
 
 export default images;
