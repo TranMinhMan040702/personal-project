@@ -1,4 +1,8 @@
-package com.mantm.dto.input;
+package com.mantm.dto.request;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.validation.constraints.NotBlank;
 
@@ -9,7 +13,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class UserRegister extends AbstractDto<UserRegister>{
+public class RegisterRequest extends AbstractDto<RegisterRequest>{
 	
 	@NotBlank
 	private String firstname;
@@ -22,4 +26,7 @@ public class UserRegister extends AbstractDto<UserRegister>{
 
 	@NotBlank
 	private String password;
+	
+	@NotBlank
+	private Set<String> roles = new HashSet<>(Arrays.asList("USER"));
 }

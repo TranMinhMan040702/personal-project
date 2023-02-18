@@ -1,4 +1,6 @@
-package com.mantm.dto.output;
+package com.mantm.dto.response;
+
+import java.util.Set;
 
 import com.mantm.dto.AbstractDto;
 
@@ -19,7 +21,7 @@ public class UserResponse extends AbstractDto<UserResponse>{
 	
 	private String phone;
 	
-	private String role;
+	private Set<String> roles;
 	
 	private String avatar;
 

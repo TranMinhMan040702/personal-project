@@ -12,13 +12,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mantm.dto.input.UserRegister;
-import com.mantm.dto.output.UserResponse;
+import com.mantm.dto.request.RegisterRequest;
+import com.mantm.dto.response.UserResponse;
+import com.mantm.exception.ResourceNotFoundException;
 import com.mantm.service.IUserService;
 
 @CrossOrigin("http://localhost:3000/")
 @RestController
-@RequestMapping("/api/v1/")
+@RequestMapping("/admin/api/v1/")
 public class UserController {
 	
 	@Autowired
@@ -30,7 +31,7 @@ public class UserController {
 	}
 	
 	@PostMapping("users")
-	public ResponseEntity<UserResponse> createUser(@RequestBody UserRegister userRegister) {
+	public ResponseEntity<UserResponse> createUser(@RequestBody RegisterRequest userRegister) throws ResourceNotFoundException {
 		return new ResponseEntity<UserResponse>(userService.save(userRegister), HttpStatus.OK);
 	}
 }

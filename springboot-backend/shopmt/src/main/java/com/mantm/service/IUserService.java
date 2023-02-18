@@ -4,14 +4,15 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.mantm.dto.input.UserRegister;
-import com.mantm.dto.output.UserResponse;
+import com.mantm.dto.request.RegisterRequest;
+import com.mantm.dto.response.UserResponse;
+import com.mantm.exception.ResourceNotFoundException;
 
 @Service
 public interface IUserService {
 
 	List<UserResponse> findAll();
 
-	UserResponse save(UserRegister userRegister);
+	UserResponse save(RegisterRequest userRegister) throws ResourceNotFoundException;
 
 }

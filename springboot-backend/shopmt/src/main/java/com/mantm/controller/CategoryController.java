@@ -28,7 +28,7 @@ public class CategoryController {
 	ICategoryService categoryService;
 	
 
-	@GetMapping("categorise")
+	@GetMapping("/admin/categorise")
 	public ResponseEntity<List<CategoryDto>> findAllCategory() {
 		return ResponseEntity.ok(categoryService.findAll());
 	}
