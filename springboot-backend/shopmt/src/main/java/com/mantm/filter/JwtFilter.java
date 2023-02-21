@@ -2,6 +2,7 @@ package com.mantm.filter;
 
 import java.io.IOException;
 
+import javax.management.RuntimeErrorException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -52,8 +53,7 @@ public class JwtFilter extends OncePerRequestFilter{
 				authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 				
 				SecurityContextHolder.getContext().setAuthentication(authToken);
-				
-			}
+			} 
 		}
 		filterChain.doFilter(request, response);
 		

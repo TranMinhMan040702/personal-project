@@ -28,12 +28,6 @@ public class ApplicationConfig {
 		return authProvider;
 	}
 	
-//	protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//	     auth
-//	          .userDetailsService(userDetailsService)
-//	          .passwordEncoder(passwordEncoder());
-//	}
-//	
 	@Bean
 	public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception{
 		return configuration.getAuthenticationManager();
@@ -43,5 +37,6 @@ public class ApplicationConfig {
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+	
 
 }

@@ -3,6 +3,9 @@ package com.mantm.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -51,9 +54,10 @@ public class AuthenticationServiceImpl implements IAuthenticationService{
 		
 		UserDetails userDetails = customUserDetailsService.loadUserByUsername(user.getEmail());
 		
-		String token = jwtUtil.generateToken(userDetails);
+		String access_token = jwtUtil.generateToken(userDetails, false);
+		String refresh_token = jwtUtil.generateToken(userDetails, true);
 		
-		return new AuthResponse(token);
+		return new AuthResponse(access_token, refresh_token);
 		
 	}
 
@@ -63,9 +67,31 @@ public class AuthenticationServiceImpl implements IAuthenticationService{
 				new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
 		);
 		UserDetails userDetails = customUserDetailsService.loadUserByUsername(request.getEmail());
-		String token = jwtUtil.generateToken(userDetails);
 		
-		return new AuthResponse(token);
+		String access_token = jwtUtil.generateToken(userDetails, false);
+		String refresh_token = jwtUtil.generateToken(userDetails, true);
+		
+		return new AuthResponse(access_token, refresh_token);
+	}
+	
+	@Override
+	public AuthResponse refresh(HttpServletRequest request, HttpServletResponse response) {
+		
+		String authorizationHeader = request.getHeader("Authorization");
+		String access_token = null;
+		String refresh_token = null;
+		String username = null;
+		
+		if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+			
+			refresh_token = authorizationHeader.substring(7);
+			username = jwtUtil.extractUsername(refresh_token);
+			UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
+			access_token = jwtUtil.generateToken(userDetails, false);
+			
+		}
+		
+		return new AuthResponse(access_token, refresh_token);
 	}
 
 }

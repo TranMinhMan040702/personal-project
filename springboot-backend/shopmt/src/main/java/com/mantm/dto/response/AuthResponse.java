@@ -7,6 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class AuthResponse {
 
-	private final String jwt;
+	private final String access_token;
+	private final String refresh_token;
 	
 }
