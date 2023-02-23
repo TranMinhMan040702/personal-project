@@ -1,13 +1,18 @@
 package com.mantm.dto.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import java.util.Set;
 
-@Getter
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class AuthResponse {
 
-	private final String access_token;
-	private final String refresh_token;
+	private String accessToken;
+	private String refreshToken;
+	private Set<String> roles;
 	
 }

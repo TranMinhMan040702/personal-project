@@ -52,7 +52,7 @@ public class JwtUtil {
 				.setClaims(claims)
 				.setSubject(subject)
 				.setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(!refresh_token ? new Date(System.currentTimeMillis() + 10 * 60 * 1000) 
+				.setExpiration(!refresh_token ? new Date(System.currentTimeMillis() +  30 * 1000) 
 						: new Date(System.currentTimeMillis() + 30 * 60 * 1000))
 				.signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
 	}

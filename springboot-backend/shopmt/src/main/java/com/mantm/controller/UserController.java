@@ -17,9 +17,9 @@ import com.mantm.dto.response.UserResponse;
 import com.mantm.exception.ResourceNotFoundException;
 import com.mantm.service.IUserService;
 
-@CrossOrigin("http://localhost:3000/")
+@CrossOrigin("http://localhost:3000")
 @RestController
-@RequestMapping("/admin/api/v1/")
+@RequestMapping("/api/v1/admin/")
 public class UserController {
 	
 	@Autowired

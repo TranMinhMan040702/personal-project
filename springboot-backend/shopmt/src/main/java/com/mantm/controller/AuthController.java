@@ -2,6 +2,7 @@ package com.mantm.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mantm.dto.request.AuthRequest;
 import com.mantm.dto.request.RegisterRequest;
+import com.mantm.dto.request.TokenRefreshRequest;
 import com.mantm.service.IAuthenticationService;
 
 @RestController
@@ -33,9 +35,9 @@ public class AuthController {
 		return ResponseEntity.ok(authenticationService.authenticate(request));
 	}
 	
-	@GetMapping("/token/refresh")
-	public ResponseEntity<?> refresh(HttpServletRequest request, HttpServletResponse response) {
-		return ResponseEntity.ok(authenticationService.refresh(request, response));
+	@PostMapping("/refresh")
+	public ResponseEntity<?> refresh(@Valid @RequestBody TokenRefreshRequest request) {
+		return ResponseEntity.ok(authenticationService.refresh(request));
 	}
 
 }

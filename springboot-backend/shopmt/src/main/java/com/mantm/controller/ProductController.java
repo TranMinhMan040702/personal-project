@@ -43,7 +43,7 @@ public class ProductController {
 	ImageProductRepository imageProductRepository;
 
 	// Get Image
-	@GetMapping("products/{filename:.+}")
+	@GetMapping("images/products/{filename:.+}")
 	@ResponseBody
 	public ResponseEntity<Resource> serverFiles(@PathVariable String filename, HttpServletRequest request) {
 		Resource file = storageService.loadAsResource(filename);
@@ -69,7 +69,7 @@ public class ProductController {
 		return ResponseEntity.ok(productService.findProductById(id));
 	}
 
-	@PostMapping("products")
+	@PostMapping("/admin/products")
 	public ResponseEntity<?> createProduct(@RequestParam("model") String JsonObject,
 			@RequestParam("files") MultipartFile[] files)
 			throws Exception {
@@ -80,7 +80,7 @@ public class ProductController {
 		return ResponseEntity.ok(productService.save(product, files));
 	}
 	
-	@PostMapping("products/{id}") 
+	@PostMapping("/admin/products/{id}") 
 	public ResponseEntity<?> updateProduct(@PathVariable long id, 
 			@RequestParam("model") String JsonObject,
 			@RequestParam("files") MultipartFile[] files) throws Exception {
@@ -90,7 +90,7 @@ public class ProductController {
 		return ResponseEntity.ok(productService.save(product, files));
 	}
 
-	@DeleteMapping("products/{id}")
+	@DeleteMapping("/admin/products/{id}")
 	public ResponseEntity<Map<String, String>> deleteProduct(@PathVariable long id) throws Exception {
 		return ResponseEntity.ok(productService.deleteProduct(id));
 	}

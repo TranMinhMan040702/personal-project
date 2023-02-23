@@ -33,18 +33,18 @@ public class DeliveryController {
 		return ResponseEntity.ok(deliveryService.findAll());
 	}
 	
-	@PostMapping("deliverise")
+	@PostMapping("/admin/deliverise")
 	public ResponseEntity<DeliveryDto> createDelivery(@RequestBody @Valid DeliveryDto deliveryDto) throws Exception{
 		return ResponseEntity.ok(deliveryService.save(deliveryDto));
 	}
 	
-	@PutMapping("deliverise/{id}")
+	@PutMapping("/admin/deliverise/{id}")
 	public ResponseEntity<DeliveryDto> updateDelivery(@RequestBody @Valid DeliveryDto deliveryDto, @PathVariable long id) throws Exception {
 		deliveryDto.setId(id);
 		return ResponseEntity.ok(deliveryService.save(deliveryDto));
 	}
 	
-	@DeleteMapping("deliverise/{ids}")
+	@DeleteMapping("/admin/deliverise/{ids}")
 	public ResponseEntity<Map<String, String>> deleteDelivery(@PathVariable List<String> ids) {
 		return ResponseEntity.ok(deliveryService.deleteDelivery(ids));
 	}

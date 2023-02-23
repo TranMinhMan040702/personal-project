@@ -28,7 +28,7 @@ public class CategoryController {
 	ICategoryService categoryService;
 	
 
-	@GetMapping("/admin/categorise")
+	@GetMapping("/categorise")
 	public ResponseEntity<List<CategoryDto>> findAllCategory() {
 		return ResponseEntity.ok(categoryService.findAll());
 	}
@@ -38,23 +38,23 @@ public class CategoryController {
 		return ResponseEntity.ok(categoryService.findCategoryById(id));
 	}
 	
-	@PostMapping("categorise")
+	@PostMapping("/admin/categorise")
 	public CategoryDto createCategory (@RequestBody CategoryDto categoryDto) throws Exception {
 		return categoryService.save(categoryDto);
 	}
 	
-	@PutMapping("/categorise/{id}") 
+	@PutMapping("/admin/categorise/{id}") 
 	public CategoryDto updateCategory(@RequestBody CategoryDto categoryDto, @PathVariable long id) throws Exception {
 		categoryDto.setId(id);
 		return categoryService.save(categoryDto);
 	}
 	
-	@DeleteMapping("/categorise/{ids}")
+	@DeleteMapping("/admin/categorise/{ids}")
 	public ResponseEntity<Map<String, String>> deleteCategory(@PathVariable List<String> ids) {
 		return ResponseEntity.ok(categoryService.deleteCategory(ids));
 	}
 	
-	@PutMapping("/categorise")
+	@PutMapping("/admin/categorise")
 	ResponseEntity<Map<String, String>> deleteSoftCategory(@RequestBody long[] ids) throws ResourceNotFoundException {
 		return ResponseEntity.ok(categoryService.deleteSoftCategory(ids));
 	} 
