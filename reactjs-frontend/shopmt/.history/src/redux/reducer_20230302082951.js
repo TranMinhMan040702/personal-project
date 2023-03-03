@@ -1,0 +1,16 @@
+const initialState = {};
+
+const rootReducer = (state = initialState, action) => {
+    switch (action.type) {
+        case 'addToCart':
+            return {
+                ...state,
+                ...action.payload,
+            };
+        default: {
+            return state;
+        }
+    }
+};
+
+export default rootReducer;

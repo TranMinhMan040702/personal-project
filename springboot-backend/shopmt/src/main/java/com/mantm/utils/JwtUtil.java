@@ -48,11 +48,8 @@ public class JwtUtil {
 	}
 
 	private String createToken(Map<String, Object> claims, String subject, Boolean refresh_token) {
-		return Jwts.builder()
-				.setClaims(claims)
-				.setSubject(subject)
-				.setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(!refresh_token ? new Date(System.currentTimeMillis() +  30 * 1000) 
+		return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
+				.setExpiration(!refresh_token ? new Date(System.currentTimeMillis() + 10 * 60 * 1000)
 						: new Date(System.currentTimeMillis() + 30 * 60 * 1000))
 				.signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
 	}

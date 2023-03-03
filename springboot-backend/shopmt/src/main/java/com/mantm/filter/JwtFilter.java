@@ -65,8 +65,7 @@ public class JwtFilter extends OncePerRequestFilter {
 		} catch (Exception e) {
 			ErrorMessage errorMessage = new ErrorMessage(HttpStatus.FORBIDDEN.value(), new Date(), e.getMessage(), null);
 			response.setStatus(HttpStatus.FORBIDDEN.value());
-			response.getWriter().write(new ObjectMapper().writeValueAsString(errorMessage));
-			
+			response.getWriter().write(new ObjectMapper().writeValueAsString(errorMessage));	
 		}
 
 	}

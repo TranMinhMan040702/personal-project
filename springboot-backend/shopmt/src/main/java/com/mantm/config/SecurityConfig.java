@@ -34,6 +34,7 @@ public class SecurityConfig  {
 			.antMatchers(HttpMethod.GET).permitAll()
 			.antMatchers("/api/v1/auth/**").permitAll()
 			.antMatchers("/api/v1/images/**").permitAll()
+			.antMatchers("/api/v1/admin/roles").permitAll()
 			.antMatchers("/api/v1/admin/**").hasAuthority("ADMIN")
 			.anyRequest().authenticated()
 			.and()

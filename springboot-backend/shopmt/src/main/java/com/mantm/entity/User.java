@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -65,8 +66,9 @@ public class User extends AbstractEntity{
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Order> orders;
 	
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<Cart> carts;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="cart_id", referencedColumnName = "id")
+	private Cart cart;
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Review> reviews;

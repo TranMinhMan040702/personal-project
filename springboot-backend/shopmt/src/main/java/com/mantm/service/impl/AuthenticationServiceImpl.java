@@ -92,6 +92,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService{
 		UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
 		
 		access_token = jwtUtil.generateToken(userDetails, false);
+		refresh_token = jwtUtil.generateToken(userDetails, true);
 		
 		authResponse.setAccessToken(access_token);
 		authResponse.setRefreshToken(refresh_token);
