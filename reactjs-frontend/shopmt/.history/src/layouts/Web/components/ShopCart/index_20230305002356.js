@@ -59,12 +59,9 @@ function ShopCart() {
     };
 
     const handleDecreaseCount = (id) => {
-        dispatch(cartSlice.actions.deleteOneItem(id));
-    };
+        const index = cart.findIndex((e) => e.id === id);
 
-    const handleRemoveItem = (id) => {
-        const data = cart.filter((e) => e.id !== id);
-        dispatch(cartSlice.actions.removeItem(data));
+        dispatch(cartSlice.actions.deleteOneItem(cart.splice(index, 1)));
     };
 
     return (
@@ -80,7 +77,6 @@ function ShopCart() {
                                         item={item}
                                         handleIncreaseCount={handleIncreaseCount}
                                         handleDecreaseCount={handleDecreaseCount}
-                                        handleRemoveItem={handleRemoveItem}
                                     />
                                 );
                             })}

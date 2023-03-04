@@ -12,7 +12,11 @@ export default createSlice({
             state.splice(index, 1);
         },
         removeItem: (state, action) => {
-            state.splice(0, Infinity, ...action.payload);
+            state.forEach((e, index) => {
+                if (e.id === action.payload) {
+                    state.splice(index, 1);
+                }
+            });
         },
     },
 });

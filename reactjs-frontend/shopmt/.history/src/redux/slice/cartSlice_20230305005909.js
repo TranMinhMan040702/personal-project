@@ -12,7 +12,11 @@ export default createSlice({
             state.splice(index, 1);
         },
         removeItem: (state, action) => {
-            state.splice(0, Infinity, ...action.payload);
+            const arrIndex = [];
+            state.forEach((e, i) => {
+                if (e.id === action.payload) arrIndex.push(i);
+            });
+            arrIndex.forEach((e) => state.splice(e, 1));
         },
     },
 });

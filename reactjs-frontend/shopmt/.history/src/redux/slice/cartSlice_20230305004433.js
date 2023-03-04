@@ -12,7 +12,8 @@ export default createSlice({
             state.splice(index, 1);
         },
         removeItem: (state, action) => {
-            state.splice(0, Infinity, ...action.payload);
+            const data = state.filter((e) => e.id !== action.payload);
+            state = data;
         },
     },
 });

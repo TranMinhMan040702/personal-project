@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import './shopcart.scss';
 import CartItem from './CartItem';
-import SummaryCart from './SummaryCart';
+import { Link } from 'react-router-dom';
+import config from '../../../../config';
 import { useSelector } from 'react-redux';
 import { cartUser } from '../../../../redux/selectors';
 import { useEffect, useState } from 'react';
@@ -44,7 +45,7 @@ function ShopCart() {
             });
         };
         return handleCountItem();
-    }, [cart]);
+    }, []);
 
     // total price
     const handleTotalPrice = () => {
@@ -58,15 +59,6 @@ function ShopCart() {
         dispatch(cartSlice.actions.addToCart(data));
     };
 
-    const handleDecreaseCount = (id) => {
-        dispatch(cartSlice.actions.deleteOneItem(id));
-    };
-
-    const handleRemoveItem = (id) => {
-        const data = cart.filter((e) => e.id !== id);
-        dispatch(cartSlice.actions.removeItem(data));
-    };
-
     return (
         <div className="shop-cart">
             <div className="container cart-items d-flex justify-content-between">
@@ -74,22 +66,19 @@ function ShopCart() {
                     <>
                         <div className="cart-list">
                             {listProducts.map((item, i) => {
-                                return (
-                                    <CartItem
-                                        key={i}
-                                        item={item}
-                                        handleIncreaseCount={handleIncreaseCount}
-                                        handleDecreaseCount={handleDecreaseCount}
-                                        handleRemoveItem={handleRemoveItem}
-                                    />
-                                );
+                                return <CartItem key={i} item={item} />;
                             })}
                         </div>
-                        <SummaryCart handleTotalPrice={handleTotalPrice()} />
+                        <div className="product cart-total">
+                            <h2>Giỏ hàng</h2>
+                            <div className="d-flex justify-content-between">
+                                <h4>Tổng giá :</h4>
+                                <h3>{handleTotalPrice()}.00 vnd</h3>
+                            </div>
+                            <Link to={config.routes.web.checkout}>Thanh toán</Link>
+                        </div>
                     </>
-                ) : (
-                    <p>Giỏ hàng trống</p>
-                )}
+                ) : null}
             </div>
         </div>
     );

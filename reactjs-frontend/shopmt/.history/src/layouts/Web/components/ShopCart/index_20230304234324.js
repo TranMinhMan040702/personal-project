@@ -10,7 +10,6 @@ import { cartSlice } from '../../../../redux/slice';
 
 function ShopCart() {
     const cart = useSelector(cartUser);
-    const dispatch = useDispatch();
     const [listProducts, setListProducts] = useState([]);
 
     // find product unique
@@ -44,7 +43,7 @@ function ShopCart() {
             });
         };
         return handleCountItem();
-    }, [cart]);
+    }, []);
 
     // total price
     const handleTotalPrice = () => {
@@ -54,19 +53,6 @@ function ShopCart() {
         return totalPrice;
     };
 
-    const handleIncreaseCount = (data) => {
-        dispatch(cartSlice.actions.addToCart(data));
-    };
-
-    const handleDecreaseCount = (id) => {
-        dispatch(cartSlice.actions.deleteOneItem(id));
-    };
-
-    const handleRemoveItem = (id) => {
-        const data = cart.filter((e) => e.id !== id);
-        dispatch(cartSlice.actions.removeItem(data));
-    };
-
     return (
         <div className="shop-cart">
             <div className="container cart-items d-flex justify-content-between">
@@ -74,15 +60,7 @@ function ShopCart() {
                     <>
                         <div className="cart-list">
                             {listProducts.map((item, i) => {
-                                return (
-                                    <CartItem
-                                        key={i}
-                                        item={item}
-                                        handleIncreaseCount={handleIncreaseCount}
-                                        handleDecreaseCount={handleDecreaseCount}
-                                        handleRemoveItem={handleRemoveItem}
-                                    />
-                                );
+                                return <CartItem key={i} item={item} />;
                             })}
                         </div>
                         <SummaryCart handleTotalPrice={handleTotalPrice()} />

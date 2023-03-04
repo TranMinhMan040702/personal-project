@@ -64,7 +64,8 @@ function ShopCart() {
 
     const handleRemoveItem = (id) => {
         const data = cart.filter((e) => e.id !== id);
-        dispatch(cartSlice.actions.removeItem(data));
+        console.log(data);
+        dispatch(cartSlice.actions.removeItem(id));
     };
 
     return (

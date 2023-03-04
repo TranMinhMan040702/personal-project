@@ -63,8 +63,11 @@ function ShopCart() {
     };
 
     const handleRemoveItem = (id) => {
-        const data = cart.filter((e) => e.id !== id);
-        dispatch(cartSlice.actions.removeItem(data));
+        const index = [];
+        cart.forEach((item, index) => {
+            if (item.id === id) index.push(index);
+        });
+        dispatch(cartSlice.actions.removeItem(id));
     };
 
     return (

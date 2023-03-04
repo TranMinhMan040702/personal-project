@@ -63,8 +63,7 @@ function ShopCart() {
     };
 
     const handleRemoveItem = (id) => {
-        const data = cart.filter((e) => e.id !== id);
-        dispatch(cartSlice.actions.removeItem(data));
+        dispatch(cartSlice.actions.removeItem(id));
     };
 
     return (
@@ -80,7 +79,6 @@ function ShopCart() {
                                         item={item}
                                         handleIncreaseCount={handleIncreaseCount}
                                         handleDecreaseCount={handleDecreaseCount}
-                                        handleRemoveItem={handleRemoveItem}
                                     />
                                 );
                             })}

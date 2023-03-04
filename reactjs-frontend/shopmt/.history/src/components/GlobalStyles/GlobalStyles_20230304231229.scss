@@ -198,9 +198,11 @@ input {
                 }
             }
             .cart-control {
+                .decBtn {
+                    margin-left: 20px;
+                }
                 span {
-                    font-weight: 600;
-                    margin: 0 10px;
+                    margin-left: 5px;
                 }
             }
         }

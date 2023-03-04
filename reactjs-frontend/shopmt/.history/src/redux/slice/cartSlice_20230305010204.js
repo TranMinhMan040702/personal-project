@@ -11,8 +11,6 @@ export default createSlice({
             const index = state.findIndex((e) => e.id === action.payload);
             state.splice(index, 1);
         },
-        removeItem: (state, action) => {
-            state.splice(0, Infinity, ...action.payload);
-        },
+        removeItem: (state, action) => {},
     },
 });

@@ -62,11 +62,6 @@ function ShopCart() {
         dispatch(cartSlice.actions.deleteOneItem(id));
     };
 
-    const handleRemoveItem = (id) => {
-        const data = cart.filter((e) => e.id !== id);
-        dispatch(cartSlice.actions.removeItem(data));
-    };
-
     return (
         <div className="shop-cart">
             <div className="container cart-items d-flex justify-content-between">
@@ -80,7 +75,6 @@ function ShopCart() {
                                         item={item}
                                         handleIncreaseCount={handleIncreaseCount}
                                         handleDecreaseCount={handleDecreaseCount}
-                                        handleRemoveItem={handleRemoveItem}
                                     />
                                 );
                             })}
