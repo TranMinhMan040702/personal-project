@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.mantm.dto.CartDto;
 import com.mantm.dto.request.RegisterRequest;
 import com.mantm.dto.response.UserResponse;
 import com.mantm.exception.ResourceNotFoundException;
@@ -13,6 +14,7 @@ public interface IUserService {
 
 	List<UserResponse> findAll();
 
-	UserResponse save(RegisterRequest userRegister) throws ResourceNotFoundException;
+	CartDto findCartUser(long userId);
+
 
 }

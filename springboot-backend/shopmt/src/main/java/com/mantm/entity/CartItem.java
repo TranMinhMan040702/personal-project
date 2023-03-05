@@ -32,7 +32,7 @@ public class CartItem extends AbstractEntity{
 	@JoinColumn(name="cart_id")
 	private Cart cart;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name="product_id", referencedColumnName = "id")
 	private Product product;
 }

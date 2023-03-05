@@ -14,10 +14,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.mantm.dto.UserDto;
 import com.mantm.dto.request.AuthRequest;
 import com.mantm.dto.request.RegisterRequest;
 import com.mantm.dto.request.TokenRefreshRequest;
 import com.mantm.dto.response.AuthResponse;
+import com.mantm.entity.Cart;
 import com.mantm.entity.Role;
 import com.mantm.entity.User;
 import com.mantm.repository.RoleRepository;
@@ -40,6 +42,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService{
 	public AuthResponse register(@RequestBody RegisterRequest request) {
 		
 		User user = new User();
+		Cart cart = new Cart();
 		AuthResponse authResponse = new AuthResponse();
 		List<Role> roles = new ArrayList<>();
 		
@@ -50,6 +53,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService{
 		BeanUtils.copyProperties(request, user, "password");
 		user.setPassword(passwordEncoder.encode(request.getPassword()));
 		user.setRoles(roles);
+		user.setCart(cart);
 		
 		userRepository.save(user);
 		
@@ -67,10 +71,14 @@ public class AuthenticationServiceImpl implements IAuthenticationService{
 	@Override
 	public AuthResponse authenticate(AuthRequest request) {
 		AuthResponse authResponse = new AuthResponse();
+		UserDto userDto = new UserDto();
 		authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
 		);
 		UserDetails userDetails = customUserDetailsService.loadUserByUsername(request.getEmail());
+		User user = userRepository.findByEmail(request.getEmail());
+		BeanUtils.copyProperties(user, userDto);
+		
 		
 		String access_token = jwtUtil.generateToken(userDetails, false);
 		String refresh_token = jwtUtil.generateToken(userDetails, true);
@@ -79,6 +87,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService{
 		authResponse.setAccessToken(access_token);
 		authResponse.setRefreshToken(refresh_token);
 		authResponse.setRoles(getRoleUser(access_token));
+		authResponse.setUser(userDto);
 		return authResponse;
 	}
 	
