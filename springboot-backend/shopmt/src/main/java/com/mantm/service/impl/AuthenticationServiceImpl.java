@@ -42,9 +42,9 @@ public class AuthenticationServiceImpl implements IAuthenticationService{
 	public AuthResponse register(@RequestBody RegisterRequest request) {
 		
 		User user = new User();
+		List<Role> roles = new ArrayList<>();
 		Cart cart = new Cart();
 		AuthResponse authResponse = new AuthResponse();
-		List<Role> roles = new ArrayList<>();
 		
 		for (String role : request.getRoles()) {
 			roles.add(roleRepository.findByName(role));
@@ -55,7 +55,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService{
 		user.setRoles(roles);
 		user.setCart(cart);
 		
-		userRepository.save(user);
+		user = userRepository.save(user);
 		
 		UserDetails userDetails = customUserDetailsService.loadUserByUsername(user.getEmail());
 		
@@ -65,6 +65,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService{
 		authResponse.setAccessToken(access_token);
 		authResponse.setRefreshToken(refresh_token);
 		authResponse.setRoles(request.getRoles());
+		authResponse.setUserId(user.getId());
 		return authResponse;	
 	}
 
@@ -87,7 +88,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService{
 		authResponse.setAccessToken(access_token);
 		authResponse.setRefreshToken(refresh_token);
 		authResponse.setRoles(getRoleUser(access_token));
-		authResponse.setUser(userDto);
+		authResponse.setUserId(user.getId());
 		return authResponse;
 	}
 	

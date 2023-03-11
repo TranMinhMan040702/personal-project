@@ -10,6 +10,5 @@ import com.mantm.entity.User;
 public interface UserRepository extends JpaRepository<User, Long>{
 	
 	User findByEmail(String email);
-	Cart findByCartId(long cartId);
 
 }

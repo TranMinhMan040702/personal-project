@@ -2,15 +2,12 @@ import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import { useAuth } from '../../../../hooks';
-import { useDispatch } from 'react-redux';
-import { accountSlice } from '../../../../redux/slice';
 import AuthService from '../../../../services/AuthService';
 import images from '../../../../assets/images';
 import config from '../../../../config';
 import UserService from '../../../../services/UserService';
 function LoginForm() {
     const { setAuth } = useAuth();
-    const dispatch = useDispatch();
 
     const navigate = useNavigate();
     const location = useLocation();

@@ -10,6 +10,6 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class CartDto extends AbstractDto<CartDto>{
 	
-	List<CartItemDto> listCartItem;
+	List<CartItemDto> cartItems;
 	
 }

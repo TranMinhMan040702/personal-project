@@ -43,42 +43,19 @@ public class ProductServiceImpl implements IProductService {
 		List<Image_Product> images = new ArrayList<>();
 		if (productReq.getId() == null) {
 			BeanUtils.copyProperties(productReq, entity);
-			// xử lý ảnh
 			for (MultipartFile file : files) {
-				UUID uuid = UUID.randomUUID();
-				String id = uuid.toString();
-				String path = storageService.getStorageFileName(file, id);
-				storageService.store(file, path);
-
-				Image_Product image_Product = new Image_Product();
-				image_Product.setProduct(entity);
-				image_Product.setPath(path);
-				images.add(image_Product);
+				images.add(saveImage(file, entity));
 			}
-
 		} else {
 			entity = productRepository.findById(productReq.getId()).orElseThrow(
 					() -> new ResourceNotFoundException("Product not exist with id: " + productReq.getId()));
 			BeanUtils.copyProperties(productReq, entity, "createdAt", "createdBy");
-
-			// kiểm tra xóa ảnh cũ khỏi dir
 			for (int i = 0; i < files.length; i++) {
 				Image_Product imageOld = entity.getImages().get(i);
 				MultipartFile imageNew = files[i];
-
 				if (!imageOld.getPath().equals(imageNew.getOriginalFilename())) {
 					storageService.delete(imageOld.getPath());
-
-					// lưu ảnh mới
-					UUID uuid = UUID.randomUUID();
-					String id = uuid.toString();
-					String path = storageService.getStorageFileName(imageNew, id);
-					storageService.store(imageNew, path);
-
-					Image_Product image_Product = new Image_Product();
-					image_Product.setProduct(entity);
-					image_Product.setPath(path);
-					images.add(image_Product);
+					images.add(saveImage(imageNew, entity));
 				} else {
 					images.add(imageOld);
 				}
@@ -86,26 +63,12 @@ public class ProductServiceImpl implements IProductService {
 			entity.getImages().clear();
 			imageProductRepository.deleteByProductId(productReq.getId());
 		}
-		
-
 		Category category = categoryRepository.findById(productReq.getCategory()).orElseThrow(
 				() -> new ResourceNotFoundException("Category not exist with id: " + productReq.getCategory()));
-		
 		entity.setCategory(category);
 		entity.setImages(images);
 		entity = productRepository.save(entity);
-
-		// Response Product
-		ProductDto productResp = new ProductDto();
-		BeanUtils.copyProperties(entity, productResp);
-
-		List<String> listImage = new ArrayList<>();
-		for (Image_Product image : entity.getImages()) {
-			listImage.add(image.getPath());
-		}
-		productResp.setCategory(entity.getCategory().getId());
-		productResp.setImages(listImage);
-		return productResp;
+		return responseProduct(entity);
 	}
 
 	@Override
@@ -152,6 +115,32 @@ public class ProductServiceImpl implements IProductService {
 		productRepository.deleteById(id);
 		resp.put("deleted", "Success");
 		return resp;
+	}
+	
+	private Image_Product saveImage(MultipartFile file, Product product) {
+		Image_Product image_Product = new Image_Product();
+		UUID uuid = UUID.randomUUID();
+		String id = uuid.toString();
+		String path = storageService.getStorageFileName(file, id);
+		storageService.store(file, path);
+
+		image_Product.setProduct(product);
+		image_Product.setPath(path);
+		return image_Product;
+	}
+	
+	private ProductDto responseProduct(Product product) {
+		ProductDto productResp = new ProductDto();
+		BeanUtils.copyProperties(product, productResp);
+
+		List<String> listImage = new ArrayList<>();
+		for (Image_Product image : product.getImages()) {
+			listImage.add(image.getPath());
+		}
+		productResp.setCategory(product.getCategory().getId());
+		productResp.setImages(listImage);
+		
+		return productResp;
 	}
 
 }

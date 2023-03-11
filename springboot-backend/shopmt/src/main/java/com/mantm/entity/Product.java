@@ -75,8 +75,8 @@ public class Product extends AbstractEntity{
 	@OneToOne(mappedBy = "product")
 	private OrderItem orderItem;
 	
-	@OneToOne(mappedBy = "product")
-	private CartItem cartItem;
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+	private List<CartItem> cartItems;
 	
 	
 }
