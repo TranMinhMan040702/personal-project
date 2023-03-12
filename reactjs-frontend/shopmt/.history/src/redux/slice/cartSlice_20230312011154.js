@@ -27,14 +27,14 @@ const cartSlice = createSlice({
             .addCase(getCart.fulfilled, (state, action) => {
                 state.status = 'idle';
                 state.cart = action.payload;
-            })
-            .addCase(addToCart.pending, (state, action) => {
-                state.status = 'pending';
-            })
-            .addCase(addToCart.fulfilled, (state, action) => {
-                state.status = 'idle';
-                state.cart = state.cart.push(action.payload);
             });
+        // .addCase(addToCart.pending, (state, action) => {
+        //     state.status = 'pending';
+        // })
+        // .addCase(getCart.fulfilled, (state, action) => {
+        //     state.status = 'idle';
+        //     state.cart = state.cart.push(action.payload);
+        // });
     },
 });
 export default cartSlice;
@@ -46,6 +46,5 @@ export const getCart = createAsyncThunk('cart/getCart', async (userId) => {
 
 export const addToCart = createAsyncThunk('cart/addToCart', async (data) => {
     const response = await CartService.addToCart(data);
-    console.log(response.data);
     return response.data;
 });

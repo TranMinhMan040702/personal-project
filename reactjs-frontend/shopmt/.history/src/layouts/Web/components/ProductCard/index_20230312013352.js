@@ -12,7 +12,6 @@ function ProductCard({ product }) {
     const PRODUCT_URL = process.env.REACT_APP_BASE_URL + '/images/products';
     const dispatch = useDispatch();
     const account = useSelector(accountUser);
-    const cart = useSelector(cartUser);
 
     const handleDiscount = (price, promotionalPrice) => {
         const discount = Math.round(((price - promotionalPrice) / price) * 100);
@@ -23,7 +22,7 @@ function ProductCard({ product }) {
         toast.success(config.message.addToCartSuccess);
     };
 
-    console.log(cart);
+    console.log(cartUser);
     return (
         <div className="product">
             <span className="discount">{handleDiscount(product.price, product.promotionalPrice)}%</span>

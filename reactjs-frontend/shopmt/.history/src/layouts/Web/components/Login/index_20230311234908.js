@@ -6,8 +6,8 @@ import { useDispatch } from 'react-redux';
 import AuthService from '../../../../services/AuthService';
 import images from '../../../../assets/images';
 import config from '../../../../config';
+import UserService from '../../../../services/UserService';
 import { createAccount } from '../../../../redux/slice/accountSlice';
-
 function LoginForm() {
     const { setAuth } = useAuth();
     const dispatch = useDispatch();
@@ -35,11 +35,20 @@ function LoginForm() {
             localStorage.setItem('refreshToken', refreshToken);
             setAuth({ ...user, accessToken, roles });
             setUser({ email: '', password: '' });
-            // thunk function
-            dispatch(createAccount(response.data.userId));
+            getUserById(response.data.userId);
+            dispatch(createAccount());
             navigate(roles.includes('ADMIN') ? '/admin' : from, { replace: true });
         } catch (err) {
             toast.error(config.message.loginError);
+            console.log(err);
+        }
+    };
+
+    const getUserById = async (id) => {
+        try {
+            const response = await UserService.getUserById(id);
+            console.log(response.data);
+        } catch (err) {
             console.log(err);
         }
     };

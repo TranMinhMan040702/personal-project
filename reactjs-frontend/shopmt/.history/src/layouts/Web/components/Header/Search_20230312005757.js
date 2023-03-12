@@ -19,9 +19,8 @@ function Search() {
     };
     const handleTotalCartItems = (cart) => {
         if (cart.length > 0) {
-            return cart.reduce((acc, cur) => acc + current.count, 0);
+            cart.reduce((acc, cur) => acc + current.count, 0);
         }
-        return 0;
     };
     return (
         <div className="search">
@@ -59,7 +58,7 @@ function Search() {
                                     <div className="user-img">
                                         <img src={images.noAvatar} alt="" />
                                     </div>
-                                    <span>{account && `${account.firstname} ${account.lastname}`}</span>
+                                    <span>{`${account.firstname} ${account.lastname}`}</span>
                                     <div className="dropdown">
                                         <ul>
                                             <li>

@@ -23,6 +23,7 @@ function Search() {
         }
         return 0;
     };
+    console.log(cart);
     return (
         <div className="search">
             <div className="container">

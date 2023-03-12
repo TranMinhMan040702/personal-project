@@ -20,19 +20,11 @@ const accountSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder
-            .addCase(createAccount.pending, (state, action) => {
-                state.status = 'loading';
-            })
-            .addCase(createAccount.fulfilled, (state, action) => {
-                state.status = 'idle';
-                state.product = action.payload;
-            });
+        builder.addCase(createAccount.pending, (state, action) => {});
     },
 });
 export default accountSlice;
 
-export const createAccount = createAsyncThunk('account/createAccount', async (id) => {
-    const response = await UserService.getUserById(id);
-    return response.data;
+export const createAccount = createAsyncThunk('account/createAccount', async () => {
+    const response = await UserService.getUserById();
 });

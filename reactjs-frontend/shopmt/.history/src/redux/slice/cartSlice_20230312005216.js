@@ -5,7 +5,7 @@ const cartSlice = createSlice({
     name: 'cart',
     initialState: {
         status: 'idle',
-        cart: [],
+        product: [],
     },
     reducers: {
         addToCart: (state, action) => {
@@ -26,14 +26,7 @@ const cartSlice = createSlice({
             })
             .addCase(getCart.fulfilled, (state, action) => {
                 state.status = 'idle';
-                state.cart = action.payload;
-            })
-            .addCase(addToCart.pending, (state, action) => {
-                state.status = 'pending';
-            })
-            .addCase(addToCart.fulfilled, (state, action) => {
-                state.status = 'idle';
-                state.cart = state.cart.push(action.payload);
+                state.product = action.payload;
             });
     },
 });
@@ -41,11 +34,5 @@ export default cartSlice;
 
 export const getCart = createAsyncThunk('cart/getCart', async (userId) => {
     const response = await CartService.getCart(userId);
-    return response.data;
-});
-
-export const addToCart = createAsyncThunk('cart/addToCart', async (data) => {
-    const response = await CartService.addToCart(data);
-    console.log(response.data);
     return response.data;
 });

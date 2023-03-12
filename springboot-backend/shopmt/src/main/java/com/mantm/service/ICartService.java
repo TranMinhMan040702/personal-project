@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.mantm.dto.CartDto;
 import com.mantm.dto.CartItemDto;
 import com.mantm.exception.ResourceNotFoundException;
 
@@ -16,6 +17,6 @@ public interface ICartService {
 
 	Map<String, String> deleteAllProductInCart(long cartItemId);
 
-
+	CartDto findCartUser(long userId);
 
 }

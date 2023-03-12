@@ -7,7 +7,6 @@ import AuthService from '../../../../services/AuthService';
 import images from '../../../../assets/images';
 import config from '../../../../config';
 import { createAccount } from '../../../../redux/slice/accountSlice';
-
 function LoginForm() {
     const { setAuth } = useAuth();
     const dispatch = useDispatch();

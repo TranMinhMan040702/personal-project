@@ -3,27 +3,32 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import { faHeart, faSquarePlus, faStar } from '@fortawesome/free-solid-svg-icons';
 import { ToastContainer, toast } from 'react-toastify';
+import { cartSlice } from '../../../../redux/slice';
 import config from '../../../../config';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { accountUser, cartUser } from '../../../../redux/selectors';
-import { addToCart } from '../../../../redux/slice/cartSlice';
+import { accountUser } from '../../../../redux/selectors';
 
 function ProductCard({ product }) {
     const PRODUCT_URL = process.env.REACT_APP_BASE_URL + '/images/products';
     const dispatch = useDispatch();
     const account = useSelector(accountUser);
-    const cart = useSelector(cartUser);
+    console.log(account);
+    const [cartItem, setCartItem] = useState({
+        cartId: account.cartId,
+        count: 1,
+        product: {},
+    });
 
     const handleDiscount = (price, promotionalPrice) => {
         const discount = Math.round(((price - promotionalPrice) / price) * 100);
         return discount;
     };
     const handleAddToCart = () => {
-        dispatch(addToCart({ cartId: account.cartId, count: 1, product: product }));
+        setCartItem({ ...cartItem, product: product });
         toast.success(config.message.addToCartSuccess);
     };
 
-    console.log(cart);
     return (
         <div className="product">
             <span className="discount">{handleDiscount(product.price, product.promotionalPrice)}%</span>

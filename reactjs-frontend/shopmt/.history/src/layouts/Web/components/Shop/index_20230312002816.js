@@ -4,9 +4,13 @@ import Padding from '../../../../components/Padding';
 import './shop.scss';
 import ProductService from '../../../../services/ProductService';
 import { useEffect, useState } from 'react';
-
+import { useSelector } from 'react-redux';
+import { account } from '../../../../redux/selectors';
 function Shop() {
     const [products, setProducts] = useState([]);
+    const user = useSelector(account);
+    console.log(user);
+
     useEffect(() => {
         getProducts();
     }, []);

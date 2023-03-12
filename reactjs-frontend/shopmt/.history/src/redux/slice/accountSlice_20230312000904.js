@@ -32,7 +32,6 @@ const accountSlice = createSlice({
 });
 export default accountSlice;
 
-export const createAccount = createAsyncThunk('account/createAccount', async (id) => {
-    const response = await UserService.getUserById(id);
-    return response.data;
+export const createAccount = createAsyncThunk('account/createAccount', async () => {
+    const response = await UserService.getUserById();
 });

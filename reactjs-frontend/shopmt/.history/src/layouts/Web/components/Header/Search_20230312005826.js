@@ -23,6 +23,7 @@ function Search() {
         }
         return 0;
     };
+    console.log(cart);
     return (
         <div className="search">
             <div className="container">
@@ -59,7 +60,7 @@ function Search() {
                                     <div className="user-img">
                                         <img src={images.noAvatar} alt="" />
                                     </div>
-                                    <span>{account && `${account.firstname} ${account.lastname}`}</span>
+                                    <span>{`${account.firstname} ${account.lastname}`}</span>
                                     <div className="dropdown">
                                         <ul>
                                             <li>
