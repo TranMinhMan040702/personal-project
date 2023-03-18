@@ -52,12 +52,13 @@ function ProductDetail() {
     };
 
     const handleAddToCart = (data, count) => {
-        dispatch(addToCart({ cartId: account.cartId, count: count, product: data }));
+        dispatch(addToCart({ cartId: account.cartId, count: count, product: product }));
         toast.success(config.message.addToCartSuccess);
     };
 
     return (
         <>
+            <ToastContainer autoClose={2000} />
             {product && (
                 <div className="product-detail background">
                     <div className="product container d-flex justify-content-between">
@@ -133,7 +134,6 @@ function ProductDetail() {
                     </div>
                 </div>
             )}
-            <ToastContainer autoClose={1000} pauseOnHover={false} />
         </>
     );
 }

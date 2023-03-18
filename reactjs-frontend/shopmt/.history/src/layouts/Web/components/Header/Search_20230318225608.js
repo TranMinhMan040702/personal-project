@@ -18,7 +18,7 @@ function Search() {
     };
     const handleTotalCartItems = (cart) => {
         console.log(cart);
-        if (cart.length > 0) {
+        if (cart.cartItems.length > 0) {
             return cart.reduce((acc, cur) => acc + cur.count, 0);
         }
         return 0;

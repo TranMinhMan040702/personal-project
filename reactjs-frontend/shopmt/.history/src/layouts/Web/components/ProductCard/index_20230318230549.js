@@ -51,7 +51,7 @@ function ProductCard({ product }) {
                     </button>
                 </div>
             </div>
-            <ToastContainer autoClose={1000} pauseOnHover={false} />
+            <ToastContainer autoClose={2000} />
         </div>
     );
 }

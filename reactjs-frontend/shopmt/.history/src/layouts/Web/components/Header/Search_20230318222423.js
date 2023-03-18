@@ -6,6 +6,7 @@ import { faBell, faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import config from '../../../../config';
 import { useSelector } from 'react-redux';
 import { cartUser, accountUser } from '../../../../redux/selectors';
+import { current } from '@reduxjs/toolkit';
 function Search() {
     const { auth, setAuth } = useAuth();
     const cart = useSelector(cartUser);
@@ -17,7 +18,6 @@ function Search() {
         setAuth({});
     };
     const handleTotalCartItems = (cart) => {
-        console.log(cart);
         if (cart.length > 0) {
             return cart.reduce((acc, cur) => acc + cur.count, 0);
         }

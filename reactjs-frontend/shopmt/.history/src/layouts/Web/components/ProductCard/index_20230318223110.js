@@ -5,7 +5,7 @@ import { faHeart, faSquarePlus, faStar } from '@fortawesome/free-solid-svg-icons
 import { ToastContainer, toast } from 'react-toastify';
 import config from '../../../../config';
 import { useSelector } from 'react-redux';
-import { accountUser } from '../../../../redux/selectors';
+import { accountUser, cartUser } from '../../../../redux/selectors';
 import { addToCart } from '../../../../redux/slice/cartSlice';
 
 function ProductCard({ product }) {
@@ -51,7 +51,7 @@ function ProductCard({ product }) {
                     </button>
                 </div>
             </div>
-            <ToastContainer autoClose={1000} pauseOnHover={false} />
+            <ToastContainer autoClose={2000} />
         </div>
     );
 }

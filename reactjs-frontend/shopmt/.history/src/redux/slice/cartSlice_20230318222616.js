@@ -34,20 +34,6 @@ const cartSlice = createSlice({
             .addCase(addToCart.fulfilled, (state, action) => {
                 state.status = 'idle';
                 state.cart = action.payload;
-            })
-            .addCase(deleteOneProductInCartItem.pending, (state, action) => {
-                state.status = 'pending';
-            })
-            .addCase(deleteOneProductInCartItem.fulfilled, (state, action) => {
-                state.status = 'idle';
-                state.cart = action.payload;
-            })
-            .addCase(deleteAllProductInCartItem.pending, (state, action) => {
-                state.status = 'pending';
-            })
-            .addCase(deleteAllProductInCartItem.fulfilled, (state, action) => {
-                state.status = 'idle';
-                state.cart = action.payload;
             });
     },
 });
@@ -60,15 +46,5 @@ export const getCart = createAsyncThunk('cart/getCart', async (userId) => {
 
 export const addToCart = createAsyncThunk('cart/addToCart', async (data) => {
     const response = await CartService.addToCart(data);
-    return response.data.cartItems;
-});
-
-export const deleteOneProductInCartItem = createAsyncThunk('cart/deleteOneProductInCartItem', async (cartItemId) => {
-    const response = await CartService.deleteOne(cartItemId);
-    return response.data.cartItems;
-});
-
-export const deleteAllProductInCartItem = createAsyncThunk('cart/deleteAllProductInCartItem', async (cartItemId) => {
-    const response = await CartService.deleteAll(cartItemId);
     return response.data.cartItems;
 });

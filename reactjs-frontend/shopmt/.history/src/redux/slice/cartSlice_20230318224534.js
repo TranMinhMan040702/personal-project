@@ -34,20 +34,6 @@ const cartSlice = createSlice({
             .addCase(addToCart.fulfilled, (state, action) => {
                 state.status = 'idle';
                 state.cart = action.payload;
-            })
-            .addCase(deleteOneProductInCartItem.pending, (state, action) => {
-                state.status = 'pending';
-            })
-            .addCase(deleteOneProductInCartItem.fulfilled, (state, action) => {
-                state.status = 'idle';
-                state.cart = action.payload;
-            })
-            .addCase(deleteAllProductInCartItem.pending, (state, action) => {
-                state.status = 'pending';
-            })
-            .addCase(deleteAllProductInCartItem.fulfilled, (state, action) => {
-                state.status = 'idle';
-                state.cart = action.payload;
             });
     },
 });

@@ -26,10 +26,7 @@ function ShopCart() {
     };
 
     const handleDecreaseCount = (id) => {
-        const cartItem = cart.find((cartItem) => cartItem.id === id);
-        if (cartItem.count > 1) {
-            dispatch(deleteOneProductInCartItem(id));
-        }
+        dispatch(deleteOneProductInCartItem(id));
     };
 
     const handleRemoveItem = (id) => {
@@ -39,7 +36,7 @@ function ShopCart() {
 
     return (
         <div className="shop-cart">
-            <ToastContainer autoClose={1000} pauseOnHover={false} />
+            <ToastContainer autoClose={2000} />
             <div className="container cart-items d-flex justify-content-between">
                 {cart.length !== 0 ? (
                     <>

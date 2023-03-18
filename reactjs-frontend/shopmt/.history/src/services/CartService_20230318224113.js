@@ -8,10 +8,10 @@ class CartService {
         return axiosPrivate.post(REACT_APP_CART_API_URL, data);
     }
     deleteOne(cartItemId) {
-        return axiosPrivate.put(REACT_APP_CART_API_URL + '/deleteOne?cartItemId=' + cartItemId);
+        return axiosPrivate.delete(REACT_APP_CART_API_URL + 'deleteOne?cartItemId=' + cartItemId);
     }
     deleteAll(cartItemId) {
-        return axiosPrivate.delete(REACT_APP_CART_API_URL + '/deleteAll?cartItemId=' + cartItemId);
+        return axiosPrivate.delete(REACT_APP_CART_API_URL + 'deleteAll?cartItemId=' + cartItemId);
     }
 }
 

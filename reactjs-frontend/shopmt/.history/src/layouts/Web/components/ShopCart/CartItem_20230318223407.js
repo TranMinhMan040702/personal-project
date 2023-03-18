@@ -23,7 +23,7 @@ function CartItem({ item, handleIncreaseCount, handleDecreaseCount, handleRemove
             </div>
             <div className="cart-item-function">
                 <div className="cart-remove">
-                    <button onClick={() => handleRemoveItem(item.id)}>
+                    <button onClick={() => handleRemoveItem(item.product.id)}>
                         <FontAwesomeIcon icon={faXmark} />
                     </button>
                 </div>
@@ -35,7 +35,7 @@ function CartItem({ item, handleIncreaseCount, handleDecreaseCount, handleRemove
                         <FontAwesomeIcon icon={faPlus} />
                     </button>
                     <span>{item.count}</span>
-                    <button className="decBtn" onClick={() => handleDecreaseCount(item.id)}>
+                    <button className="decBtn" onClick={() => handleDecreaseCount(item.product.id)}>
                         <FontAwesomeIcon icon={faMinus} />
                     </button>
                 </div>

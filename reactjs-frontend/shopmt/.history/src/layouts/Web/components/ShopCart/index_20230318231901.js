@@ -39,7 +39,7 @@ function ShopCart() {
 
     return (
         <div className="shop-cart">
-            <ToastContainer autoClose={1000} pauseOnHover={false} />
+            <ToastContainer autoClose={2000} pauseOnHover={false} />
             <div className="container cart-items d-flex justify-content-between">
                 {cart.length !== 0 ? (
                     <>

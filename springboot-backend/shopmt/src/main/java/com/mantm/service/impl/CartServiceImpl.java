@@ -1,8 +1,6 @@
 package com.mantm.service.impl;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +52,9 @@ public class CartServiceImpl implements ICartService {
 			}
 		}
 		if (!hasInCart) {
-			cartItemRepository.save(cartItemConvert.converToEntity(cartItemDto));
+//			cartItemRepository.save(cartItemConvert.converToEntity(cartItemDto));
+			cart.get().getCartItems().add(cartItemConvert.converToEntity(cartItemDto));
+			cartRepository.save(cart.get());
 		}
 		return cartConvert.convertToDto(cart.get());
 	}

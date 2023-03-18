@@ -1,13 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useSelector } from 'react-redux';
 import { cartUser } from '../../../../redux/selectors';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { cartSlice } from '../../../../redux/slice';
 import { ToastContainer, toast } from 'react-toastify';
 import SummaryCart from './SummaryCart';
 import CartItem from './CartItem';
 import config from '../../../../config';
 import './shopcart.scss';
-import { addToCart, deleteAllProductInCartItem, deleteOneProductInCartItem } from '../../../../redux/slice/cartSlice';
+import { addToCart } from '../../../../redux/slice/cartSlice';
 
 function ShopCart() {
     const cart = useSelector(cartUser);
@@ -26,20 +28,18 @@ function ShopCart() {
     };
 
     const handleDecreaseCount = (id) => {
-        const cartItem = cart.find((cartItem) => cartItem.id === id);
-        if (cartItem.count > 1) {
-            dispatch(deleteOneProductInCartItem(id));
-        }
+        dispatch(cartSlice.actions.deleteOneItem(id));
     };
 
     const handleRemoveItem = (id) => {
-        dispatch(deleteAllProductInCartItem(id));
+        const data = cart.filter((e) => e.id !== id);
+        dispatch(cartSlice.actions.removeItem(data));
         toast.warning(config.message.removeItemInCart);
     };
 
     return (
         <div className="shop-cart">
-            <ToastContainer autoClose={1000} pauseOnHover={false} />
+            <ToastContainer autoClose={2000} />
             <div className="container cart-items d-flex justify-content-between">
                 {cart.length !== 0 ? (
                     <>
