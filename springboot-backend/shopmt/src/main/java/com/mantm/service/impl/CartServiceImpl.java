@@ -1,23 +1,20 @@
 package com.mantm.service.impl;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mantm.convert.CartConvert;
+import com.mantm.convert.CartItemConvert;
 import com.mantm.convert.ProductConvert;
 import com.mantm.dto.CartDto;
 import com.mantm.dto.CartItemDto;
-import com.mantm.dto.ProductDto;
 import com.mantm.entity.Cart;
 import com.mantm.entity.CartItem;
-import com.mantm.entity.Image_Product;
-import com.mantm.entity.Product;
 import com.mantm.entity.User;
 import com.mantm.exception.ResourceNotFoundException;
 import com.mantm.repository.CartItemRepository;
@@ -31,39 +28,19 @@ public class CartServiceImpl implements ICartService {
 	@Autowired UserRepository userRepository;
 	@Autowired CartRepository cartRepository;
 	@Autowired CartItemRepository cartItemRepository;
-	@Autowired ProductConvert convert;
+	@Autowired ProductConvert productConvert;
+	@Autowired CartItemConvert cartItemConvert;
+	@Autowired CartConvert cartConvert;
 	
 	@Override
 	public CartDto findCartUser(long userId) {
-		CartDto response = new CartDto();
-		List<CartItemDto> listCartItemDto = new ArrayList<>();
-		
 		Optional<User> user = userRepository.findById(userId);
 		Cart cart = user.get().getCart();
-		
-		for (CartItem cartItem : cart.getCartItems()) {
-			CartItemDto cartItemDto = new CartItemDto();
-			ProductDto productDto = new ProductDto();
-			List<String> images = new ArrayList<>();
-			BeanUtils.copyProperties(cartItem.getProduct(), productDto);
-			for (Image_Product image_Product : cartItem.getProduct().getImages()) {
-				images.add(image_Product.getPath());
-			}
-			productDto.setImages(images);
-			cartItemDto.setCartId(cart.getId());
-			cartItemDto.setCount(cartItem.getCount());
-			cartItemDto.setProduct(productDto);
-			BeanUtils.copyProperties(cartItem, cartItemDto);
-			listCartItemDto.add(cartItemDto);
-		}
-		BeanUtils.copyProperties(cart, response);
-		response.setCartItems(listCartItemDto);
-		return response;
+		return cartConvert.convertToDto(cart);
 	}
 	
 	@Override
-	public Map<String, String> addToCart(CartItemDto cartItemDto) throws ResourceNotFoundException {
-		Map<String, String> response = new HashMap<>();
+	public CartDto addToCart(CartItemDto cartItemDto) throws ResourceNotFoundException {
 		Optional<Cart> cart = cartRepository.findById(cartItemDto.getCartId());
 		List<CartItem> cartItems = cart.get().getCartItems();
 		boolean hasInCart = false;
@@ -77,37 +54,28 @@ public class CartServiceImpl implements ICartService {
 			}
 		}
 		if (!hasInCart) {
-			CartItem cartItem = new CartItem();
-			Product product = convert.convertToEntity(cartItemDto.getProduct());
-			cartItem.setCount(cartItemDto.getCount());
-			cartItem.setProduct(product);
-			cartItem.setCart(cart.get());
-			cartItemRepository.save(cartItem);
+			cartItemRepository.save(cartItemConvert.converToEntity(cartItemDto));
 		}
-		response.put("Add to cart", "Add to cart successfully !");
-		return response;
+		return cartConvert.convertToDto(cart.get());
 	}
 	
 	@Override
-	public Map<String, String> deleteOneProductInCart(long cartItemId) {
-		Map<String, String> response = new HashMap<>();
+	public CartDto deleteOneProductInCart(long cartItemId) {
 		Optional<CartItem> cartItem = cartItemRepository.findById(cartItemId);
+		Optional<Cart> cart = cartRepository.findById(cartItem.get().getCart().getId());
 		int newCount = cartItem.get().getCount() - 1;
 		cartItem.get().setCount(newCount);
-		cartItemRepository.save(cartItem.get());
-		response.put("Delete one product in cart", "Delete product in cart successfully !");
-		return response;
+		cartRepository.save(cart.get());
+		return cartConvert.convertToDto(cart.get());
 	}
 	
 	@Override
-	public Map<String, String> deleteAllProductInCart(long cartItemId) {
-		Map<String, String> response = new HashMap<>();
+	public CartDto deleteAllProductInCart(long cartItemId) {
 		Optional<CartItem> cartItem = cartItemRepository.findById(cartItemId);
 		Optional<Cart> cart = cartRepository.findById(cartItem.get().getCart().getId());
 		cart.get().getCartItems().removeIf(item -> item.getId().equals(cartItemId));
 		cartRepository.save(cart.get());
-		response.put("Delete one product in cart", "Delete product in cart successfully !");
-		return response;
+		return cartConvert.convertToDto(cart.get());
 	}
 	
 }

@@ -46,6 +46,6 @@ export const getCart = createAsyncThunk('cart/getCart', async (userId) => {
 
 export const addToCart = createAsyncThunk('cart/addToCart', async (data) => {
     const response = await CartService.addToCart(data);
-    console.log(response.data.cartItems);
+    console.log(response.data);
     return response.data;
 });
