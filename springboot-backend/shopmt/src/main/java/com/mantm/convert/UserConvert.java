@@ -23,28 +23,28 @@ public class UserConvert {
 	@Autowired CartRepository cartRepository;
 
 	public User convertToEntity(UserDto dto) {
-		User user = new User();
+		User entity = new User();
 		List<Role> roles = new ArrayList<>();
 		Cart cart = new Cart();
 		for (String role : dto.getRoles()) {
 			roles.add(roleRepository.findByName(role));
 		}
-		BeanUtils.copyProperties(dto, user, "password");
-		user.setRoles(roles);
-		user.setCart(cart);
-		return user;
+		BeanUtils.copyProperties(dto, entity, "password");
+		entity.setRoles(roles);
+		entity.setCart(cart);
+		return entity;
 	}
 	
 	public UserDto convertToDto (User user) {
-		UserDto userDto = new UserDto();
+		UserDto dto = new UserDto();
 		Set<String> roles = new HashSet<>();
-		BeanUtils.copyProperties(user, userDto);
+		BeanUtils.copyProperties(user, dto);
 		for (Role role : user.getRoles()) {
 			roles.add(role.getName());
 		}
 		Cart cart = cartRepository.findByUser(user);
-		userDto.setCartId(cart.getId());
-		userDto.setRoles(roles);
-		return userDto;
+		dto.setCartId(cart.getId());
+		dto.setRoles(roles);
+		return dto;
 	}
 }

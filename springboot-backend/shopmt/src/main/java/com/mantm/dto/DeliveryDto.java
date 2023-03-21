@@ -1,5 +1,7 @@
 package com.mantm.dto;
 
+import java.util.List;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -24,4 +26,5 @@ public class DeliveryDto extends AbstractDto<DeliveryDto>{
 	
 	private boolean isDeleted = false;
 	
+	private List<OrderDto> orders;
 }

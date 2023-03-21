@@ -10,7 +10,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -53,8 +52,8 @@ public class Order extends AbstractEntity{
 	@JoinColumn(name="user_id")
 	private User user;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="delivery_id", referencedColumnName = "id")
+	@ManyToOne
+	@JoinColumn(name="delivery_id")
 	private Delivery delivery;
 	
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)

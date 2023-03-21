@@ -52,7 +52,6 @@ public class CartServiceImpl implements ICartService {
 			}
 		}
 		if (!hasInCart) {
-//			cartItemRepository.save(cartItemConvert.converToEntity(cartItemDto));
 			cart.get().getCartItems().add(cartItemConvert.converToEntity(cartItemDto));
 			cartRepository.save(cart.get());
 		}

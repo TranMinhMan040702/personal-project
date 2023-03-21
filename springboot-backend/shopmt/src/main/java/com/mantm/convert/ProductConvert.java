@@ -20,20 +20,20 @@ public class ProductConvert {
 	@Autowired CategoryRepository categoryRepository;
 	
 	public Product convertToEntity(ProductDto dto) throws ResourceNotFoundException {
-		Product product = new Product();
+		Product entity = new Product();
 		List<Image_Product> images = new ArrayList<>();
-		BeanUtils.copyProperties(dto, product);
+		BeanUtils.copyProperties(dto, entity);
 		for (String image : dto.getImages()) {
 			Image_Product image_Product = new Image_Product();
 			image_Product.setPath(image);
-			image_Product.setProduct(product);
+			image_Product.setProduct(entity);
 			images.add(image_Product);	
 		}
-		product.setImages(images);
+		entity.setImages(images);
 		Category category = categoryRepository.findById(dto.getCategory()).orElseThrow(
 				() -> new ResourceNotFoundException("Category not exist with id: " + dto.getCategory()));
-		product.setCategory(category);
-		return product;
+		entity.setCategory(category);
+		return entity;
 	}
 	
 	public ProductDto converToDto(Product product) {
