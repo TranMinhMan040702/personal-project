@@ -13,12 +13,15 @@ import com.mantm.entity.Delivery;
 import com.mantm.entity.Order;
 import com.mantm.entity.OrderItem;
 import com.mantm.exception.ResourceNotFoundException;
+import com.mantm.repository.DeliveryRepository;
 
 @Component
 public class OrderConvert {
 	
+	
 	@Autowired DeliveryConvert deliveryConvert;
 	@Autowired OrderItemConvert orderItemConvert;
+	@Autowired DeliveryRepository deliveryRepository;
 	
 	public OrderDto convertToDto (Order order) {
 		OrderDto dto = new OrderDto();

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
@@ -39,6 +40,6 @@ public class Delivery extends AbstractEntity{
 	@Column(name="is_deleted")
 	private boolean isDeleted = false;
 	
-	@OneToMany(mappedBy = "delivery", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "delivery", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Order> orders;
 }

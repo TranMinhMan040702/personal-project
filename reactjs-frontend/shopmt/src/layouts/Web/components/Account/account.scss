@@ -202,6 +202,40 @@
                 border-bottom: 2px solid var(--primary-color-web);
             }
         }
+        .address-item {
+            margin-top: 10px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e3e3e3;
+            .address {
+                .name-phone {
+                    span {
+                        padding: 5px 10px 5px 0px;
+                    }
+                    .name {
+                        border-right: 1px solid #b8b6b6;
+                    }
+                    .phone {
+                        margin-left: 10px;
+                        opacity: 0.6;
+                    }
+                }
+                .address-content {
+                    p {
+                        margin: 0;
+                        font-size: 14px;
+                        opacity: 0.7;
+                    }
+                }
+                .label {
+                    margin-top: 5px;
+                    span {
+                        font-size: 14px;
+                        padding: 3px 8px 2px 8px;
+                        border: 1px solid var(--primary-color-web);
+                    }
+                }
+            }
+        }
     }
     .active {
         color: var(--primary-color-web);
