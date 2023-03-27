@@ -12,5 +12,5 @@ public interface IUserService {
 	List<UserDto> findAll();
 
 	UserDto findOneByUserId(long userId);
-	
+
 }
