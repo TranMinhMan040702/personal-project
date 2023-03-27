@@ -1,16 +1,18 @@
 package com.mantm.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mantm.dto.UserDto;
+import com.mantm.dto.AddressDto;
+import com.mantm.service.IAddressService;
 import com.mantm.service.IUserService;
 
 @CrossOrigin("http://localhost:3000")
@@ -18,17 +20,32 @@ import com.mantm.service.IUserService;
 @RequestMapping("/api/v1/")
 public class UserController {
 	
-	@Autowired
-	IUserService userService;
+	@Autowired IUserService userService;
+	@Autowired IAddressService addressService;
 
 	@GetMapping("users")
-	public ResponseEntity<List<UserDto>> findAllUser() {
+	public ResponseEntity<?> findAllUser() {
 		return ResponseEntity.ok(userService.findAll());
 	}
 	
 	@GetMapping("users/{id}")
 	public ResponseEntity<?> findOneByUserId(@PathVariable long id) {
 		return ResponseEntity.ok(userService.findOneByUserId(id));
+	}
+	
+	@GetMapping("users/addresses/{id}")
+	public ResponseEntity<?> findAddresses(@PathVariable long id) {
+		return ResponseEntity.ok(addressService.findAddressByUserId(id));
+	}
+	
+	@PostMapping("users/addresses")
+	public ResponseEntity<?> uploadAddresses(@RequestBody AddressDto addressDto) {
+		return ResponseEntity.ok(addressService.saveAddressByUserId(addressDto));
+	}
+	
+	@PutMapping("users/addresses/{id}")
+	public ResponseEntity<?> deleteAddress(@PathVariable long id) {
+		return ResponseEntity.ok(addressService.deleteAddressById(id));
 	}
 
 }

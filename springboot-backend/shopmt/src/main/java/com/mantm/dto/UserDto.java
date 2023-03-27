@@ -1,5 +1,6 @@
 package com.mantm.dto;
 
+import java.util.List;
 import java.util.Set;
 
 import lombok.Data;
@@ -22,5 +23,7 @@ public class UserDto extends AbstractDto<UserDto>{
 	private String avatar;
 	
 	private long cartId;
+	
+	private List<AddressDto> addresses;
 
 }

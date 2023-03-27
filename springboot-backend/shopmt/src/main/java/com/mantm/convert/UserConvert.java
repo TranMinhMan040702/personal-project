@@ -1,9 +1,6 @@
 package com.mantm.convert;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,40 +8,41 @@ import org.springframework.stereotype.Component;
 
 import com.mantm.dto.UserDto;
 import com.mantm.entity.Cart;
-import com.mantm.entity.Role;
 import com.mantm.entity.User;
 import com.mantm.repository.CartRepository;
 import com.mantm.repository.RoleRepository;
+import com.mantm.repository.UserRepository;
 
 @Component
 public class UserConvert {
 	
 	@Autowired RoleRepository roleRepository;
 	@Autowired CartRepository cartRepository;
+	@Autowired UserRepository userRepository;
+	@Autowired RoleConvert roleConvert;
+	@Autowired AddressConvert addressConvert;
 
 	public User convertToEntity(UserDto dto) {
-		User entity = new User();
-		List<Role> roles = new ArrayList<>();
-		Cart cart = new Cart();
-		for (String role : dto.getRoles()) {
-			roles.add(roleRepository.findByName(role));
+		Optional<User> entity = Optional.of(new User());
+		
+		if (dto.getId() == null) {
+			Cart cart = new Cart();
+			entity.get().setRoles(roleConvert.convertToEntity(dto.getRoles()));
+			entity.get().setCart(cart);
+		} else {
+			entity = userRepository.findById(dto.getId());
 		}
-		BeanUtils.copyProperties(dto, entity, "password");
-		entity.setRoles(roles);
-		entity.setCart(cart);
-		return entity;
+		BeanUtils.copyProperties(dto, entity.get(), "password", "createdAt", "createdBy");
+		return entity.get();
 	}
 	
 	public UserDto convertToDto (User user) {
 		UserDto dto = new UserDto();
-		Set<String> roles = new HashSet<>();
 		BeanUtils.copyProperties(user, dto);
-		for (Role role : user.getRoles()) {
-			roles.add(role.getName());
-		}
 		Cart cart = cartRepository.findByUser(user);
 		dto.setCartId(cart.getId());
-		dto.setRoles(roles);
+		dto.setRoles(roleConvert.convertToDto(user.getRoles()));
+		dto.setAddresses(addressConvert.convertToDto(user.getAddresses()));
 		return dto;
 	}
 }

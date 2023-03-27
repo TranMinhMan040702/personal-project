@@ -15,6 +15,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -78,5 +79,8 @@ public class User extends AbstractEntity{
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Transaction> transactions;
+	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<Address> addresses;
 	
 }
