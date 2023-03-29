@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import DataTable from '../../../components/Datatable/Datatable';
 import CategoryService from '../../../services/CategoryService';
-import field from '../../../utils';
+import { field } from '../../../utils';
 function Category() {
     const fieldIgnoreCategory = [...field, 'listResult', 'products'];
     const [checked, setChecked] = useState(true);

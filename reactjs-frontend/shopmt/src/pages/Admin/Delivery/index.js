@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import DataTable from '../../../components/Datatable/Datatable';
 import DeliveryService from '../../../services/DeliveryService';
-import field from '../../../utils';
+import { field } from '../../../utils';
 function Delivery() {
     const fieldIgnoreDelivery = [...field];
     const [checked, setChecked] = useState(true);

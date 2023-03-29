@@ -8,7 +8,7 @@
     "jsxSingleQuote": false,
     "prettier.cssEnable": ["css", "less", "scss"],
     "prettier.stylelintIntegration": true,
-    "printWidth": 120,
+    "printWidth": 100,
     "proseWrap": "preserve",
     "quoteProps": "as-needed",
     "requirePragma": false,
