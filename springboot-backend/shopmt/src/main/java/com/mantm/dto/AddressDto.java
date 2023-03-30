@@ -26,6 +26,9 @@ public class AddressDto extends AbstractDto<AddressDto>{
 	
 	@NotBlank
 	private String street;
+	
+	@NotBlank
+	private boolean status;
 
 	@NotBlank
 	private long userId;
