@@ -8,6 +8,9 @@ class UserService {
     getUserById(id) {
         return axiosPrivate.get(REACT_APP_USER_API_URL + '/' + id);
     }
+    updateUser(user) {
+        return axiosPrivate.post(REACT_APP_USER_API_URL, user);
+    }
 }
 
 export default new UserService();

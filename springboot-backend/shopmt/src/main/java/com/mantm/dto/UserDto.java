@@ -18,6 +18,10 @@ public class UserDto extends AbstractDto<UserDto>{
 	
 	private String phone;
 	
+	private String gender;
+	
+	private String birthday;
+	
 	private Set<String> roles;
 	
 	private String avatar;

@@ -1,5 +1,6 @@
 package com.mantm.entity;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -46,6 +47,12 @@ public class User extends AbstractEntity{
 	
 	@Column(name="phone", unique = true)
 	private String phone;
+	
+	@Column(name="gender") 
+	private String gender;
+	
+	@Column(name="birthday")
+	private Date birthday;
 	
 	@Column(name="password")
 	@NotNull
