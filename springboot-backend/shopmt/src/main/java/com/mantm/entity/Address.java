@@ -37,6 +37,9 @@ public class Address extends AbstractEntity{
 	@Column(name="street")
 	private String street;
 	
+	@Column(name="status")
+	private boolean status;
+	
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	private User user;

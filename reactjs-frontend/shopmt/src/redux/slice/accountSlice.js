@@ -10,6 +10,8 @@ const accountSlice = createSlice({
             lastname: '',
             email: '',
             phone: '',
+            gender: '',
+            birthday: '',
             avatar: '',
             cartId: '',
         },

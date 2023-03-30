@@ -72,8 +72,10 @@ public class FileSystemStorageServiceImpl implements IStorageService {
 	
 	@Override
 	public void delete(String storeFilename) throws Exception {
-		Path destinationFile = rootLocation.resolve(Paths.get(storeFilename)).normalize().toAbsolutePath();
-		Files.delete(destinationFile);
+		if (storeFilename != null) {
+			Path destinationFile = rootLocation.resolve(Paths.get(storeFilename)).normalize().toAbsolutePath();
+			Files.delete(destinationFile);
+		}
 	}
 	
 	@Override

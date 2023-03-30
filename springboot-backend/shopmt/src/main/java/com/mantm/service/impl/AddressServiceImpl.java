@@ -31,6 +31,12 @@ public class AddressServiceImpl implements IAddressService{
 	public List<AddressDto> saveAddressByUserId(AddressDto addressDto) {
 		Optional<User> user = userRepository.findById(addressDto.getUserId());
 		List<Address> addresses = user.get().getAddresses();
+		if (addressDto.isStatus()) {
+			updateStatusAddress();
+		}
+		if (addresses.isEmpty()) {
+			addressDto.setStatus(true);
+		}
 		for (Address address : addresses) {
 			if (address.getId() == addressDto.getId()) {
 				BeanUtils.copyProperties(addressDto, address, "createdAt", "createdBy", "id");
@@ -40,6 +46,12 @@ public class AddressServiceImpl implements IAddressService{
 		}
 		addresses.add(addressConvert.convertToEntity(addressDto));
 		return addressConvert.convertToDto(userRepository.save(user.get()).getAddresses());
+	}
+	
+	private void updateStatusAddress() {
+		Address address = addressRepository.findByStatus(true);
+		address.setStatus(false);
+		addressRepository.save(address);
 	}
 	
 	@Override

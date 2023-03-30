@@ -7,5 +7,5 @@ import com.mantm.entity.Address;
 
 @Repository
 public interface AddressRepository extends JpaRepository<Address, Long>{
-
+	Address findByStatus(boolean status);
 }
