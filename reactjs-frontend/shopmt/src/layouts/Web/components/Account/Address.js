@@ -1,14 +1,67 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { addressUser } from '../../../../redux/selectors';
+import { useDispatch } from 'react-redux';
+import { deleteAddress, uploadAddress } from '../../../../redux/slice/addressSlice';
+import { ToastContainer, toast } from 'react-toastify';
 import Modal from '../../../../components/Modal';
-function Address() {
+import config from '../../../../config';
+
+function Address({ account }) {
+    const addresses = useSelector(addressUser);
+    const dispath = useDispatch();
     const [address, setAddress] = useState({
-        name: '',
+        id: '',
+        username: '',
         phone: '',
         ward: '',
         district: '',
         province: '',
+        status: false,
         street: '',
+        userId: '',
     });
+    const [check, setCheck] = useState(false);
+
+    useEffect(() => {
+        setAddress({ ...address, userId: account.id });
+    }, [account]);
+
+    const handleChange = (e) => {
+        setAddress({ ...address, [e.target.name]: e.target.value });
+    };
+    const handleCheckBox = (e) => {
+        setAddress({ ...address, [e.target.name]: e.target.checked });
+    };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        console.log(address);
+        dispath(uploadAddress(address));
+        clearedData();
+        toast.success(config.message.success.uploadAddress);
+    };
+    const handleDeleteAddress = (e, id) => {
+        e.preventDefault();
+        dispath(deleteAddress(id));
+        toast.warning(config.message.success.deleteAddress);
+    };
+    const handleUpdateAddress = (address) => {
+        setAddress(address);
+        setCheck(address.status);
+    };
+    const clearedData = () => {
+        setAddress({
+            username: '',
+            phone: '',
+            ward: '',
+            district: '',
+            province: '',
+            street: '',
+            status: false,
+            userId: account.id,
+        });
+    };
+    const modalHeader = 'Địa chỉ mới';
     const modalBody = (
         <form>
             <div class="mb-3">
@@ -17,8 +70,8 @@ function Address() {
                     className="w-100"
                     placeholder="Họ và tên"
                     required
-                    name="name"
-                    value={address.name}
+                    name="username"
+                    value={address.username}
                     onChange={(e) => handleChange(e)}
                 />
             </div>
@@ -79,100 +132,124 @@ function Address() {
                     onChange={(e) => handleChange(e)}
                 />
             </div>
+            <div class="mb-3 d-flex align-items-center">
+                <input
+                    type="checkbox"
+                    id="status"
+                    name="status"
+                    style={{ width: '20px', height: '20px' }}
+                    checked={address.status}
+                    onChange={(e) => handleCheckBox(e)}
+                    disabled={check}
+                />
+                <label for="status" style={{ marginTop: '4px', marginLeft: '10px' }}>
+                    Đặt làm địa chỉ mặt định
+                </label>
+                <br />
+            </div>
         </form>
     );
-    const modalHeader = 'Địa chỉ mới';
-    const modalFooter = {
-        close: 'Hủy',
-        submit: 'Thêm',
-    };
-    const handleChange = (e) => {
-        setAddress({ ...address, [e.target.name]: e.target.value });
-    };
-    useEffect(() => {
-        setAddress({
-            name: 'Trần Mẫn',
-            phone: '0964294799',
-            ward: 'Tà Đảnh',
-            district: 'Tri Tôn',
-            province: 'An Giang',
-            street: 'Cầu đường thét',
-        });
-    }, []);
+    const modalFooter = (
+        <>
+            <button
+                type="button"
+                class="btn btn-sm btn-secondary modal-address"
+                data-bs-dismiss="modal"
+            >
+                Hủy
+            </button>
+            <button
+                onClick={(e) => handleSubmit(e)}
+                type="submit"
+                data-bs-dismiss="modal"
+                class="btn btn-sm btn-success"
+            >
+                Tải lên
+            </button>
+        </>
+    );
+    console.log(addresses);
+    const list = [...addresses].sort((a, b) => b.status - a.status);
+    console.log(list);
     return (
         <>
             <div className="wapper">
                 <div className="header d-flex justify-content-between align-items-center">
                     <h5>Địa chỉ của tôi</h5>
-                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal">
+                    <button
+                        type="button"
+                        class="btn btn-success"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modal"
+                    >
                         Thêm địa chỉ mới
                     </button>
                 </div>
                 <div className="address-list">
-                    <div className="address-item d-flex justify-content-between align-items-center">
-                        <div className="address">
-                            <div className="name-phone mb-1">
-                                <span className="name">Trần Minh Mẫn</span>
-                                <span className="phone">0964294799</span>
-                            </div>
-                            <div className="address-content">
-                                <p>Ktx Khu B đại học quốc gia</p>
-                                <p>Phường Linh Trung, Thành Phố Thử Đức, TP.Hồ Chí Minh</p>
-                            </div>
-                            <div className="label">
-                                <span>Mặc định</span>
-                            </div>
-                        </div>
-                        <div className="address-control d-flex flex-column">
-                            <div className="modify">
-                                <button
-                                    type="button"
-                                    class="btn btn-link mb-1 text-decoration-none"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#modal"
-                                >
-                                    Cập nhật
-                                </button>
-                                <button type="button" class="btn btn-link mb-1 text-decoration-none">
-                                    Xóa
-                                </button>
-                            </div>
-                            <button type="button" class="btn btn-sm btn-outline-secondary">
-                                Thiết lập mặc định
-                            </button>
-                        </div>
-                    </div>
-                    <div className="address-item d-flex justify-content-between align-items-center">
-                        <div className="address">
-                            <div className="name-phone mb-1">
-                                <span className="name">Trần Minh Mẫn</span>
-                                <span className="phone">0964294799</span>
-                            </div>
-                            <div className="address-content">
-                                <p>Ktx Khu B đại học quốc gia</p>
-                                <p>Phường Linh Trung, Thành Phố Thử Đức, TP.Hồ Chí Minh</p>
-                            </div>
-                            <div className="label">
-                                <span>Mặc định</span>
-                            </div>
-                        </div>
-                        <div className="address-control d-flex flex-column">
-                            <div className="modify">
-                                <button type="button" class="btn btn-link mb-1 text-decoration-none">
-                                    Cập nhật
-                                </button>
-                                <button type="button" class="btn btn-link mb-1 text-decoration-none">
-                                    Xóa
-                                </button>
-                            </div>
-                            <button type="button" class="btn btn-sm btn-outline-secondary">
-                                Thiết lập mặc định
-                            </button>
-                        </div>
-                    </div>
+                    {addresses &&
+                        [...addresses]
+                            .sort((a, b) => b.status - a.status)
+                            .map((address, index) => {
+                                return (
+                                    <div
+                                        key={index}
+                                        className="address-item d-flex justify-content-between align-items-center"
+                                    >
+                                        <div className="address">
+                                            <div className="name-phone mb-1">
+                                                <span className="name">{address.username}</span>
+                                                <span className="phone">{address.phone}</span>
+                                            </div>
+                                            <div className="address-content">
+                                                <p>{address.street}</p>
+                                                <p>
+                                                    {`${address.ward}, ${address.district}, ${address.province}`}
+                                                </p>
+                                            </div>
+                                            {address.status && (
+                                                <div className="label">
+                                                    <span>Mặc định</span>
+                                                </div>
+                                            )}
+                                        </div>
+                                        <div className="address-control d-flex flex-column">
+                                            <div className="modify d-flex justify-content-end">
+                                                <button
+                                                    type="button"
+                                                    class="btn btn-link mb-1 text-decoration-none"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#modal"
+                                                    onClick={() => handleUpdateAddress(address)}
+                                                >
+                                                    Cập nhật
+                                                </button>
+                                                {!address.status && (
+                                                    <button
+                                                        type="button"
+                                                        class="btn btn-link mb-1 text-decoration-none"
+                                                        onClick={(e) =>
+                                                            handleDeleteAddress(e, address.id)
+                                                        }
+                                                    >
+                                                        Xóa
+                                                    </button>
+                                                )}
+                                            </div>
+                                            <button
+                                                type="button"
+                                                class="btn btn-sm btn-outline-secondary"
+                                                disabled={address.status}
+                                            >
+                                                Thiết lập mặc định
+                                            </button>
+                                        </div>
+                                    </div>
+                                );
+                            })}
                 </div>
             </div>
             <Modal modalHeader={modalHeader} modalBody={modalBody} modalFooter={modalFooter} />
+            <ToastContainer autoClose={1000} pauseOnHover={false} />
         </>
     );
 }

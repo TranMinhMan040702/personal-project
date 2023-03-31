@@ -9,6 +9,7 @@ import Address from './Address';
 import { useParams } from 'react-router-dom';
 function Account() {
     const account = useSelector(accountUser);
+    console.log(account);
     let param = useParams()['slug'];
     param = param[0].toUpperCase() + param.slice(1);
     const components = [Profile, Address, Password, Purchase];

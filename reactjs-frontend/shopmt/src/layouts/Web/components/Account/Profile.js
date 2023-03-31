@@ -6,7 +6,7 @@ import { createAccount } from '../../../../redux/slice/accountSlice';
 import UserService from '../../../../services/UserService';
 
 function Profile({ account }) {
-    const PRODUCT_URL = process.env.REACT_APP_BASE_URL + '/images/products';
+    const IMAGE_URL = process.env.REACT_APP_IMAGE_API_URL;
     const dispatch = useDispatch();
     const [user, setUser] = useState({
         id: '',
@@ -67,7 +67,7 @@ function Profile({ account }) {
 
     const handleDisplayAvatar = () => {
         if (user.avatar && !preview) {
-            return PRODUCT_URL + '\\' + user.avatar;
+            return IMAGE_URL + '\\' + user.avatar;
         }
         return !avatar ? images.noAvatar : preview;
     };
@@ -96,7 +96,6 @@ function Profile({ account }) {
             }
         }
     };
-    console.log(user);
     return (
         <div className="wapper">
             <div className="header">

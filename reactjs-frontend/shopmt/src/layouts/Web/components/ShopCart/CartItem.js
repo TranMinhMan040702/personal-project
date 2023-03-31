@@ -4,14 +4,17 @@ import { useSelector } from 'react-redux';
 import { accountUser } from '../../../../redux/selectors';
 
 function CartItem({ item, handleIncreaseCount, handleDecreaseCount, handleRemoveItem }) {
-    const PRODUCT_URL = process.env.REACT_APP_BASE_URL + '/images/products';
+    const IMAGE_URL = process.env.REACT_APP_IMAGE_API_URL;
     const account = useSelector(accountUser);
 
     return (
-        <div className="product cart-item d-flex justify-content-between" style={{ 'margin-bottom': '0' }}>
+        <div
+            className="product cart-item d-flex justify-content-between"
+            style={{ 'margin-bottom': '0' }}
+        >
             <div className="cart-details d-flex align-items-center">
                 <div className="cart-image">
-                    <img src={PRODUCT_URL + '\\' + item.product.images[0]} alt="product" />
+                    <img src={IMAGE_URL + '\\' + item.product.images[0]} alt="product" />
                 </div>
                 <div className="cart-info">
                     <h4>{item.product.name}</h4>
@@ -30,7 +33,13 @@ function CartItem({ item, handleIncreaseCount, handleDecreaseCount, handleRemove
                 <div className="cart-control">
                     <button
                         className="incBtn"
-                        onClick={() => handleIncreaseCount({ cartId: account.cartId, count: 1, product: item.product })}
+                        onClick={() =>
+                            handleIncreaseCount({
+                                cartId: account.cartId,
+                                count: 1,
+                                product: item.product,
+                            })
+                        }
                     >
                         <FontAwesomeIcon icon={faPlus} />
                     </button>

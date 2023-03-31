@@ -5,20 +5,14 @@ const accountSlice = createSlice({
     name: 'account',
     initialState: {
         status: 'idle',
-        account: {
-            firstname: '',
-            lastname: '',
-            email: '',
-            phone: '',
-            gender: '',
-            birthday: '',
-            avatar: '',
-            cartId: '',
-        },
+        account: {},
     },
     reducers: {
         createAccount: (state, action) => {
             console.log(state);
+        },
+        clearedAccount: (state, action) => {
+            state.account = action.payload;
         },
     },
     extraReducers: (builder) => {
@@ -28,7 +22,7 @@ const accountSlice = createSlice({
             })
             .addCase(createAccount.fulfilled, (state, action) => {
                 state.status = 'idle';
-                state.product = action.payload;
+                state.account = action.payload;
             });
     },
 });

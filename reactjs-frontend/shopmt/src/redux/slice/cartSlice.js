@@ -18,6 +18,9 @@ const cartSlice = createSlice({
         removeItem: (state, action) => {
             state.splice(0, Infinity, ...action.payload);
         },
+        clearedCart: (state, action) => {
+            state.cart = action.payload;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -63,12 +66,18 @@ export const addToCart = createAsyncThunk('cart/addToCart', async (data) => {
     return response.data.cartItems;
 });
 
-export const deleteOneProductInCartItem = createAsyncThunk('cart/deleteOneProductInCartItem', async (cartItemId) => {
-    const response = await CartService.deleteOne(cartItemId);
-    return response.data.cartItems;
-});
+export const deleteOneProductInCartItem = createAsyncThunk(
+    'cart/deleteOneProductInCartItem',
+    async (cartItemId) => {
+        const response = await CartService.deleteOne(cartItemId);
+        return response.data.cartItems;
+    },
+);
 
-export const deleteAllProductInCartItem = createAsyncThunk('cart/deleteAllProductInCartItem', async (cartItemId) => {
-    const response = await CartService.deleteAll(cartItemId);
-    return response.data.cartItems;
-});
+export const deleteAllProductInCartItem = createAsyncThunk(
+    'cart/deleteAllProductInCartItem',
+    async (cartItemId) => {
+        const response = await CartService.deleteAll(cartItemId);
+        return response.data.cartItems;
+    },
+);

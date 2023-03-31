@@ -15,9 +15,10 @@ import com.mantm.repository.UserRepository;
 
 @Component
 public class AddressConvert {
-	
-	@Autowired UserRepository userRepository;
-	
+
+	@Autowired
+	UserRepository userRepository;
+
 	public Address convertToEntity(AddressDto dto) {
 		Address entity = new Address();
 		Optional<User> user = userRepository.findById(dto.getUserId());
@@ -25,7 +26,7 @@ public class AddressConvert {
 		entity.setUser(user.get());
 		return entity;
 	}
-	
+
 	public List<AddressDto> convertToDto(List<Address> addresses) {
 		List<AddressDto> dtos = new ArrayList<>();
 		for (Address address : addresses) {
@@ -34,7 +35,6 @@ public class AddressConvert {
 			dto.setUserId(address.getUser().getId());
 			dtos.add(dto);
 		}
-		
 		return dtos;
 	}
 }

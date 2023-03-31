@@ -5,17 +5,15 @@ function Modal({ modalBody, modalHeader, modalFooter }) {
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">{modalHeader}</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                        ></button>
                     </div>
                     <div class="modal-body">{modalBody}</div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">
-                            {modalFooter.close}
-                        </button>
-                        <button type="button" class="btn btn-sm btn-success">
-                            Thêm
-                        </button>
-                    </div>
+                    <div class="modal-footer">{modalFooter}</div>
                 </div>
             </div>
         </div>

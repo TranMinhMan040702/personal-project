@@ -7,7 +7,11 @@ import SummaryCart from './SummaryCart';
 import CartItem from './CartItem';
 import config from '../../../../config';
 import './shopcart.scss';
-import { addToCart, deleteAllProductInCartItem, deleteOneProductInCartItem } from '../../../../redux/slice/cartSlice';
+import {
+    addToCart,
+    deleteAllProductInCartItem,
+    deleteOneProductInCartItem,
+} from '../../../../redux/slice/cartSlice';
 
 function ShopCart() {
     const cart = useSelector(cartUser);
@@ -34,7 +38,7 @@ function ShopCart() {
 
     const handleRemoveItem = (id) => {
         dispatch(deleteAllProductInCartItem(id));
-        toast.warning(config.message.removeItemInCart);
+        toast.warning(config.message.success.removeItemInCart);
     };
 
     return (

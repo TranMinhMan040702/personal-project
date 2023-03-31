@@ -9,7 +9,7 @@ import { accountUser } from '../../../../redux/selectors';
 import { addToCart } from '../../../../redux/slice/cartSlice';
 
 function ProductCard({ product }) {
-    const PRODUCT_URL = process.env.REACT_APP_BASE_URL + '/images/products';
+    const IMAGE_URL = process.env.REACT_APP_IMAGE_API_URL;
     const dispatch = useDispatch();
     const account = useSelector(accountUser);
 
@@ -19,13 +19,15 @@ function ProductCard({ product }) {
     };
     const handleAddToCart = () => {
         dispatch(addToCart({ cartId: account.cartId, count: 1, product: product }));
-        toast.success(config.message.addToCartSuccess);
+        toast.success(config.message.success.addToCart);
     };
     return (
         <div className="product">
-            <span className="discount">{handleDiscount(product.price, product.promotionalPrice)}%</span>
+            <span className="discount">
+                {handleDiscount(product.price, product.promotionalPrice)}%
+            </span>
             <Link to={config.routes.web.productDetails + '\\' + product.id} className="img-wrap">
-                <img src={PRODUCT_URL + '\\' + product.images[0]} alt="product" />
+                <img src={IMAGE_URL + '\\' + product.images[0]} alt="product" />
             </Link>
             <div className="info-wrap">
                 <Link to={config.routes.web.productDetails} className="title text-truncate">
