@@ -7,6 +7,7 @@ import images from '../../../../assets/images';
 import config from '../../../../config';
 import { useEffect } from 'react';
 function Navbar({ account }) {
+    const IMAGE_URL = process.env.REACT_APP_BASE_URL + '/images';
     let param = useParams()['slug'];
     const navigate = useNavigate();
     useEffect(() => {
@@ -21,7 +22,6 @@ function Navbar({ account }) {
 
     const handleActive = () => {
         let tag = document.getElementsByClassName('link');
-        console.log(tag);
         for (var i = 0; i < tag.length; i++) {
             if (tag[i].classList.contains('active')) {
                 tag[i].classList.remove('active');
@@ -32,11 +32,15 @@ function Navbar({ account }) {
         }
     };
 
+    const handAvatar = () => {
+        return account.avatar ? IMAGE_URL + '/' + account.avatar : images.noAvatar;
+    };
+
     return (
         <div className="d-flex flex-column">
             <div className="top d-flex align-items-center">
                 <div className="img">
-                    <img src={images.noAvatar} alt="" />
+                    <img src={handAvatar()} alt="" />
                 </div>
                 <div className="name d-flex flex-column">
                     <h6>{account && account.lastname + ' ' + account.firstname}</h6>

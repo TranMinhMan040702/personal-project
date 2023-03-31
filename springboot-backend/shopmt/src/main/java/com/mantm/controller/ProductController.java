@@ -1,14 +1,9 @@
 package com.mantm.controller;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,31 +27,10 @@ import com.mantm.service.IStorageService;
 @RequestMapping("/api/v1/")
 public class ProductController {
 
-	@Autowired
-	ObjectMapper objectMapper;
-	@Autowired
-	IProductService productService;
-	@Autowired
-	IStorageService storageService;
-	@Autowired
-	ImageProductRepository imageProductRepository;
-
-	// Get Image
-	@GetMapping("images/products/{filename:.+}")
-	@ResponseBody
-	public ResponseEntity<Resource> serverFiles(@PathVariable String filename, HttpServletRequest request) {
-		Resource file = storageService.loadAsResource(filename);
-		String contentType = null;
-		try {
-			contentType = request.getServletContext().getMimeType(file.getFile().getAbsolutePath());
-		} catch (IOException ex) {
-			System.out.println("Could not determine fileType");
-		}
-		if (contentType == null) {
-			contentType = "application/octet-stream";
-		}
-		return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType)).body(file);
-	}
+	@Autowired ObjectMapper objectMapper;
+	@Autowired IProductService productService;
+	@Autowired IStorageService storageService;
+	@Autowired ImageProductRepository imageProductRepository;
 
 	@GetMapping("products")
 	public ResponseEntity<List<ProductDto>> getProduct() {

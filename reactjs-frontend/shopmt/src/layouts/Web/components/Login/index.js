@@ -8,6 +8,7 @@ import images from '../../../../assets/images';
 import config from '../../../../config';
 import { createAccount } from '../../../../redux/slice/accountSlice';
 import { getCart } from '../../../../redux/slice/cartSlice';
+import { getAddresses } from '../../../../redux/slice/addressSlice';
 
 function LoginForm() {
     const { setAuth } = useAuth();
@@ -39,9 +40,10 @@ function LoginForm() {
             // thunk function
             dispatch(createAccount(response.data.userId));
             dispatch(getCart(response.data.userId));
+            dispatch(getAddresses(response.data.userId));
             navigate(roles.includes('ADMIN') ? '/admin' : from, { replace: true });
         } catch (err) {
-            toast.error(config.message.loginError);
+            toast.error(config.message.error.login);
             console.log(err);
         }
     };

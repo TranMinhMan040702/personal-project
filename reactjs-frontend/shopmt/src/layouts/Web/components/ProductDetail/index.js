@@ -13,7 +13,7 @@ import config from '../../../../config';
 import './productdetail.scss';
 
 function ProductDetail() {
-    const PRODUCT_URL = process.env.REACT_APP_BASE_URL + '/images/products';
+    const IMAGE_URL = process.env.REACT_APP_IMAGE_API_URL;
     const account = useSelector(accountUser);
     const param = useParams();
     const dispatch = useDispatch();
@@ -29,7 +29,7 @@ function ProductDetail() {
         try {
             const response = await ProductService.getProductById(id);
             setProduct(response.data);
-            setImage(PRODUCT_URL + '\\' + response.data.images[0]);
+            setImage(IMAGE_URL + '\\' + response.data.images[0]);
             console.log(response.data);
         } catch (err) {
             console.log(err);
@@ -53,7 +53,7 @@ function ProductDetail() {
 
     const handleAddToCart = (data, count) => {
         dispatch(addToCart({ cartId: account.cartId, count: count, product: data }));
-        toast.success(config.message.addToCartSuccess);
+        toast.success(config.message.success.addToCart);
     };
 
     return (
@@ -70,7 +70,7 @@ function ProductDetail() {
                                     return (
                                         <div className="small-images-item img-thumbnail">
                                             <img
-                                                src={PRODUCT_URL + '\\' + image}
+                                                src={IMAGE_URL + '\\' + image}
                                                 alt=""
                                                 onMouseEnter={(e) => handleImage(e)}
                                             />
@@ -95,13 +95,20 @@ function ProductDetail() {
                                 <h3>{product.promotionalPrice} đ</h3>
                                 <h5>{product.price} đ</h5>
                                 <span>
-                                    {Math.round(((product.price - product.promotionalPrice) / product.price) * 100)}%
+                                    {Math.round(
+                                        ((product.price - product.promotionalPrice) /
+                                            product.price) *
+                                            100,
+                                    )}
+                                    %
                                 </span>
                             </div>
                             <div className="delivery-policy">
                                 <div className="delivery d-flex">
                                     <div className="title">Thời gian giao hàng:</div>
-                                    <span>Giao hàng đến: xã Tân Lập, huyện Tịnh Biên, tỉnh An Giang</span>
+                                    <span>
+                                        Giao hàng đến: xã Tân Lập, huyện Tịnh Biên, tỉnh An Giang
+                                    </span>
                                 </div>
                                 <div className="policy d-flex">
                                     <div className="title">Chính sách đổi trả:</div>{' '}
@@ -121,7 +128,10 @@ function ProductDetail() {
                                 </div>
                             </div>
                             <div className="control-btn d-flex align-items-center justify-content-start">
-                                <button className="add-to-cart" onClick={() => handleAddToCart(product, count)}>
+                                <button
+                                    className="add-to-cart"
+                                    onClick={() => handleAddToCart(product, count)}
+                                >
                                     <span>
                                         <FontAwesomeIcon icon={faCartShopping} />
                                     </span>

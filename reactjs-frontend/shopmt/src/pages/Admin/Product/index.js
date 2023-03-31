@@ -7,7 +7,7 @@ import ProductService from '../../../services/ProductService';
 import config from '../../../config';
 import Padding from '../../../components/Padding';
 function Product() {
-    const PRODUCT_URL = process.env.REACT_APP_BASE_URL + '/images/products';
+    const IMAGE_URL = process.env.REACT_APP_IMAGE_API_URL;
     const [checked, setChecked] = useState(true);
     const [products, setProducts] = useState([]);
     useEffect(() => {
@@ -70,17 +70,30 @@ function Product() {
                                     <div className="col-lg-3 mb-5">
                                         <div className="card shadow-sm">
                                             <Link className="img-wrap">
-                                                <img src={PRODUCT_URL + '\\' + product.images[0]} alt="product" />
+                                                <img
+                                                    src={IMAGE_URL + '\\' + product.images[0]}
+                                                    alt="product"
+                                                />
                                             </Link>
                                             <div className="info-wrap">
-                                                <Link className="title text-truncate">{product.name}</Link>
+                                                <Link className="title text-truncate">
+                                                    {product.name}
+                                                </Link>
                                                 <div className="price">
-                                                    <span className=" original-price">{product.price}</span>
-                                                    <span className="discount-price">{product.promotionalPrice}</span>
+                                                    <span className=" original-price">
+                                                        {product.price}
+                                                    </span>
+                                                    <span className="discount-price">
+                                                        {product.promotionalPrice}
+                                                    </span>
                                                 </div>
                                                 <div className="row d-flex">
                                                     <Link
-                                                        to={config.routes.admin.product + '/' + product.id}
+                                                        to={
+                                                            config.routes.admin.product +
+                                                            '/' +
+                                                            product.id
+                                                        }
                                                         data={product.id}
                                                         // onClick={(e) => EditProduct(e)}
                                                         className="btn btn-outline-success p-2 col-6"
