@@ -12,6 +12,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.mantm.dto.UserDto;
@@ -22,12 +23,14 @@ import com.mantm.dto.response.AuthResponse;
 import com.mantm.entity.Cart;
 import com.mantm.entity.Role;
 import com.mantm.entity.User;
+import com.mantm.exception.ResourceNotFoundException;
 import com.mantm.repository.RoleRepository;
 import com.mantm.repository.UserRepository;
 import com.mantm.service.IAuthenticationService;
 import com.mantm.utils.JwtUtil;
 
 @Component
+@Transactional
 public class AuthenticationServiceImpl implements IAuthenticationService{
 	
 	@Autowired CustomUserDetailsService customUserDetailsService;
@@ -39,7 +42,8 @@ public class AuthenticationServiceImpl implements IAuthenticationService{
 	
 	
 	@Override
-	public AuthResponse register(@RequestBody RegisterRequest request) {
+	@Transactional(rollbackFor = ResourceNotFoundException.class)
+	public AuthResponse register(@RequestBody RegisterRequest request) throws ResourceNotFoundException {
 		
 		User user = new User();
 		List<Role> roles = new ArrayList<>();
@@ -47,7 +51,11 @@ public class AuthenticationServiceImpl implements IAuthenticationService{
 		AuthResponse authResponse = new AuthResponse();
 		
 		for (String role : request.getRoles()) {
-			roles.add(roleRepository.findByName(role));
+			Role roleEntity = roleRepository.findByName(role);
+			if (roleEntity == null) {
+				throw new ResourceNotFoundException("Cannot find role");
+			}
+			roles.add(roleEntity);
 		}
 		
 		BeanUtils.copyProperties(request, user, "password");

@@ -9,6 +9,7 @@ import java.util.Map;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mantm.dto.RoleDto;
 import com.mantm.entity.Role;
@@ -17,6 +18,7 @@ import com.mantm.repository.RoleRepository;
 import com.mantm.service.IRoleService;
 
 @Component
+@Transactional
 public class RoleServiceImpl implements IRoleService{
 
 	@Autowired

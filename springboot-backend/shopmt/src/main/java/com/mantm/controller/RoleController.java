@@ -20,8 +20,7 @@ import com.mantm.service.IRoleService;
 @RequestMapping("/api/v1/admin")
 public class RoleController {
 
-	@Autowired
-	private IRoleService roleService;
+	@Autowired IRoleService roleService;
 	
 	@GetMapping("/roles")
 	public ResponseEntity<?> findAllRoles() {

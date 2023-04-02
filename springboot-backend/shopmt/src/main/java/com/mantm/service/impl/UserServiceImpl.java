@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.mantm.convert.AddressConvert;
@@ -20,6 +21,7 @@ import com.mantm.service.IStorageService;
 import com.mantm.service.IUserService;
 
 @Component
+@Transactional
 public class UserServiceImpl implements IUserService {
 
 	@Autowired UserRepository userRepository;

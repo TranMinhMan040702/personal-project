@@ -22,6 +22,11 @@ import lombok.NoArgsConstructor;
 @Table(name="role")
 public class Role extends AbstractEntity{
 	
+	public Role(String name) {
+		super();
+		this.name = name;
+	}
+
 	@Column(name = "name")
 	private String name;
 	

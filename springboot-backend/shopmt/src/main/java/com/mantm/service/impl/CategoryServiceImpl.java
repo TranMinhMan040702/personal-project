@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mantm.dto.CategoryDto;
 import com.mantm.entity.Category;
@@ -22,12 +22,11 @@ import com.mantm.service.ICategoryService;
 
 
 @Component
+@Transactional
 public class CategoryServiceImpl implements ICategoryService {
 
-	@Autowired
-	ModelMapper mapper;
-	@Autowired
-	CategoryRepository categoryRepository;
+	@Autowired ModelMapper mapper;
+	@Autowired CategoryRepository categoryRepository;
 
 	@Override
 	public List<CategoryDto> findAll() {
@@ -73,7 +72,7 @@ public class CategoryServiceImpl implements ICategoryService {
 	}
 	
 	@Override
-	@Transactional(rollbackOn = ResourceNotFoundException.class)
+	@Transactional(rollbackFor = ResourceNotFoundException.class)
 	public Map<String, String> deleteSoftCategory(long[] ids) throws ResourceNotFoundException {
 		Map<String, String> resp = new HashMap<>();
 		for (long item : ids) {

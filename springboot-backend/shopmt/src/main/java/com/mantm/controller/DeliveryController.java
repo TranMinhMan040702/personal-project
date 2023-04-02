@@ -25,8 +25,7 @@ import com.mantm.service.IDeliveryService;
 @RequestMapping("/api/v1/")
 public class DeliveryController {
 
-	@Autowired
-	IDeliveryService deliveryService;
+	@Autowired IDeliveryService deliveryService;
 	
 	@GetMapping("deliverise")
 	public ResponseEntity<List<DeliveryDto>> findAllDelivery() {

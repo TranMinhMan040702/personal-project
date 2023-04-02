@@ -17,6 +17,7 @@ public class ShopmtApplication {
 	@Bean
 	public ObjectMapper getObjectMapper() {
 		return new ObjectMapper();
-
 	}
+	
+
 }
