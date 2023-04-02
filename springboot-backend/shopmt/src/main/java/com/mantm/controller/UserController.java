@@ -24,12 +24,9 @@ import com.mantm.service.IUserService;
 @RequestMapping("/api/v1/")
 public class UserController {
 
-	@Autowired
-	IUserService userService;
-	@Autowired
-	IAddressService addressService;
-	@Autowired
-	ObjectMapper objectMapper;
+	@Autowired IUserService userService;
+	@Autowired IAddressService addressService;
+	@Autowired ObjectMapper objectMapper;
 
 	@GetMapping("users")
 	public ResponseEntity<?> findAllUser() {

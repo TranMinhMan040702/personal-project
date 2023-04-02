@@ -12,6 +12,7 @@ import {
     deleteAllProductInCartItem,
     deleteOneProductInCartItem,
 } from '../../../../redux/slice/cartSlice';
+import { formatter } from '../../../../utils';
 
 function ShopCart() {
     const cart = useSelector(cartUser);
@@ -22,7 +23,7 @@ function ShopCart() {
         const totalPrice = cart.reduce((acc, curr) => {
             return acc + curr.product.promotionalPrice * curr.count;
         }, 0);
-        return totalPrice;
+        return formatter(totalPrice);
     };
 
     const handleIncreaseCount = (data) => {

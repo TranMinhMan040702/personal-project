@@ -10,6 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.mantm.dto.ProductDto;
@@ -24,18 +25,14 @@ import com.mantm.service.IProductService;
 import com.mantm.service.IStorageService;
 
 @Component
+@Transactional
 public class ProductServiceImpl implements IProductService {
 
-	@Autowired
-	ModelMapper mapper;
-	@Autowired
-	IStorageService storageService;
-	@Autowired
-	ProductRepository productRepository;
-	@Autowired
-	CategoryRepository categoryRepository;
-	@Autowired
-	ImageProductRepository imageProductRepository;
+	@Autowired ModelMapper mapper;
+	@Autowired IStorageService storageService;
+	@Autowired ProductRepository productRepository;
+	@Autowired CategoryRepository categoryRepository;
+	@Autowired ImageProductRepository imageProductRepository;
 
 	@Override
 	public ProductDto save(ProductDto productReq, MultipartFile[] files) throws Exception {

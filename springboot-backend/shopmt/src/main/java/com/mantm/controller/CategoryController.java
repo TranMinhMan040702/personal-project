@@ -24,8 +24,7 @@ import com.mantm.service.ICategoryService;
 @RequestMapping("/api/v1/")
 public class CategoryController {
 
-	@Autowired
-	ICategoryService categoryService;
+	@Autowired ICategoryService categoryService;
 	
 
 	@GetMapping("/categorise")

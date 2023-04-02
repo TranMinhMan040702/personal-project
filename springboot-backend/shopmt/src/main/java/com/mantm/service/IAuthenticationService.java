@@ -7,13 +7,14 @@ import com.mantm.dto.request.AuthRequest;
 import com.mantm.dto.request.RegisterRequest;
 import com.mantm.dto.request.TokenRefreshRequest;
 import com.mantm.dto.response.AuthResponse;
+import com.mantm.exception.ResourceNotFoundException;
 
 @Service
 public interface IAuthenticationService {
 
 	AuthResponse authenticate(AuthRequest request);
 
-	AuthResponse register(@RequestBody RegisterRequest request);
+	AuthResponse register(@RequestBody RegisterRequest request) throws ResourceNotFoundException;
 
 	AuthResponse refresh(TokenRefreshRequest request);
 

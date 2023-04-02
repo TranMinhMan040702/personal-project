@@ -49,6 +49,9 @@ function Address({ account }) {
         setAddress(address);
         setCheck(address.status);
     };
+    const handleSetDefaultAddress = (address) => {
+        dispath(uploadAddress({ ...address, status: true }));
+    };
     const clearedData = () => {
         setAddress({
             username: '',
@@ -168,9 +171,6 @@ function Address({ account }) {
             </button>
         </>
     );
-    console.log(addresses);
-    const list = [...addresses].sort((a, b) => b.status - a.status);
-    console.log(list);
     return (
         <>
             <div className="wapper">
@@ -239,6 +239,7 @@ function Address({ account }) {
                                                 type="button"
                                                 class="btn btn-sm btn-outline-secondary"
                                                 disabled={address.status}
+                                                onClick={() => handleSetDefaultAddress(address)}
                                             >
                                                 Thiết lập mặc định
                                             </button>

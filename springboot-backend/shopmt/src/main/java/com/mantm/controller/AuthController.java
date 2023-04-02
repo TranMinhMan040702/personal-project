@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mantm.dto.request.AuthRequest;
 import com.mantm.dto.request.RegisterRequest;
 import com.mantm.dto.request.TokenRefreshRequest;
+import com.mantm.exception.ResourceNotFoundException;
 import com.mantm.service.IAuthenticationService;
 
 @RestController
@@ -23,7 +24,7 @@ public class AuthController {
 	@Autowired IAuthenticationService authenticationService;
 	
 	@PostMapping("/register")
-	public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
+	public ResponseEntity<?> register(@RequestBody RegisterRequest request) throws ResourceNotFoundException {
 		return ResponseEntity.ok(authenticationService.register(request));
 	}
 	

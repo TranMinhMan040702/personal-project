@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mantm.convert.AddressConvert;
 import com.mantm.dto.AddressDto;
@@ -16,6 +17,7 @@ import com.mantm.repository.UserRepository;
 import com.mantm.service.IAddressService;
 
 @Component
+@Transactional
 public class AddressServiceImpl implements IAddressService{
 	
 	@Autowired UserRepository userRepository;

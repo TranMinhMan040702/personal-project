@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mantm.convert.CartConvert;
 import com.mantm.convert.CartItemConvert;
@@ -21,6 +22,7 @@ import com.mantm.repository.UserRepository;
 import com.mantm.service.ICartService;
 
 @Component
+@Transactional
 public class CartServiceImpl implements ICartService {
 
 	@Autowired UserRepository userRepository;

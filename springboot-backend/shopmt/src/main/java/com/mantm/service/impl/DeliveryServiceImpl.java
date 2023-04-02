@@ -10,6 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mantm.dto.DeliveryDto;
 import com.mantm.entity.Delivery;
@@ -18,13 +19,12 @@ import com.mantm.repository.DeliveryRepository;
 import com.mantm.service.IDeliveryService;
 
 @Component
+@Transactional
 public class DeliveryServiceImpl implements IDeliveryService{
 
-	@Autowired
-	ModelMapper mapper;
+	@Autowired ModelMapper mapper;
 	
-	@Autowired
-	DeliveryRepository deliveryRepository;
+	@Autowired DeliveryRepository deliveryRepository;
 	
 	@Override
 	public DeliveryDto save(DeliveryDto deliveryDto) {
