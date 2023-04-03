@@ -28,11 +28,16 @@ import com.mantm.service.IStorageService;
 @Transactional
 public class ProductServiceImpl implements IProductService {
 
-	@Autowired ModelMapper mapper;
-	@Autowired IStorageService storageService;
-	@Autowired ProductRepository productRepository;
-	@Autowired CategoryRepository categoryRepository;
-	@Autowired ImageProductRepository imageProductRepository;
+	@Autowired
+	ModelMapper mapper;
+	@Autowired
+	IStorageService storageService;
+	@Autowired
+	ProductRepository productRepository;
+	@Autowired
+	CategoryRepository categoryRepository;
+	@Autowired
+	ImageProductRepository imageProductRepository;
 
 	@Override
 	public ProductDto save(ProductDto productReq, MultipartFile[] files) throws Exception {
@@ -113,7 +118,7 @@ public class ProductServiceImpl implements IProductService {
 		resp.put("deleted", "Success");
 		return resp;
 	}
-	
+
 	private Image_Product saveImage(MultipartFile file, Product product) {
 		Image_Product image_Product = new Image_Product();
 		UUID uuid = UUID.randomUUID();
@@ -125,7 +130,7 @@ public class ProductServiceImpl implements IProductService {
 		image_Product.setPath(path);
 		return image_Product;
 	}
-	
+
 	private ProductDto responseProduct(Product product) {
 		ProductDto productResp = new ProductDto();
 		BeanUtils.copyProperties(product, productResp);
@@ -136,7 +141,7 @@ public class ProductServiceImpl implements IProductService {
 		}
 		productResp.setCategory(product.getCategory().getId());
 		productResp.setImages(listImage);
-		
+
 		return productResp;
 	}
 

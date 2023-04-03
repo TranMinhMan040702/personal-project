@@ -1,11 +1,9 @@
 package com.mantm.entity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -32,8 +30,8 @@ public class OrderItem extends AbstractEntity{
 	@JoinColumn(name="order_id")
 	private Order order;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="product_id", referencedColumnName = "id")
+	@ManyToOne
+	@JoinColumn(name="product_id")
 	private Product product;
 	
 }

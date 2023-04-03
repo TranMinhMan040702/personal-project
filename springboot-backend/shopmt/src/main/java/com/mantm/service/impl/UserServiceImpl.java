@@ -24,12 +24,18 @@ import com.mantm.service.IUserService;
 @Transactional
 public class UserServiceImpl implements IUserService {
 
-	@Autowired UserRepository userRepository;
-	@Autowired RoleRepository roleRepository;
-	@Autowired AddressRepository addressRepository;
-	@Autowired UserConvert userConvert;
-	@Autowired AddressConvert addressConvert;
-	@Autowired IStorageService storageService;
+	@Autowired
+	UserRepository userRepository;
+	@Autowired
+	RoleRepository roleRepository;
+	@Autowired
+	AddressRepository addressRepository;
+	@Autowired
+	UserConvert userConvert;
+	@Autowired
+	AddressConvert addressConvert;
+	@Autowired
+	IStorageService storageService;
 
 	@Override
 	public List<UserDto> findAll() {
@@ -47,7 +53,6 @@ public class UserServiceImpl implements IUserService {
 		Optional<User> user = userRepository.findById(userId);
 		return userConvert.convertToDto(user.get());
 	}
-	
 
 	@Override
 	public UserDto updateUser(UserDto userDto, MultipartFile file) throws Exception {

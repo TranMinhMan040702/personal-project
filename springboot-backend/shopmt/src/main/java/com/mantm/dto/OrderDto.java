@@ -2,14 +2,12 @@ package com.mantm.dto;
 
 import java.util.List;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class OrderDto {
+@EqualsAndHashCode(callSuper = true)
+public class OrderDto extends AbstractDto<OrderDto>{
 	
 	private String address;
 	
@@ -21,7 +19,7 @@ public class OrderDto {
 	
 	private double amountFromUser;
 	
-	private long userId;
+	private UserDto user;
 	
 	private DeliveryDto delivery;
 	

@@ -25,20 +25,26 @@ import com.mantm.service.ICartService;
 @Transactional
 public class CartServiceImpl implements ICartService {
 
-	@Autowired UserRepository userRepository;
-	@Autowired CartRepository cartRepository;
-	@Autowired CartItemRepository cartItemRepository;
-	@Autowired ProductConvert productConvert;
-	@Autowired CartItemConvert cartItemConvert;
-	@Autowired CartConvert cartConvert;
-	
+	@Autowired
+	UserRepository userRepository;
+	@Autowired
+	CartRepository cartRepository;
+	@Autowired
+	CartItemRepository cartItemRepository;
+	@Autowired
+	ProductConvert productConvert;
+	@Autowired
+	CartItemConvert cartItemConvert;
+	@Autowired
+	CartConvert cartConvert;
+
 	@Override
 	public CartDto findCartUser(long userId) {
 		Optional<User> user = userRepository.findById(userId);
 		Cart cart = user.get().getCart();
 		return cartConvert.convertToDto(cart);
 	}
-	
+
 	@Override
 	public CartDto addToCart(CartItemDto cartItemDto) throws ResourceNotFoundException {
 		Optional<Cart> cart = cartRepository.findById(cartItemDto.getCartId());
@@ -59,7 +65,7 @@ public class CartServiceImpl implements ICartService {
 		}
 		return cartConvert.convertToDto(cart.get());
 	}
-	
+
 	@Override
 	public CartDto deleteOneProductInCart(long cartItemId) {
 		Optional<CartItem> cartItem = cartItemRepository.findById(cartItemId);
@@ -69,7 +75,7 @@ public class CartServiceImpl implements ICartService {
 		cartRepository.save(cart.get());
 		return cartConvert.convertToDto(cart.get());
 	}
-	
+
 	@Override
 	public CartDto deleteAllProductInCart(long cartItemId) {
 		Optional<CartItem> cartItem = cartItemRepository.findById(cartItemId);
@@ -78,5 +84,5 @@ public class CartServiceImpl implements ICartService {
 		cartRepository.save(cart.get());
 		return cartConvert.convertToDto(cart.get());
 	}
-	
+
 }

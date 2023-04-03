@@ -17,22 +17,24 @@ import com.mantm.repository.UserRepository;
 
 @Service
 @Transactional
-public class CustomUserDetailsService implements UserDetailsService{
-	
-	@Autowired UserRepository repository;
+public class CustomUserDetailsService implements UserDetailsService {
+
+	@Autowired
+	UserRepository repository;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		
+
 		User user = repository.findByEmail(username);
-		
+
 		List<SimpleGrantedAuthority> grantedAuthorities = new ArrayList<>();
-		
+
 		for (Role role : user.getRoles()) {
 			grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
 		}
-		
-		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), grantedAuthorities);
+
+		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
+				grantedAuthorities);
 	}
 
 }

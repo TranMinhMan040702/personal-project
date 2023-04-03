@@ -18,17 +18,20 @@ import com.mantm.service.IAddressService;
 
 @Component
 @Transactional
-public class AddressServiceImpl implements IAddressService{
-	
-	@Autowired UserRepository userRepository;
-	@Autowired AddressRepository addressRepository;
-	@Autowired AddressConvert addressConvert;
-	
+public class AddressServiceImpl implements IAddressService {
+
+	@Autowired
+	UserRepository userRepository;
+	@Autowired
+	AddressRepository addressRepository;
+	@Autowired
+	AddressConvert addressConvert;
+
 	@Override
 	public List<AddressDto> findAddressByUserId(long userId) {
 		return addressConvert.convertToDto(userRepository.findById(userId).get().getAddresses());
 	}
-	
+
 	@Override
 	public List<AddressDto> saveAddressByUserId(AddressDto addressDto) {
 		Optional<User> user = userRepository.findById(addressDto.getUserId());
@@ -49,7 +52,7 @@ public class AddressServiceImpl implements IAddressService{
 		addresses.add(addressConvert.convertToEntity(addressDto));
 		return addressConvert.convertToDto(userRepository.save(user.get()).getAddresses());
 	}
-	
+
 	private void updateStatusAddress() {
 		Address address = addressRepository.findByStatus(true);
 		if (address != null) {
@@ -57,7 +60,7 @@ public class AddressServiceImpl implements IAddressService{
 			addressRepository.save(address);
 		}
 	}
-	
+
 	@Override
 	public List<AddressDto> deleteAddressById(long id) {
 		Optional<Address> address = addressRepository.findById(id);

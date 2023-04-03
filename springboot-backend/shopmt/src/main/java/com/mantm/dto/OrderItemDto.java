@@ -1,13 +1,11 @@
 package com.mantm.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class OrderItemDto {
+@EqualsAndHashCode(callSuper = true) 
+public class OrderItemDto extends AbstractDto<OrderItemDto>{
 	
 	private long orderId;
 	private int count;
