@@ -20,12 +20,14 @@ import com.mantm.service.IDeliveryService;
 
 @Component
 @Transactional
-public class DeliveryServiceImpl implements IDeliveryService{
+public class DeliveryServiceImpl implements IDeliveryService {
 
-	@Autowired ModelMapper mapper;
-	
-	@Autowired DeliveryRepository deliveryRepository;
-	
+	@Autowired
+	ModelMapper mapper;
+
+	@Autowired
+	DeliveryRepository deliveryRepository;
+
 	@Override
 	public DeliveryDto save(DeliveryDto deliveryDto) {
 		Delivery entity = new Delivery();
@@ -48,10 +50,10 @@ public class DeliveryServiceImpl implements IDeliveryService{
 
 	@Override
 	public List<DeliveryDto> findAll() {
-		
+
 		List<DeliveryDto> results = new ArrayList<>();
 		List<Delivery> entitise = deliveryRepository.findAll();
-		
+
 		for (Delivery delivery : entitise) {
 			DeliveryDto deliveryDto = mapper.map(delivery, DeliveryDto.class);
 			results.add(deliveryDto);

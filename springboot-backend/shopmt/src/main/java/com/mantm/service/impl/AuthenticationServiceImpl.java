@@ -31,25 +31,30 @@ import com.mantm.utils.JwtUtil;
 
 @Component
 @Transactional
-public class AuthenticationServiceImpl implements IAuthenticationService{
-	
-	@Autowired CustomUserDetailsService customUserDetailsService;
-	@Autowired UserRepository userRepository;
-	@Autowired RoleRepository roleRepository;
-	@Autowired JwtUtil jwtUtil;
-	@Autowired AuthenticationManager authenticationManager;
-	@Autowired PasswordEncoder passwordEncoder;
-	
-	
+public class AuthenticationServiceImpl implements IAuthenticationService {
+
+	@Autowired
+	CustomUserDetailsService customUserDetailsService;
+	@Autowired
+	UserRepository userRepository;
+	@Autowired
+	RoleRepository roleRepository;
+	@Autowired
+	JwtUtil jwtUtil;
+	@Autowired
+	AuthenticationManager authenticationManager;
+	@Autowired
+	PasswordEncoder passwordEncoder;
+
 	@Override
 	@Transactional(rollbackFor = ResourceNotFoundException.class)
 	public AuthResponse register(@RequestBody RegisterRequest request) throws ResourceNotFoundException {
-		
+
 		User user = new User();
 		List<Role> roles = new ArrayList<>();
 		Cart cart = new Cart();
 		AuthResponse authResponse = new AuthResponse();
-		
+
 		for (String role : request.getRoles()) {
 			Role roleEntity = roleRepository.findByName(role);
 			if (roleEntity == null) {
@@ -57,67 +62,64 @@ public class AuthenticationServiceImpl implements IAuthenticationService{
 			}
 			roles.add(roleEntity);
 		}
-		
+
 		BeanUtils.copyProperties(request, user, "password");
 		user.setPassword(passwordEncoder.encode(request.getPassword()));
 		user.setRoles(roles);
 		user.setCart(cart);
-		
+
 		user = userRepository.save(user);
-		
+
 		UserDetails userDetails = customUserDetailsService.loadUserByUsername(user.getEmail());
-		
+
 		String access_token = jwtUtil.generateToken(userDetails, false);
 		String refresh_token = jwtUtil.generateToken(userDetails, true);
-		
+
 		authResponse.setAccessToken(access_token);
 		authResponse.setRefreshToken(refresh_token);
 		authResponse.setRoles(request.getRoles());
 		authResponse.setUserId(user.getId());
-		return authResponse;	
+		return authResponse;
 	}
 
 	@Override
 	public AuthResponse authenticate(AuthRequest request) {
 		AuthResponse authResponse = new AuthResponse();
 		UserDto userDto = new UserDto();
-		authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
-		);
+		authenticationManager
+				.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
 		UserDetails userDetails = customUserDetailsService.loadUserByUsername(request.getEmail());
 		User user = userRepository.findByEmail(request.getEmail());
 		BeanUtils.copyProperties(user, userDto);
-		
-		
+
 		String access_token = jwtUtil.generateToken(userDetails, false);
 		String refresh_token = jwtUtil.generateToken(userDetails, true);
-		
-		
+
 		authResponse.setAccessToken(access_token);
 		authResponse.setRefreshToken(refresh_token);
 		authResponse.setRoles(getRoleUser(access_token));
 		authResponse.setUserId(user.getId());
 		return authResponse;
 	}
-	
+
 	@Override
 	public AuthResponse refresh(TokenRefreshRequest request) {
 		AuthResponse authResponse = new AuthResponse();
 		String refresh_token = request.getTokenRefresh();
 		String access_token = null;
-		
+
 		String username = jwtUtil.extractUsername(refresh_token);
 		UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
-		
+
 		access_token = jwtUtil.generateToken(userDetails, false);
 		refresh_token = jwtUtil.generateToken(userDetails, true);
-		
+
 		authResponse.setAccessToken(access_token);
 		authResponse.setRefreshToken(refresh_token);
 		authResponse.setRoles(getRoleUser(access_token));
 		return authResponse;
 	}
-	
+
 	public Set<String> getRoleUser(String token) {
 		Set<String> roles = new HashSet<>();
 		String roleUser = jwtUtil.extractRoles(token);

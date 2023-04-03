@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,14 +18,14 @@ import com.mantm.exception.ResourceNotFoundException;
 import com.mantm.repository.CategoryRepository;
 import com.mantm.service.ICategoryService;
 
-
-
 @Component
 @Transactional
 public class CategoryServiceImpl implements ICategoryService {
 
-	@Autowired ModelMapper mapper;
-	@Autowired CategoryRepository categoryRepository;
+	@Autowired
+	ModelMapper mapper;
+	@Autowired
+	CategoryRepository categoryRepository;
 
 	@Override
 	public List<CategoryDto> findAll() {
@@ -42,7 +41,7 @@ public class CategoryServiceImpl implements ICategoryService {
 	@Override
 	public CategoryDto findCategoryById(long id) throws ResourceNotFoundException {
 		Category entity = categoryRepository.findById(id)
-				.orElseThrow(()-> new ResourceNotFoundException("Category not exist with id: " + id));
+				.orElseThrow(() -> new ResourceNotFoundException("Category not exist with id: " + id));
 		CategoryDto result = mapper.map(entity, CategoryDto.class);
 		return result;
 	}
@@ -70,14 +69,14 @@ public class CategoryServiceImpl implements ICategoryService {
 		resp.put("delete", "Success");
 		return resp;
 	}
-	
+
 	@Override
 	@Transactional(rollbackFor = ResourceNotFoundException.class)
 	public Map<String, String> deleteSoftCategory(long[] ids) throws ResourceNotFoundException {
 		Map<String, String> resp = new HashMap<>();
 		for (long item : ids) {
 			Category entity = categoryRepository.findById(item)
-					.orElseThrow(()-> new ResourceNotFoundException("Category not exist with id: " + item));
+					.orElseThrow(() -> new ResourceNotFoundException("Category not exist with id: " + item));
 			entity.setDeleted(true);
 			categoryRepository.save(entity);
 		}

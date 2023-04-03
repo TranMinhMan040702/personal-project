@@ -1,14 +1,11 @@
 package com.mantm.convert;
 
-import java.util.Optional;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mantm.dto.OrderItemDto;
 import com.mantm.dto.ProductDto;
-import com.mantm.entity.Order;
 import com.mantm.entity.OrderItem;
 import com.mantm.entity.Product;
 import com.mantm.exception.ResourceNotFoundException;
@@ -32,9 +29,9 @@ public class OrderItemConvert {
 	public OrderItem convertToEntity (OrderItemDto orderItemDto) throws ResourceNotFoundException {
 		OrderItem entity = new OrderItem();
 		Product product = productConvert.convertToEntity(orderItemDto.getProduct());
-		Optional<Order> order = orderRepository.findById(orderItemDto.getOrderId());
+//		Optional<Order> order = orderRepository.findById(orderItemDto.getOrderId());
 		entity.setProduct(product);
-		entity.setOrder(order.get());
+//		entity.setOrder(order.get());
 		BeanUtils.copyProperties(orderItemDto, entity);
 		return entity;
 	}

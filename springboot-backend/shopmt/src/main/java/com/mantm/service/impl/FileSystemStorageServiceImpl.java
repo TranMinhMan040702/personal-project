@@ -19,44 +19,43 @@ import com.mantm.service.IStorageService;
 @Component
 public class FileSystemStorageServiceImpl implements IStorageService {
 	private final Path rootLocation;
-	
+
 	public FileSystemStorageServiceImpl(StoragePropertise properties) {
 		this.rootLocation = Paths.get(properties.getLocation());
 	}
-	
+
 	@Override
 	public String getStorageFileName(MultipartFile file, String id) {
 		String ext = FilenameUtils.getExtension(file.getOriginalFilename());
 		return "p" + id + "." + ext;
 	}
-	
+
 	// Save image into DIR
 	@Override
 	public void store(MultipartFile file, String storeFileName) {
 		try {
-			if(file.isEmpty()) {
+			if (file.isEmpty()) {
 				throw new StorageException("Failed to store empty file");
 			}
-			Path destinationFile = this.rootLocation.resolve(Paths.get(storeFileName))
-					.normalize().toAbsolutePath();
+			Path destinationFile = this.rootLocation.resolve(Paths.get(storeFileName)).normalize().toAbsolutePath();
 			if (!destinationFile.getParent().equals(this.rootLocation.toAbsolutePath())) {
 				throw new StorageException("Cannot store file outside current directory");
 			}
 			try (InputStream inputStream = file.getInputStream()) {
 				Files.copy(inputStream, destinationFile, StandardCopyOption.REPLACE_EXISTING);
 			}
-			
+
 		} catch (Exception e) {
 			throw new StorageException("Failed to store file: ", e);
 		}
 	}
-	
+
 	@Override
 	public Resource loadAsResource(String filename) {
 		try {
 			Path file = load(filename);
 			Resource resource = new UrlResource(file.toUri());
-			if(resource.exists() || resource.isReadable()) {
+			if (resource.exists() || resource.isReadable()) {
 				return resource;
 			}
 			throw new StorageException("Can not read file: " + filename);
@@ -64,12 +63,12 @@ public class FileSystemStorageServiceImpl implements IStorageService {
 			throw new StorageException("Could not read file: " + filename);
 		}
 	}
-	
+
 	@Override
 	public Path load(String filename) {
 		return rootLocation.resolve(filename);
 	}
-	
+
 	@Override
 	public void delete(String storeFilename) throws Exception {
 		if (storeFilename != null) {
@@ -77,11 +76,11 @@ public class FileSystemStorageServiceImpl implements IStorageService {
 			Files.delete(destinationFile);
 		}
 	}
-	
+
 	@Override
 	public void init() {
 		try {
-			Files.createDirectories(rootLocation); 
+			Files.createDirectories(rootLocation);
 			System.out.println(rootLocation.toString());
 		} catch (Exception e) {
 			throw new StorageException("Could not read file: ", e);
