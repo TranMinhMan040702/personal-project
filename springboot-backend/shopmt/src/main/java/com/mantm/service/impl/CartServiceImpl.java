@@ -1,6 +1,8 @@
 package com.mantm.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,6 +85,16 @@ public class CartServiceImpl implements ICartService {
 		cart.get().getCartItems().removeIf(item -> item.getId().equals(cartItemId));
 		cartRepository.save(cart.get());
 		return cartConvert.convertToDto(cart.get());
+	}
+	
+	@Override
+	public Map<String, String> clearedCart(long cartId) {
+		Map<String, String> resp = new HashMap<>();
+		Optional<Cart> cart = cartRepository.findById(cartId);
+		cart.get().getCartItems().clear();
+		cartRepository.save(cart.get());
+		resp.put("Clear Cart", "Successfully");
+		return resp;
 	}
 
 }

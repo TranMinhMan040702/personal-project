@@ -1,18 +1,16 @@
-function Modal({ modalBody, modalHeader, modalFooter }) {
+function Modal({ modalBody, modalHeader, modalFooter, modalId }) {
     return (
-        <div class="modal fade" id="modal" tabindex="-1" aria-hidden="true">
+        <div class="modal fade" id={modalId} tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">{modalHeader}</h5>
-                        <button
-                            type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"
-                        ></button>
+                        <h5 class="modal-title" style={{ fontSize: '20px' }}>
+                            {modalHeader}
+                        </h5>
                     </div>
-                    <div class="modal-body">{modalBody}</div>
+                    <div class="modal-body" style={{ padding: '0px 10px' }}>
+                        {modalBody}
+                    </div>
                     <div class="modal-footer">{modalFooter}</div>
                 </div>
             </div>

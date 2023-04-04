@@ -3,12 +3,13 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import { useAuth } from '../../../../hooks';
 import { useDispatch } from 'react-redux';
-import AuthService from '../../../../services/AuthService';
-import images from '../../../../assets/images';
-import config from '../../../../config';
 import { createAccount } from '../../../../redux/slice/accountSlice';
 import { getCart } from '../../../../redux/slice/cartSlice';
 import { getAddresses } from '../../../../redux/slice/addressSlice';
+import { getDeliverise } from '../../../../redux/slice/deliverySlice';
+import AuthService from '../../../../services/AuthService';
+import images from '../../../../assets/images';
+import config from '../../../../config';
 
 function LoginForm() {
     const { setAuth } = useAuth();
@@ -41,6 +42,7 @@ function LoginForm() {
             dispatch(createAccount(response.data.userId));
             dispatch(getCart(response.data.userId));
             dispatch(getAddresses(response.data.userId));
+            dispatch(getDeliverise());
             navigate(roles.includes('ADMIN') ? '/admin' : from, { replace: true });
         } catch (err) {
             toast.error(config.message.error.login);

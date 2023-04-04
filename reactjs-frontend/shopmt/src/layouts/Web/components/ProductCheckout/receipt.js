@@ -1,22 +1,23 @@
-function Receipt({ handleTotalPrice }) {
+import { formatter } from '../../../../utils';
+function Receipt({ handleTotalPrice, deliveryOrder, handleOrder }) {
     return (
         <div className="receipt d-flex justify-content-end">
             <div className="detail">
                 <div className="d-flex justify-content-between align-items-center mb-3">
                     <h5>Tổng tiền hàng</h5>
-                    <span>{handleTotalPrice()}</span>
+                    <span>{formatter(handleTotalPrice())}</span>
                 </div>
                 <div className="d-flex justify-content-between align-items-center mb-3">
                     <h5>Phí vận chuyển</h5>
-                    <span>12.000.00 đ</span>
+                    <span>{formatter(deliveryOrder.price)}</span>
                 </div>
                 <div className="d-flex justify-content-between align-items-center mb-3">
                     <h5>Tổng thanh toán</h5>
-                    <h3>212.000.00 đ</h3>
+                    <h3>{formatter(handleTotalPrice() + deliveryOrder.price)}</h3>
                 </div>
             </div>
             <div className="line"></div>
-            <button>Đặt hàng</button>
+            <button onClick={() => handleOrder()}>Đặt hàng</button>
         </div>
     );
 }

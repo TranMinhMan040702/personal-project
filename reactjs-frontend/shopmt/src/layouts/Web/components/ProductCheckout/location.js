@@ -1,27 +1,9 @@
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useSelector } from 'react-redux';
-import { addressUser } from '../../../../redux/selectors';
 import Modal from '../../../../components/Modal';
 import './location.scss';
-import { useEffect, useState } from 'react';
-function Location() {
-    // cần sửa lại để
-    const addresses = useSelector(addressUser);
-    const addressDefault = addresses.find((address) => address.status === true);
-    const [addressOrder, setAddressOrder] = useState(addressDefault);
-    const [check, setCheck] = useState();
 
-    const handleUpdateAddressOrder = (e) => {
-        let addressOrder = document.getElementsByName('addressOrder');
-        for (let i = 0; i < addressOrder.length; i++) {
-            if (addressOrder[i].checked) {
-                setAddressOrder(
-                    addresses.find((address) => address.id == addressOrder[i].defaultValue),
-                );
-            }
-        }
-    };
+function Location({ addresses, addressOrder, addressCurrent, setAddressCurrent, setAddressOrder }) {
     const modalHeader = 'Địa chỉ của tôi';
     const modalBody = (
         <div className="address-list">
@@ -40,8 +22,8 @@ function Location() {
                                     type="radio"
                                     name="addressOrder"
                                     value={address.id}
-                                    onChange={(e) => handleUpdateAddressOrder(e)}
-                                    checked={address.id == check}
+                                    onChange={() => setAddressCurrent(address)}
+                                    checked={address.id === addressCurrent.id}
                                 />
                                 <label htmlFor="">
                                     <div className="address">
@@ -73,6 +55,7 @@ function Location() {
                 type="button"
                 class="btn btn-sm btn-secondary modal-address"
                 data-bs-dismiss="modal"
+                onClick={() => setAddressCurrent(addressOrder)}
             >
                 Hủy
             </button>
@@ -80,7 +63,7 @@ function Location() {
                 type="submit"
                 data-bs-dismiss="modal"
                 class="btn btn-sm btn-success"
-                onClick={() => handleUpdateAddressOrder()}
+                onClick={() => setAddressOrder(addressCurrent)}
             >
                 Xác nhận
             </button>
@@ -102,7 +85,7 @@ function Location() {
                             <button
                                 className="btn btn-link"
                                 data-bs-toggle="modal"
-                                data-bs-target="#modal"
+                                data-bs-target="#modal-location"
                             >
                                 Thay đổi
                             </button>
@@ -110,7 +93,12 @@ function Location() {
                     )}
                 </div>
             </div>
-            <Modal modalHeader={modalHeader} modalBody={modalBody} modalFooter={modalFooter} />
+            <Modal
+                modalHeader={modalHeader}
+                modalBody={modalBody}
+                modalFooter={modalFooter}
+                modalId={'modal-location'}
+            />
         </div>
     );
 }

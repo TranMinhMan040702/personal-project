@@ -1,23 +1,97 @@
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { cartUser, addressUser, deliveriseSystem, accountUser } from '../../../../redux/selectors';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { formatter } from '../../../../utils';
+import { clearedCart } from '../../../../redux/slice/cartSlice';
+import { ToastContainer, toast } from 'react-toastify';
+import Receipt from './receipt';
 import Location from './location';
 import Delivery from './delivery';
 import Payment from './payment';
-import { useSelector } from 'react-redux';
-import { cartUser } from '../../../../redux/selectors';
-import { formatter } from '../../../../utils';
+import config from '../../../../config';
+import OrderService from '../../../../services/OrderService';
 import './productcheckout.scss';
-import Receipt from './receipt';
 function ProductCheckout() {
     const IMAGE_URL = process.env.REACT_APP_IMAGE_API_URL;
+    const dispath = useDispatch();
+    const navigate = useNavigate();
     const cart = useSelector(cartUser);
+    const account = useSelector(accountUser);
+    // const [order, setOrder] = useState();
+
+    // Address
+    const addresses = useSelector(addressUser);
+    const addressDefault = addresses.find((address) => address.status === true);
+    const [addressCurrent, setAddressCurrent] = useState(addressDefault);
+    const [addressOrder, setAddressOrder] = useState(addressDefault);
+
+    // Delivery
+    const deliverise = useSelector(deliveriseSystem);
+    const deliveryDefault = deliverise[0];
+    const [deliveryCurrent, setDeliveryCurrent] = useState(deliveryDefault);
+    const [deliveryOrder, setDeliveryOrder] = useState(deliveryDefault);
+
+    // Payment
+    const [isPaidBefore, setIsPaidBefore] = useState(false);
+    const handleAddress = () => {
+        return (
+            addressOrder.street +
+            ', ' +
+            addressOrder.ward +
+            ', ' +
+            addressOrder.district +
+            ', ' +
+            addressOrder.province
+        );
+    };
+    const handleOrderItem = () => {
+        return cart.map((item) => {
+            return { count: item.count, product: item.product };
+        });
+    };
+
+    // Order
+    const handleOrder = async () => {
+        try {
+            const response = await OrderService.createOrder({
+                address: handleAddress(),
+                phone: addressOrder.phone,
+                paidBefore: isPaidBefore,
+                amountFromUser: handleTotalPrice() + deliveryOrder.price,
+                user: { id: account.id },
+                delivery: deliveryOrder,
+                orderItems: handleOrderItem(),
+            });
+            toast.success(config.message.success.order);
+            dispath(clearedCart(account.cartId));
+            navigate('/user/purchase?state=ALL');
+        } catch (err) {
+            console.log(err);
+        }
+    };
+    // index
     const handleTotalPrice = () => {
         const totalPrice = cart.reduce((acc, curr) => {
             return acc + curr.product.promotionalPrice * curr.count;
         }, 0);
-        return formatter(totalPrice);
+        return totalPrice;
     };
+    // console.log(addressOrder);
+    // console.log(deliveryOrder);
+    // console.log(isPaidBefore);
+    // console.log(order);
+
     return (
         <>
-            <Location />
+            <Location
+                addresses={addresses}
+                addressCurrent={addressCurrent}
+                setAddressCurrent={setAddressCurrent}
+                addressOrder={addressOrder}
+                setAddressOrder={setAddressOrder}
+            />
             <div className="productCheckout background">
                 <div className="container">
                     <div className="cart-list">
@@ -60,15 +134,29 @@ function ProductCheckout() {
                                 );
                             })}
                     </div>
-                    <Delivery />
+                    <Delivery
+                        deliverise={deliverise}
+                        deliveryCurrent={deliveryCurrent}
+                        setDeliveryCurrent={setDeliveryCurrent}
+                        deliveryOrder={deliveryOrder}
+                        setDeliveryOrder={setDeliveryOrder}
+                    />
                     <div className="finish">
                         <div className="product">
-                            <Payment />
-                            <Receipt handleTotalPrice={handleTotalPrice} />
+                            <Payment
+                                isPaidBefore={isPaidBefore}
+                                setIsPaidBefore={setIsPaidBefore}
+                            />
+                            <Receipt
+                                handleTotalPrice={handleTotalPrice}
+                                deliveryOrder={deliveryOrder}
+                                handleOrder={handleOrder}
+                            />
                         </div>
                     </div>
                 </div>
             </div>
+            <ToastContainer autoClose={1000} pauseOnHover={false} />
         </>
     );
 }
