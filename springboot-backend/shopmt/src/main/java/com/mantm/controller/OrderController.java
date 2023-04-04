@@ -33,7 +33,12 @@ public class OrderController {
 		return ResponseEntity.ok(orderService.findAllOrders());
 	}
 	
-	@GetMapping("/order/{userId}")
+	@GetMapping("/order/user")
+	public ResponseEntity<?> getOrderByStatus(@RequestParam long userId, @RequestParam String status) {
+		return ResponseEntity.ok(orderService.findOrderByStatus(userId, status));
+	}
+	
+	@GetMapping("/order/user/{userId}")
 	public ResponseEntity<?> getOrderByUser(@PathVariable long userId) {
 		return ResponseEntity.ok(orderService.findAllOrdersByUser(userId));
 	}

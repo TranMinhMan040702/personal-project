@@ -25,6 +25,7 @@ const images = {
     },
     facebook: require('../../../src/assets/images/fb.png'),
     google: require('../../../src/assets/images/gg.png'),
+    orderEmpty: require('../../../src/assets/images/orderEmpty.png'),
 };
 
 export default images;

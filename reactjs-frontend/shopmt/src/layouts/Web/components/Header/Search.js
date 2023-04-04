@@ -86,7 +86,9 @@ function Search() {
                                                 </Link>
                                             </li>
                                             <li>
-                                                <Link to={`${config.routes.web.user}/purchase`}>
+                                                <Link
+                                                    to={`${config.routes.web.user}/purchase?state=ALL`}
+                                                >
                                                     Đơn hàng
                                                 </Link>
                                             </li>
