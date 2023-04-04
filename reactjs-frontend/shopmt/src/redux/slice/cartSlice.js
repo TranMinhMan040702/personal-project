@@ -51,6 +51,13 @@ const cartSlice = createSlice({
             .addCase(deleteAllProductInCartItem.fulfilled, (state, action) => {
                 state.status = 'idle';
                 state.cart = action.payload;
+            })
+            .addCase(clearedCart.pending, (state, action) => {
+                state.status = 'pending';
+            })
+            .addCase(clearedCart.fulfilled, (state, action) => {
+                state.status = 'idle';
+                state.cart = action.payload;
             });
     },
 });
@@ -81,3 +88,8 @@ export const deleteAllProductInCartItem = createAsyncThunk(
         return response.data.cartItems;
     },
 );
+
+export const clearedCart = createAsyncThunk('cart/clearedCart', async (cartId) => {
+    const response = await CartService.clearedCart(cartId);
+    return response.data;
+});

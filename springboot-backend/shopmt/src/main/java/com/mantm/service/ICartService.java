@@ -1,5 +1,7 @@
 package com.mantm.service;
 
+import java.util.Map;
+
 import org.springframework.stereotype.Service;
 
 import com.mantm.dto.CartDto;
@@ -16,5 +18,7 @@ public interface ICartService {
 	CartDto deleteAllProductInCart(long cartItemId);
 
 	CartDto findCartUser(long userId);
+
+	Map<String, String> clearedCart(long cartId);
 
 }

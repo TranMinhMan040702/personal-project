@@ -6,7 +6,7 @@ function SummaryCart(props) {
             <h2>Giỏ hàng</h2>
             <div className="d-flex justify-content-between">
                 <h4>Tổng giá :</h4>
-                <h3>{props.handleTotalPrice}.00 vnd</h3>
+                <h3>{props.handleTotalPrice}</h3>
             </div>
             <Link to={config.routes.web.checkout}>Thanh toán</Link>
         </div>

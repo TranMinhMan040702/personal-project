@@ -35,7 +35,6 @@ function Address({ account }) {
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(address);
         dispath(uploadAddress(address));
         clearedData();
         toast.success(config.message.success.uploadAddress);
@@ -66,7 +65,7 @@ function Address({ account }) {
     };
     const modalHeader = 'Địa chỉ mới';
     const modalBody = (
-        <form>
+        <form style={{ padding: '20px' }}>
             <div class="mb-3">
                 <input
                     type="text"
@@ -158,6 +157,7 @@ function Address({ account }) {
                 type="button"
                 class="btn btn-sm btn-secondary modal-address"
                 data-bs-dismiss="modal"
+                onClick={() => clearedData()}
             >
                 Hủy
             </button>
