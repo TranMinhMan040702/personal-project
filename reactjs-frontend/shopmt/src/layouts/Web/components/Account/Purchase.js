@@ -1,76 +1,186 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTruck } from '@fortawesome/free-solid-svg-icons';
-import images from '../../../../assets/images';
-import config from '../../../../config';
+import { faMoneyCheckDollar, faTruck } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { accountUser } from '../../../../redux/selectors';
+import { convertStatus, formatter } from '../../../../utils';
+import OrderEmpty from '../Empty/OrderEmpty';
+import OrderService from '../../../../services/OrderService';
+import config from '../../../../config';
 function Purchase() {
-    const path = config.routes.web.user + '/purchase';
-    const url = useLocation();
-    const [liPrev, setLiPrev] = useState(null);
-    // useEffect(() => {
-    //     console.log(liPrev);
-    //     if (liPrev !== null) {
-    //         liPrev.classList.remove('active');
-    //         const state = url.search.split('=')[1];
-    //         const tag = document.getElementById(state);
-    //         tag.classList.add('active');
-    //         setLiPrev(tag);
-    //         console.log(state);
-    //     }
-    // }, [url]);
+    const IMAGE_URL = process.env.REACT_APP_IMAGE_API_URL;
+    const account = useSelector(accountUser);
+    let location = useLocation();
+    const navigate = useNavigate();
+    const [orders, setOrders] = useState();
+
+    useEffect(() => {
+        handleActive(location.search);
+        let param = location.search.split('=');
+        let status = param[param.length - 1];
+        if (status === 'ALL') {
+            getAllOrdersByUserId(account.id);
+        } else {
+            getOrderByUserId(account.id, status);
+        }
+        console.log(status);
+    }, [location]);
+    const getOrderByUserId = async (userId, status) => {
+        try {
+            const response = await OrderService.getByUserAndStatus(userId, status);
+            setOrders(response.data);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+    const getAllOrdersByUserId = async (userId) => {
+        try {
+            const response = await OrderService.getOrdersAllByUser(userId);
+            setOrders(response.data);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+    const handleTotalMoney = (orderItems) => {
+        return orderItems.reduce(
+            (acc, item) => acc + item.product.promotionalPrice * item.count,
+            0,
+        );
+    };
+    const handleClick = (e) => {
+        e.preventDefault();
+        const paramOrigin = e.target.href.split('user/')[1];
+        handleActive(paramOrigin);
+        navigate(config.routes.web.user + '/' + paramOrigin);
+    };
+    const handleActive = (paramOrigin) => {
+        let tag = document.getElementsByClassName('link-purchase');
+        for (var i = 0; i < tag.length; i++) {
+            if (tag[i].classList.contains('active')) {
+                tag[i].classList.remove('active');
+            }
+            if (tag[i].href.includes(paramOrigin)) {
+                tag[i].classList.add('active');
+            }
+        }
+    };
     return (
         <div className="purchase">
             <div className="nav-purchase wapper mb-3">
                 <ul className="d-flex justify-content-between align-items-center">
-                    <li className="active" id="ALL">
-                        <Link to={path + '?state=ALL'}>Tất cả</Link>
+                    <li id="ALL">
+                        <Link
+                            className="link-purchase"
+                            to={config.routes.web.user + '/purchase?state=ALL'}
+                            onClick={(e) => handleClick(e)}
+                        >
+                            Tất cả
+                        </Link>
                     </li>
                     <li id="NOT_PROCESSED">
-                        <Link to={path + '?state=NOT_PROCESSED'}>Chờ thanh toán</Link>
+                        <Link
+                            className="link-purchase"
+                            to={config.routes.web.user + '/purchase?state=NOT_PROCESSED'}
+                            onClick={(e) => handleClick(e)}
+                        >
+                            Chưa xử lý
+                        </Link>
                     </li>
                     <li id="PROCESSING">
-                        <Link to={path + '?state=PROCESSING'}>Vận chuyển</Link>
+                        <Link
+                            className="link-purchase"
+                            to={config.routes.web.user + '/purchase?state=PROCESSING'}
+                            onClick={(e) => handleClick(e)}
+                        >
+                            Đang xử lý
+                        </Link>
                     </li>
                     <li id="SHIPPED">
-                        <Link to={path + '?state=SHIPPED'}>Đang giao</Link>
+                        <Link
+                            className="link-purchase"
+                            to={config.routes.web.user + '/purchase?state=SHIPPED'}
+                            onClick={(e) => handleClick(e)}
+                        >
+                            Đang giao
+                        </Link>
                     </li>
                     <li id="DELIVERED">
-                        <Link to={path + '?state=DELIVERED'}>Hoàn thành</Link>
+                        <Link
+                            className="link-purchase"
+                            to={config.routes.web.user + '/purchase?state=DELIVERED'}
+                            onClick={(e) => handleClick(e)}
+                        >
+                            Hoàn thành
+                        </Link>
                     </li>
                     <li id="CANCELLED">
-                        <Link to={path + '?state=CANCELLED'}>Đã hủy</Link>
+                        <Link
+                            className="link-purchase"
+                            to={config.routes.web.user + '/purchase?state=CANCELLED'}
+                            onClick={(e) => handleClick(e)}
+                        >
+                            Đã hủy
+                        </Link>
                     </li>
                 </ul>
             </div>
             <div className="cart-list">
-                <div className="wapper cart-item">
-                    <div className="cart-header d-flex justify-content-end align-items-center">
-                        <FontAwesomeIcon icon={faTruck} />
-                        <span>Đơn hàng đang giao</span>
-                    </div>
-                    <div className="cart-details d-flex align-items-center justify-content-between">
-                        <div className="name d-flex align-items-center">
-                            <div className="cart-image d-flex">
-                                <img src={images.products.p1} alt="product" />
+                {orders.length > 0 ? (
+                    orders.map((order, index) => {
+                        return (
+                            <div key={index} className="cart-item">
+                                <div className="wapper">
+                                    <div className="cart-header d-flex justify-content-end align-items-center">
+                                        <FontAwesomeIcon icon={faTruck} />
+                                        <span>Đơn hàng {convertStatus(order.status)}</span>
+                                    </div>
+                                    {order.orderItems.map((item, index) => {
+                                        return (
+                                            <div
+                                                key={index}
+                                                className="cart-details d-flex align-items-center justify-content-start"
+                                            >
+                                                <div className="name" style={{ width: '13%' }}>
+                                                    <div className="cart-image d-flex">
+                                                        <img
+                                                            className="img-thumbnail"
+                                                            src={
+                                                                IMAGE_URL +
+                                                                '/' +
+                                                                item.product.images[0]
+                                                            }
+                                                            alt="product"
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div className="infor d-flex flex-column justify-content-center">
+                                                    <h4>{item.product.name}</h4>
+                                                    <h5 className=" text-start">x{item.count}</h5>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                                <div className="money d-flex align-items-center justify-content-end">
+                                    <FontAwesomeIcon
+                                        style={{
+                                            fontSize: '18px',
+                                            color: 'var(--primary-color-web)',
+                                        }}
+                                        icon={faMoneyCheckDollar}
+                                    />
+                                    <h5>Thành tiền:</h5>
+                                    <span>{formatter(handleTotalMoney(order.orderItems))}</span>
+                                </div>
                             </div>
-                            <h4>Nhà giả kim</h4>
-                        </div>
-                        <div className="price">
-                            <span>Đơn giá</span>
-                            <h5>100.000.00</h5>
-                        </div>
-                        <div className="quatity">
-                            <span>Số lượng</span>
-                            <h5>2</h5>
-                        </div>
-                        <div className="total">
-                            <span>Thành tiền</span>
-                            <h5>200.000.00</h5>
-                        </div>
-                    </div>
-                </div>
+                        );
+                    })
+                ) : (
+                    <OrderEmpty />
+                )}
             </div>
         </div>
     );

@@ -75,6 +75,17 @@ public class OrderServiceImpl implements IOrderService {
 		}
 		return orderDtos;
 	}
+	
+	@Override
+	public List<OrderDto> findOrderByStatus(long userId, String status) {
+		List<OrderDto> orderDtos = new ArrayList<>();
+		Optional<User> user = userRepository.findById(userId);
+		List<Order> orders = orderRepository.findByUserAndStatus(user.get(), handleStatus(status));
+		for (Order order : orders) {
+			orderDtos.add(orderConvert.convertToDto(order));
+		}
+		return orderDtos;
+	}
 
 	@Override
 	public List<OrderDto> updateStatus(long orderId, String status) {

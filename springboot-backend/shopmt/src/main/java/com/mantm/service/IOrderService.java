@@ -18,4 +18,6 @@ public interface IOrderService {
 
 	List<OrderDto> updateStatus(long orderId, String status);
 
+	List<OrderDto> findOrderByStatus(long userId, String status);
+
 }
