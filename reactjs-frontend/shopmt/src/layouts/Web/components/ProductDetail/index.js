@@ -13,7 +13,6 @@ import config from '../../../../config';
 import './productdetail.scss';
 
 function ProductDetail() {
-    const IMAGE_URL = process.env.REACT_APP_IMAGE_API_URL;
     const account = useSelector(accountUser);
     const param = useParams();
     const dispatch = useDispatch();
@@ -29,7 +28,7 @@ function ProductDetail() {
         try {
             const response = await ProductService.getProductById(id);
             setProduct(response.data);
-            setImage(IMAGE_URL + '\\' + response.data.images[0]);
+            setImage(response.data.images[0]);
             console.log(response.data);
         } catch (err) {
             console.log(err);
@@ -70,7 +69,7 @@ function ProductDetail() {
                                     return (
                                         <div className="small-images-item img-thumbnail">
                                             <img
-                                                src={IMAGE_URL + '\\' + image}
+                                                src={image}
                                                 alt=""
                                                 onMouseEnter={(e) => handleImage(e)}
                                             />

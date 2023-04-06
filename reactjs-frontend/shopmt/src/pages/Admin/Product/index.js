@@ -70,10 +70,7 @@ function Product() {
                                     <div className="col-lg-3 mb-5">
                                         <div className="card shadow-sm">
                                             <Link className="img-wrap">
-                                                <img
-                                                    src={IMAGE_URL + '\\' + product.images[0]}
-                                                    alt="product"
-                                                />
+                                                <img src={product.images[0]} alt="product" />
                                             </Link>
                                             <div className="info-wrap">
                                                 <Link className="title text-truncate">

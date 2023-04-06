@@ -14,7 +14,6 @@ import config from '../../../../config';
 import OrderService from '../../../../services/OrderService';
 import './productcheckout.scss';
 function ProductCheckout() {
-    const IMAGE_URL = process.env.REACT_APP_IMAGE_API_URL;
     const dispath = useDispatch();
     const navigate = useNavigate();
     const cart = useSelector(cartUser);
@@ -103,11 +102,7 @@ function ProductCheckout() {
                                             <div className="name d-flex align-items-center">
                                                 <div className="cart-image d-flex">
                                                     <img
-                                                        src={
-                                                            IMAGE_URL +
-                                                            '\\' +
-                                                            item.product.images[0]
-                                                        }
+                                                        src={item.product.images[0]}
                                                         alt="product"
                                                     />
                                                 </div>

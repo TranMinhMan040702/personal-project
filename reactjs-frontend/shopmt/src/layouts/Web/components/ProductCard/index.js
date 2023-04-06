@@ -9,7 +9,7 @@ import { accountUser } from '../../../../redux/selectors';
 import { addToCart } from '../../../../redux/slice/cartSlice';
 
 function ProductCard({ product }) {
-    const IMAGE_URL = process.env.REACT_APP_IMAGE_API_URL;
+    // const IMAGE_URL = process.env.REACT_APP_IMAGE_API_URL;
     const dispatch = useDispatch();
     const account = useSelector(accountUser);
 
@@ -27,7 +27,7 @@ function ProductCard({ product }) {
                 {handleDiscount(product.price, product.promotionalPrice)}%
             </span>
             <Link to={config.routes.web.productDetails + '\\' + product.id} className="img-wrap">
-                <img src={IMAGE_URL + '\\' + product.images[0]} alt="product" />
+                <img src={product.images[0]} alt="product" />
             </Link>
             <div className="info-wrap">
                 <Link to={config.routes.web.productDetails} className="title text-truncate">

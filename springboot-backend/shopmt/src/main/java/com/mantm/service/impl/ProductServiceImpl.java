@@ -1,10 +1,10 @@
 package com.mantm.service.impl;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
@@ -13,6 +13,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.mantm.dto.ProductDto;
 import com.mantm.entity.Category;
 import com.mantm.entity.Image_Product;
@@ -38,6 +40,8 @@ public class ProductServiceImpl implements IProductService {
 	CategoryRepository categoryRepository;
 	@Autowired
 	ImageProductRepository imageProductRepository;
+	@Autowired
+	Cloudinary cloudinary;
 
 	@Override
 	public ProductDto save(ProductDto productReq, MultipartFile[] files) throws Exception {
@@ -46,7 +50,7 @@ public class ProductServiceImpl implements IProductService {
 		if (productReq.getId() == null) {
 			BeanUtils.copyProperties(productReq, entity);
 			for (MultipartFile file : files) {
-				images.add(saveImage(file, entity));
+				images.add(saveCloudinary(file, entity));
 			}
 		} else {
 			entity = productRepository.findById(productReq.getId()).orElseThrow(
@@ -56,8 +60,8 @@ public class ProductServiceImpl implements IProductService {
 				Image_Product imageOld = entity.getImages().get(i);
 				MultipartFile imageNew = files[i];
 				if (!imageOld.getPath().equals(imageNew.getOriginalFilename())) {
-					storageService.delete(imageOld.getPath());
-					images.add(saveImage(imageNew, entity));
+//					storageService.delete(imageOld.getPath());
+					images.add(saveCloudinary(imageNew, entity));
 				} else {
 					images.add(imageOld);
 				}
@@ -119,15 +123,31 @@ public class ProductServiceImpl implements IProductService {
 		return resp;
 	}
 
-	private Image_Product saveImage(MultipartFile file, Product product) {
-		Image_Product image_Product = new Image_Product();
-		UUID uuid = UUID.randomUUID();
-		String id = uuid.toString();
-		String path = storageService.getStorageFileName(file, id);
-		storageService.store(file, path);
+	// WHEN SAVE IMAGE LOCAL 
+//	private Image_Product saveImage(MultipartFile file, Product product) {
+//		Image_Product image_Product = new Image_Product();
+//		UUID uuid = UUID.randomUUID();
+//		String id = uuid.toString();
+//		String path = storageService.getStorageFileName(file, id);
+//		storageService.store(file, path);
+//
+//		image_Product.setProduct(product);
+//		image_Product.setPath(path);
+//		return image_Product;
+//	}
 
-		image_Product.setProduct(product);
-		image_Product.setPath(path);
+	private Image_Product saveCloudinary(MultipartFile file, Product product) {
+		Image_Product image_Product = new Image_Product();
+		
+		try {
+			Map<?, ?> r = this.cloudinary.uploader().upload(file.getBytes(), 
+					ObjectUtils.asMap("resource_type", "auto"));
+			String img = (String) r.get("secure_url");
+			image_Product.setProduct(product);
+			image_Product.setPath(img);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return image_Product;
 	}
 

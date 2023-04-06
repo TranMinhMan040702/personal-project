@@ -1,15 +1,18 @@
 package com.mantm.service.impl;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.mantm.convert.AddressConvert;
 import com.mantm.convert.UserConvert;
 import com.mantm.dto.UserDto;
@@ -36,6 +39,8 @@ public class UserServiceImpl implements IUserService {
 	AddressConvert addressConvert;
 	@Autowired
 	IStorageService storageService;
+	@Autowired
+	Cloudinary cloudinary;
 
 	@Override
 	public List<UserDto> findAll() {
@@ -59,16 +64,36 @@ public class UserServiceImpl implements IUserService {
 		User user = userConvert.convertToEntity(userDto);
 		String avatarOld = user.getAvatar();
 		if ((avatarOld == null || !avatarOld.equals(file.getOriginalFilename())) && file != null) {
-			storageService.delete(avatarOld);
-			UUID uuid = UUID.randomUUID();
-			String id = uuid.toString();
-			String path = storageService.getStorageFileName(file, id);
-			storageService.store(file, path);
-			user.setAvatar(path);
+			user.setAvatar(saveAvatarCloudinary(file));
 		}
-//		BeanUtils.copyProperties(userDto, user, "createdAt", "createdBy");
 		User userResp = userRepository.save(user);
 		return userConvert.convertToDto(userResp);
 	}
+
+	private String saveAvatarCloudinary(MultipartFile file) {
+		Map<?, ?> r;
+		try {
+			r = this.cloudinary.uploader().upload(file.getBytes(), ObjectUtils.asMap("resource_type", "auto"));
+			return (String) r.get("secure_url");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return "";
+	}
+
+	// WHEN SAVE IMAGE LOCAL
+//	private String saveAvatarLocal(MultipartFile file, String avatarOld) {
+//		try {
+//			storageService.delete(avatarOld);
+//			UUID uuid = UUID.randomUUID();
+//			String id = uuid.toString();
+//			String path = storageService.getStorageFileName(file, id);
+//			storageService.store(file, path);
+//			return path;
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return "";
+//	}
 
 }

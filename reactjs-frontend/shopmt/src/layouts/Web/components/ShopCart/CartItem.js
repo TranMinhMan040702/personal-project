@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import { accountUser } from '../../../../redux/selectors';
 
 function CartItem({ item, handleIncreaseCount, handleDecreaseCount, handleRemoveItem }) {
-    const IMAGE_URL = process.env.REACT_APP_IMAGE_API_URL;
     const account = useSelector(accountUser);
 
     return (
@@ -14,7 +13,7 @@ function CartItem({ item, handleIncreaseCount, handleDecreaseCount, handleRemove
         >
             <div className="cart-details d-flex align-items-center">
                 <div className="cart-image">
-                    <img src={IMAGE_URL + '\\' + item.product.images[0]} alt="product" />
+                    <img src={item.product.images[0]} alt="product" />
                 </div>
                 <div className="cart-info">
                     <h4>{item.product.name}</h4>
