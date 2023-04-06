@@ -7,7 +7,6 @@ import images from '../../../../assets/images';
 import config from '../../../../config';
 import { useEffect } from 'react';
 function Navbar({ account }) {
-    const IMAGE_URL = process.env.REACT_APP_BASE_URL + '/images';
     let param = useParams()['slug'];
     const navigate = useNavigate();
     useEffect(() => {
@@ -33,7 +32,7 @@ function Navbar({ account }) {
     };
 
     const handAvatar = () => {
-        return account.avatar ? IMAGE_URL + '/' + account.avatar : images.noAvatar;
+        return account.avatar ? account.avatar : images.noAvatar;
     };
 
     return (

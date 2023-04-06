@@ -10,7 +10,6 @@ import accountSlice from '../../../../redux/slice/accountSlice';
 import cartSlice from '../../../../redux/slice/cartSlice';
 import { useDispatch } from 'react-redux';
 function Search() {
-    const IMAGE_URL = process.env.REACT_APP_IMAGE_API_URL;
     const cart = useSelector(cartUser);
     const account = useSelector(accountUser);
     const dispath = useDispatch();
@@ -30,7 +29,7 @@ function Search() {
         return 0;
     };
     const handleAvatar = () => {
-        return account.avatar ? IMAGE_URL + '/' + account.avatar : images.noAvatar;
+        return account.avatar ? account.avatar : images.noAvatar;
     };
     return (
         <div className="search">

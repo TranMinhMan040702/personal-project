@@ -11,7 +11,6 @@ import OrderEmpty from '../Empty/OrderEmpty';
 import OrderService from '../../../../services/OrderService';
 import config from '../../../../config';
 function Purchase() {
-    const IMAGE_URL = process.env.REACT_APP_IMAGE_API_URL;
     const account = useSelector(accountUser);
     let location = useLocation();
     const navigate = useNavigate();
@@ -147,11 +146,7 @@ function Purchase() {
                                                     <div className="cart-image d-flex">
                                                         <img
                                                             className="img-thumbnail"
-                                                            src={
-                                                                IMAGE_URL +
-                                                                '/' +
-                                                                item.product.images[0]
-                                                            }
+                                                            src={item.product.images[0]}
                                                             alt="product"
                                                         />
                                                     </div>
