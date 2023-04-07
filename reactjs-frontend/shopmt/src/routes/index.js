@@ -16,6 +16,7 @@ import Checkout from '../pages/Web/Checkout';
 import User from '../pages/Web/User';
 import Login from '../pages/Web/Login';
 import Register from '../pages/Web/Register';
+import Order from '../layouts/Web/components/Account/Order';
 const privateRoutes = [
     // Route Admin
     {
@@ -89,6 +90,12 @@ const privateRoutes = [
     },
     {
         path: config.routes.web.user + '/:slug',
+        component: User,
+        layout: WebLayout,
+        roles: ['USER'],
+    },
+    {
+        path: config.routes.web.user + '/purchase' + '/:slug',
         component: User,
         layout: WebLayout,
         roles: ['USER'],

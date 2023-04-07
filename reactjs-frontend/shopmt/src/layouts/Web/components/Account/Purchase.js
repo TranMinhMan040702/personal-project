@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import { accountUser } from '../../../../redux/selectors';
 import { convertStatus, formatter } from '../../../../utils';
 import OrderEmpty from '../Empty/OrderEmpty';
+import Loading from '../../../../components/Loading';
 import OrderService from '../../../../services/OrderService';
 import config from '../../../../config';
 function Purchase() {
@@ -15,6 +16,7 @@ function Purchase() {
     let location = useLocation();
     const navigate = useNavigate();
     const [orders, setOrders] = useState();
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         handleActive(location.search);
@@ -25,12 +27,12 @@ function Purchase() {
         } else {
             getOrderByUserId(account.id, status);
         }
-        console.log(status);
     }, [location]);
     const getOrderByUserId = async (userId, status) => {
         try {
             const response = await OrderService.getByUserAndStatus(userId, status);
             setOrders(response.data);
+            setLoading(false);
         } catch (err) {
             console.log(err);
         }
@@ -39,6 +41,7 @@ function Purchase() {
         try {
             const response = await OrderService.getOrdersAllByUser(userId);
             setOrders(response.data);
+            setLoading(false);
         } catch (err) {
             console.log(err);
         }
@@ -53,6 +56,7 @@ function Purchase() {
         e.preventDefault();
         const paramOrigin = e.target.href.split('user/')[1];
         handleActive(paramOrigin);
+        setLoading(true);
         navigate(config.routes.web.user + '/' + paramOrigin);
     };
     const handleActive = (paramOrigin) => {
@@ -127,10 +131,16 @@ function Purchase() {
                 </ul>
             </div>
             <div className="cart-list">
-                {orders.length > 0 ? (
+                {loading ? (
+                    <Loading />
+                ) : orders.length > 0 ? (
                     orders.map((order, index) => {
                         return (
-                            <div key={index} className="cart-item">
+                            <Link
+                                to={config.routes.web.user + '/purchase/order?orderId=' + order.id}
+                                key={index}
+                                className="cart-item"
+                            >
                                 <div className="wapper">
                                     <div className="cart-header d-flex justify-content-end align-items-center">
                                         <FontAwesomeIcon icon={faTruck} />
@@ -168,9 +178,14 @@ function Purchase() {
                                         icon={faMoneyCheckDollar}
                                     />
                                     <h5>Thành tiền:</h5>
-                                    <span>{formatter(handleTotalMoney(order.orderItems))}</span>
+                                    <span>
+                                        {formatter(
+                                            handleTotalMoney(order.orderItems) +
+                                                order.delivery.price,
+                                        )}
+                                    </span>
                                 </div>
-                            </div>
+                            </Link>
                         );
                     })
                 ) : (

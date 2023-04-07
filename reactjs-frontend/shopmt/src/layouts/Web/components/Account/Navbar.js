@@ -1,4 +1,4 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell, faRectangleList, faUser } from '@fortawesome/free-regular-svg-icons';
 import { faPencil } from '@fortawesome/free-solid-svg-icons';
@@ -7,11 +7,11 @@ import images from '../../../../assets/images';
 import config from '../../../../config';
 import { useEffect } from 'react';
 function Navbar({ account }) {
-    let param = useParams()['slug'];
+    let location = useLocation();
     const navigate = useNavigate();
     useEffect(() => {
         handleActive();
-    }, [param]);
+    }, [location]);
     const handleClick = (e) => {
         e.preventDefault();
         const paramOrigin = e.target.href.split('user/')[1];
@@ -25,7 +25,7 @@ function Navbar({ account }) {
             if (tag[i].classList.contains('active')) {
                 tag[i].classList.remove('active');
             }
-            if (tag[i].href.includes(param)) {
+            if (tag[i].href.includes(location.pathname.split('/')[2])) {
                 tag[i].classList.add('active');
             }
         }
@@ -102,7 +102,11 @@ function Navbar({ account }) {
                     </Link>
                 </li>
                 <li>
-                    <Link className="link" onClick={(e) => handleClick(e)}>
+                    <Link
+                        to={config.routes.web.user + '/notification'}
+                        className="link"
+                        onClick={(e) => handleClick(e)}
+                    >
                         <FontAwesomeIcon
                             className="icon"
                             icon={faBell}
