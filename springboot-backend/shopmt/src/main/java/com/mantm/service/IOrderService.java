@@ -20,4 +20,8 @@ public interface IOrderService {
 
 	List<OrderDto> findOrderByStatus(long userId, String status);
 
+	OrderDto findOrderById(long orderId);
+
+	List<OrderDto> deleteOrder(long orderId);
+
 }

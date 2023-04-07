@@ -16,9 +16,9 @@ const routes = {
         cart: '/cart',
         productDetails: '/productDetails',
         checkout: '/checkout',
-        user: '/user',
         login: '/login',
         register: '/register',
+        user: '/user',
     },
 };
 export default routes;

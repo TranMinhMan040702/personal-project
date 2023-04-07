@@ -10,6 +10,7 @@ import Receipt from './receipt';
 import Location from './location';
 import Delivery from './delivery';
 import Payment from './payment';
+import Loading from '../../../../components/Loading';
 import config from '../../../../config';
 import OrderService from '../../../../services/OrderService';
 import './productcheckout.scss';
@@ -18,6 +19,7 @@ function ProductCheckout() {
     const navigate = useNavigate();
     const cart = useSelector(cartUser);
     const account = useSelector(accountUser);
+    const [loading, setLoading] = useState(true);
     // const [order, setOrder] = useState();
 
     // Address

@@ -4,6 +4,7 @@ import { addressUser } from '../../../../redux/selectors';
 import { useDispatch } from 'react-redux';
 import { deleteAddress, uploadAddress } from '../../../../redux/slice/addressSlice';
 import { ToastContainer, toast } from 'react-toastify';
+import Loading from '../../../../components/Loading';
 import Modal from '../../../../components/Modal';
 import config from '../../../../config';
 
@@ -22,9 +23,11 @@ function Address({ account }) {
         userId: '',
     });
     const [check, setCheck] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         setAddress({ ...address, userId: account.id });
+        setLoading(false);
     }, [account]);
 
     const handleChange = (e) => {
@@ -173,82 +176,86 @@ function Address({ account }) {
     );
     return (
         <>
-            <div className="wapper">
-                <div className="header d-flex justify-content-between align-items-center">
-                    <h5>Địa chỉ của tôi</h5>
-                    <button
-                        type="button"
-                        class="btn btn-success"
-                        data-bs-toggle="modal"
-                        data-bs-target="#modal"
-                    >
-                        Thêm địa chỉ mới
-                    </button>
-                </div>
-                <div className="address-list">
-                    {addresses &&
-                        [...addresses]
-                            .sort((a, b) => b.status - a.status)
-                            .map((address, index) => {
-                                return (
-                                    <div
-                                        key={index}
-                                        className="address-item d-flex justify-content-between align-items-center"
-                                    >
-                                        <div className="address">
-                                            <div className="name-phone mb-1">
-                                                <span className="name">{address.username}</span>
-                                                <span className="phone">{address.phone}</span>
-                                            </div>
-                                            <div className="address-content">
-                                                <p>{address.street}</p>
-                                                <p>
-                                                    {`${address.ward}, ${address.district}, ${address.province}`}
-                                                </p>
-                                            </div>
-                                            {address.status && (
-                                                <div className="label">
-                                                    <span>Mặc định</span>
+            {loading ? (
+                <Loading />
+            ) : (
+                <div className="wapper">
+                    <div className="header d-flex justify-content-between align-items-center">
+                        <h5>Địa chỉ của tôi</h5>
+                        <button
+                            type="button"
+                            class="btn btn-success"
+                            data-bs-toggle="modal"
+                            data-bs-target="#modal"
+                        >
+                            Thêm địa chỉ mới
+                        </button>
+                    </div>
+                    <div className="address-list">
+                        {addresses &&
+                            [...addresses]
+                                .sort((a, b) => b.status - a.status)
+                                .map((address, index) => {
+                                    return (
+                                        <div
+                                            key={index}
+                                            className="address-item d-flex justify-content-between align-items-center"
+                                        >
+                                            <div className="address">
+                                                <div className="name-phone mb-1">
+                                                    <span className="name">{address.username}</span>
+                                                    <span className="phone">{address.phone}</span>
                                                 </div>
-                                            )}
-                                        </div>
-                                        <div className="address-control d-flex flex-column">
-                                            <div className="modify d-flex justify-content-end">
-                                                <button
-                                                    type="button"
-                                                    class="btn btn-link mb-1 text-decoration-none"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#modal"
-                                                    onClick={() => handleUpdateAddress(address)}
-                                                >
-                                                    Cập nhật
-                                                </button>
-                                                {!address.status && (
+                                                <div className="address-content">
+                                                    <p>{address.street}</p>
+                                                    <p>
+                                                        {`${address.ward}, ${address.district}, ${address.province}`}
+                                                    </p>
+                                                </div>
+                                                {address.status && (
+                                                    <div className="label">
+                                                        <span>Mặc định</span>
+                                                    </div>
+                                                )}
+                                            </div>
+                                            <div className="address-control d-flex flex-column">
+                                                <div className="modify d-flex justify-content-end">
                                                     <button
                                                         type="button"
                                                         class="btn btn-link mb-1 text-decoration-none"
-                                                        onClick={(e) =>
-                                                            handleDeleteAddress(e, address.id)
-                                                        }
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#modal"
+                                                        onClick={() => handleUpdateAddress(address)}
                                                     >
-                                                        Xóa
+                                                        Cập nhật
                                                     </button>
-                                                )}
+                                                    {!address.status && (
+                                                        <button
+                                                            type="button"
+                                                            class="btn btn-link mb-1 text-decoration-none"
+                                                            onClick={(e) =>
+                                                                handleDeleteAddress(e, address.id)
+                                                            }
+                                                        >
+                                                            Xóa
+                                                        </button>
+                                                    )}
+                                                </div>
+                                                <button
+                                                    type="button"
+                                                    class="btn btn-sm btn-outline-secondary"
+                                                    disabled={address.status}
+                                                    onClick={() => handleSetDefaultAddress(address)}
+                                                >
+                                                    Thiết lập mặc định
+                                                </button>
                                             </div>
-                                            <button
-                                                type="button"
-                                                class="btn btn-sm btn-outline-secondary"
-                                                disabled={address.status}
-                                                onClick={() => handleSetDefaultAddress(address)}
-                                            >
-                                                Thiết lập mặc định
-                                            </button>
                                         </div>
-                                    </div>
-                                );
-                            })}
+                                    );
+                                })}
+                    </div>
                 </div>
-            </div>
+            )}
             <Modal modalHeader={modalHeader} modalBody={modalBody} modalFooter={modalFooter} />
             <ToastContainer autoClose={1000} pauseOnHover={false} />
         </>

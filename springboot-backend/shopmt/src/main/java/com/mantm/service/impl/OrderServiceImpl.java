@@ -77,6 +77,12 @@ public class OrderServiceImpl implements IOrderService {
 	}
 	
 	@Override
+	public OrderDto findOrderById(long orderId) {
+		Optional<Order> order = orderRepository.findById(orderId);
+		return orderConvert.convertToDto(order.get());
+	}
+	
+	@Override
 	public List<OrderDto> findOrderByStatus(long userId, String status) {
 		List<OrderDto> orderDtos = new ArrayList<>();
 		Optional<User> user = userRepository.findById(userId);
@@ -93,6 +99,18 @@ public class OrderServiceImpl implements IOrderService {
 		order.get().setStatus(handleStatus(status));
 		orderRepository.save(order.get());
 		return findAllOrdersByUser(order.get().getUser().getId());
+	}
+	
+	@Override
+	public List<OrderDto> deleteOrder(long orderId) {
+		Optional<Order> order = orderRepository.findById(orderId);
+		orderRepository.delete(order.get());
+		List<OrderDto> orderDtos = new ArrayList<>();
+		List<Order> orders = orderRepository.findByUser(order.get().getUser());
+		for (Order o : orders) {
+			orderDtos.add(orderConvert.convertToDto(o));
+		}
+		return orderDtos;
 	}
 
 	private StatusOrderEnum handleStatus(String status) {

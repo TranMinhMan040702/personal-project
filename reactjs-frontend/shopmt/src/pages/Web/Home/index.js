@@ -5,9 +5,9 @@ import Contact from '../../../layouts/Web/components/Contact';
 function Home() {
     return (
         <>
+            {/* <FlashCard /> */}
             <MainHome />
             <Shop />
-            {/* <FlashCard /> */}
             <Subscribe />
             <Contact />
         </>

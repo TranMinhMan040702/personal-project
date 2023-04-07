@@ -3,6 +3,7 @@ package com.mantm.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,6 +34,11 @@ public class OrderController {
 		return ResponseEntity.ok(orderService.findAllOrders());
 	}
 	
+	@GetMapping("/order/{id}")
+	public ResponseEntity<?> getOrderById(@PathVariable long id) {
+		return ResponseEntity.ok(orderService.findOrderById(id));
+	}
+	
 	@GetMapping("/order/user")
 	public ResponseEntity<?> getOrderByStatus(@RequestParam long userId, @RequestParam String status) {
 		return ResponseEntity.ok(orderService.findOrderByStatus(userId, status));
@@ -46,5 +52,9 @@ public class OrderController {
 	@PutMapping("/order") 
 	public ResponseEntity<?> updateStatus(@RequestParam long orderId, @RequestParam String status) {
 		return ResponseEntity.ok(orderService.updateStatus(orderId, status));
+	}
+	@DeleteMapping("/order/{id}")
+	public ResponseEntity<?> deleteOrder(@PathVariable long id) {
+		return ResponseEntity.ok(orderService.deleteOrder(id));
 	}
 }

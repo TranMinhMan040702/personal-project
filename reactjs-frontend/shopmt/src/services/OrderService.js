@@ -13,6 +13,14 @@ class Order {
     getOrdersAllByUser(userId) {
         return axiosPrivate.get(REACT_APP_ORDER_API_URL + '/user/' + userId);
     }
+    getOrderById(orderId) {
+        return axiosPrivate.get(REACT_APP_ORDER_API_URL + '/' + orderId);
+    }
+    updateStatus(orderId, status) {
+        return axiosPrivate.put(
+            REACT_APP_ORDER_API_URL + '?orderId=' + orderId + '&status=' + status,
+        );
+    }
 }
 
 export default new Order();
