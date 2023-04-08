@@ -19,18 +19,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "cart_item")
-public class CartItem extends AbstractEntity{
-	
+public class CartItem extends AbstractEntity {
+
 	@NotNull
 	@Min(1)
-	@Column(name="count")
+	@Column(name = "count")
 	private int count;
-	
+
 	@ManyToOne
-	@JoinColumn(name="cart_id")
+	@JoinColumn(name = "cart_id")
 	private Cart cart;
-	
+
 	@ManyToOne
-	@JoinColumn(name="product_id")
+	@JoinColumn(name = "product_id")
 	private Product product;
 }

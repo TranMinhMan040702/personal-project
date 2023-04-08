@@ -20,14 +20,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="image_product")
-public class Image_Product extends AbstractEntity{
-	
-	@Column(name="path")
+@Table(name = "image_product")
+public class Image_Product extends AbstractEntity {
+
+	@Column(name = "path")
 	private String path;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name="product_id")
+	@JoinColumn(name = "product_id")
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Product product;
 }

@@ -18,20 +18,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="order_item")
-public class OrderItem extends AbstractEntity{
-	
+@Table(name = "order_item")
+public class OrderItem extends AbstractEntity {
+
 	@NotNull
 	@Min(1)
-	@Column(name="count")
+	@Column(name = "count")
 	private int count;
-	
+
 	@ManyToOne
-	@JoinColumn(name="order_id")
+	@JoinColumn(name = "order_id")
 	private Order order;
-	
+
 	@ManyToOne
-	@JoinColumn(name="product_id")
+	@JoinColumn(name = "product_id")
 	private Product product;
-	
+
 }

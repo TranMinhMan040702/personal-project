@@ -41,6 +41,11 @@ public class ProductController {
 	public ResponseEntity<?> getProductById(@RequestParam long id) throws ResourceNotFoundException {
 		return ResponseEntity.ok(productService.findProductById(id));
 	}
+	
+	@GetMapping("products/category/{id}") 
+	public ResponseEntity<?> getProductByCategory(@PathVariable long id) {
+		return ResponseEntity.ok(productService.findByCategory(id));
+	}
 
 	@PostMapping("/admin/products")
 	public ResponseEntity<?> createProduct(@RequestParam("model") String JsonObject,

@@ -20,4 +20,6 @@ public interface IProductService {
 
 	ProductDto findProductById(long id) throws ResourceNotFoundException;
 
+	List<ProductDto> findByCategory(long categoryId);
+
 }

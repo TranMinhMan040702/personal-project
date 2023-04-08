@@ -19,28 +19,28 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="review")
-public class Review extends AbstractEntity{
+@Table(name = "review")
+public class Review extends AbstractEntity {
 
 	@NotNull
-	@Column(name="content", length = 1000)
+	@Column(name = "content", length = 1000)
 	private String content;
-	
+
 	@NotNull
 	@Min(0)
 	@Max(5)
-	@Column(name="rating")
+	@Column(name = "rating")
 	private int rating;
-	
+
 	@ManyToOne
-	@JoinColumn(name="user_id")
+	@JoinColumn(name = "user_id")
 	private User user;
-	
+
 	@ManyToOne
-	@JoinColumn(name="order_id")
+	@JoinColumn(name = "order_id")
 	private Order order;
-	
+
 	@ManyToOne
-	@JoinColumn(name="product_id")
+	@JoinColumn(name = "product_id")
 	private Product product;
 }

@@ -1,7 +1,5 @@
 package com.mantm.entity;
 
-
-
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -27,20 +25,20 @@ public abstract class AbstractEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@Column(name="created_by")
+
+	@Column(name = "created_by")
 	@CreatedBy
 	private String createdBy;
-	
-	@Column(name="updated_by")
+
+	@Column(name = "updated_by")
 	@LastModifiedBy
 	private String updatedBy;
-	
-	@Column(name="create_at")
+
+	@Column(name = "create_at")
 	@CreatedDate
 	private Date createdAt;
-	
-	@Column(name="update_at")
+
+	@Column(name = "update_at")
 	@LastModifiedDate
 	private Date updatedAt;
 }

@@ -23,6 +23,7 @@ import com.mantm.dto.response.AuthResponse;
 import com.mantm.entity.Cart;
 import com.mantm.entity.Role;
 import com.mantm.entity.User;
+import com.mantm.entity.UserFollowProduct;
 import com.mantm.exception.ResourceNotFoundException;
 import com.mantm.repository.RoleRepository;
 import com.mantm.repository.UserRepository;
@@ -53,6 +54,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
 		User user = new User();
 		List<Role> roles = new ArrayList<>();
 		Cart cart = new Cart();
+		UserFollowProduct followProduct = new UserFollowProduct();
 		AuthResponse authResponse = new AuthResponse();
 
 		for (String role : request.getRoles()) {
@@ -67,6 +69,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
 		user.setPassword(passwordEncoder.encode(request.getPassword()));
 		user.setRoles(roles);
 		user.setCart(cart);
+		user.setFollowProduct(followProduct);
 
 		user = userRepository.save(user);
 
