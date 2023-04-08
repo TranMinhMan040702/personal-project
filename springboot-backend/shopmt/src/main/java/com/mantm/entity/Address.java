@@ -17,30 +17,30 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "address")
-public class Address extends AbstractEntity{
-	
-	@Column(name="username")
+public class Address extends AbstractEntity {
+
+	@Column(name = "username")
 	private String username;
-	
-	@Column(name="phone")
+
+	@Column(name = "phone")
 	private String phone;
-	
-	@Column(name="ward")
+
+	@Column(name = "ward")
 	private String ward;
-	
-	@Column(name="district")
+
+	@Column(name = "district")
 	private String district;
-	
-	@Column(name="province")
+
+	@Column(name = "province")
 	private String province;
-	
-	@Column(name="street")
+
+	@Column(name = "street")
 	private String street;
-	
-	@Column(name="status")
+
+	@Column(name = "status")
 	private boolean status;
-	
+
 	@ManyToOne
-	@JoinColumn(name="user_id")
+	@JoinColumn(name = "user_id")
 	private User user;
 }

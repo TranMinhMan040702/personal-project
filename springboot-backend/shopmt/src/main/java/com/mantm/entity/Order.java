@@ -24,41 +24,41 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="orders")
-public class Order extends AbstractEntity{
-	
+@Table(name = "orders")
+public class Order extends AbstractEntity {
+
 	@NotNull
-	@Column(name="address")
+	@Column(name = "address")
 	private String address;
-	
+
 	@NotNull
-	@Column(name="phone")
+	@Column(name = "phone")
 	private String phone;
-	
+
 	@NotNull
 	@Enumerated(EnumType.STRING)
-	@Column(name="status")
+	@Column(name = "status")
 	private StatusOrderEnum status = StatusOrderEnum.NOT_PROCESSED;
-	
-	@Column(name="is_paid_before")
+
+	@Column(name = "is_paid_before")
 	private boolean isPaidBefore = false;
-	
+
 	@NotNull
 	@Min(0)
-	@Column(name="amount_from_user")
+	@Column(name = "amount_from_user")
 	private double amountFromUser;
-	
+
 	@ManyToOne
-	@JoinColumn(name="user_id")
+	@JoinColumn(name = "user_id")
 	private User user;
-	
+
 	@ManyToOne
-	@JoinColumn(name="delivery_id")
+	@JoinColumn(name = "delivery_id")
 	private Delivery delivery;
-	
+
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
 	private List<OrderItem> orderItems;
-	
+
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
 	private List<Review> reviews;
 }

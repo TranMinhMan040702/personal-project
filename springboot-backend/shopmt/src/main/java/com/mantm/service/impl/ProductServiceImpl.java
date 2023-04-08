@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
@@ -15,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.mantm.convert.ProductConvert;
 import com.mantm.dto.ProductDto;
 import com.mantm.entity.Category;
 import com.mantm.entity.Image_Product;
@@ -42,6 +44,8 @@ public class ProductServiceImpl implements IProductService {
 	ImageProductRepository imageProductRepository;
 	@Autowired
 	Cloudinary cloudinary;
+	@Autowired
+	ProductConvert productConvert;
 
 	@Override
 	public ProductDto save(ProductDto productReq, MultipartFile[] files) throws Exception {
@@ -74,7 +78,7 @@ public class ProductServiceImpl implements IProductService {
 		entity.setCategory(category);
 		entity.setImages(images);
 		entity = productRepository.save(entity);
-		return responseProduct(entity);
+		return productConvert.converToDto(entity);
 	}
 
 	@Override
@@ -82,15 +86,7 @@ public class ProductServiceImpl implements IProductService {
 		List<ProductDto> results = new ArrayList<>();
 		List<Product> entitise = productRepository.findAll();
 		for (Product product : entitise) {
-			ProductDto dto = new ProductDto();
-			List<String> images = new ArrayList<>();
-			BeanUtils.copyProperties(product, dto);
-			for (Image_Product image : product.getImages()) {
-				images.add(image.getPath());
-			}
-			dto.setCategory(product.getCategory().getId());
-			dto.setImages(images);
-			results.add(dto);
+			results.add(productConvert.converToDto(product));
 		}
 		return results;
 	}
@@ -111,6 +107,17 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
+	public List<ProductDto> findByCategory(long categoryId) {
+		List<ProductDto> productDtos = new ArrayList<>();
+		Optional<Category> category = categoryRepository.findById(categoryId);
+		List<Product> products = productRepository.findByCategory(category.get());
+		for (Product product : products) {
+			productDtos.add(productConvert.converToDto(product));
+		}
+		return productDtos;
+	}
+
+	@Override
 	public Map<String, String> deleteProduct(long id) throws Exception {
 		Map<String, String> resp = new HashMap<>();
 		Product entity = productRepository.findById(id)
@@ -123,7 +130,7 @@ public class ProductServiceImpl implements IProductService {
 		return resp;
 	}
 
-	// WHEN SAVE IMAGE LOCAL 
+	// WHEN SAVE IMAGE LOCAL
 //	private Image_Product saveImage(MultipartFile file, Product product) {
 //		Image_Product image_Product = new Image_Product();
 //		UUID uuid = UUID.randomUUID();
@@ -138,9 +145,9 @@ public class ProductServiceImpl implements IProductService {
 
 	private Image_Product saveCloudinary(MultipartFile file, Product product) {
 		Image_Product image_Product = new Image_Product();
-		
+
 		try {
-			Map<?, ?> r = this.cloudinary.uploader().upload(file.getBytes(), 
+			Map<?, ?> r = this.cloudinary.uploader().upload(file.getBytes(),
 					ObjectUtils.asMap("resource_type", "auto"));
 			String img = (String) r.get("secure_url");
 			image_Product.setProduct(product);
@@ -149,20 +156,6 @@ public class ProductServiceImpl implements IProductService {
 			e.printStackTrace();
 		}
 		return image_Product;
-	}
-
-	private ProductDto responseProduct(Product product) {
-		ProductDto productResp = new ProductDto();
-		BeanUtils.copyProperties(product, productResp);
-
-		List<String> listImage = new ArrayList<>();
-		for (Image_Product image : product.getImages()) {
-			listImage.add(image.getPath());
-		}
-		productResp.setCategory(product.getCategory().getId());
-		productResp.setImages(listImage);
-
-		return productResp;
 	}
 
 }

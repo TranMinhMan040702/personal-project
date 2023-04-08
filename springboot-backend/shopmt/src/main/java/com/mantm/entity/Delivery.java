@@ -21,25 +21,25 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="delivery")
-public class Delivery extends AbstractEntity{
-	
+@Table(name = "delivery")
+public class Delivery extends AbstractEntity {
+
 	@NotNull
-	@Column(name="name", length = 100, unique = true)
+	@Column(name = "name", length = 100, unique = true)
 	private String name;
-	
+
 	@Min(0)
 	@NotNull
-	@Column(name="price")
+	@Column(name = "price")
 	private double price;
-	
+
 	@NotNull
-	@Column(name="description", length = 1000)
+	@Column(name = "description", length = 1000)
 	private String description;
-	
-	@Column(name="is_deleted")
+
+	@Column(name = "is_deleted")
 	private boolean isDeleted = false;
-	
+
 	@OneToMany(mappedBy = "delivery", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Order> orders;
 }

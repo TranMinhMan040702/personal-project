@@ -18,13 +18,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="cart")
-public class Cart extends AbstractEntity{
+@Table(name = "cart")
+public class Cart extends AbstractEntity {
 
 	@OneToOne(mappedBy = "cart")
 	private User user;
-	
+
 	@OneToMany(mappedBy = "cart", orphanRemoval = true, cascade = CascadeType.ALL)
 	private List<CartItem> cartItems;
-	
+
 }

@@ -17,14 +17,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="transaction")
-public class Transaction extends AbstractEntity{
-	
+@Table(name = "transaction")
+public class Transaction extends AbstractEntity {
+
 	@NotNull
-	@Column(name="amount")
+	@Column(name = "amount")
 	private double amount;
-	
+
 	@ManyToOne
-	@JoinColumn(name="user_Id")
+	@JoinColumn(name = "user_Id")
 	private User user;
 }
