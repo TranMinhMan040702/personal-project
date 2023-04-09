@@ -15,11 +15,13 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-@Data
+@Setter
+@Getter
 public abstract class AbstractEntity {
 
 	@Id

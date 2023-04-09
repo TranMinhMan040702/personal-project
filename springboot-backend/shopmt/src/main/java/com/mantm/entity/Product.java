@@ -17,11 +17,13 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Setter
+@Getter
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
@@ -72,7 +74,7 @@ public class Product extends AbstractEntity {
 	private List<Review> reviews;
 
 	@ManyToMany(mappedBy = "products", cascade = CascadeType.ALL)
-	private Set<UserFollowProduct> followProducts;
+	private Set<User> users;
 
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<OrderItem> orderItems;
