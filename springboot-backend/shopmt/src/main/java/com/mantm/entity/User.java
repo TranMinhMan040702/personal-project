@@ -2,6 +2,7 @@ package com.mantm.entity;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,12 +18,12 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
-@EqualsAndHashCode(callSuper = true)
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -78,9 +79,9 @@ public class User extends AbstractEntity {
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Review> reviews;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "follow_id", referencedColumnName = "id")
-	private UserFollowProduct followProduct;
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "product_like", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
+	private Set<Product> products;
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Transaction> transactions;
