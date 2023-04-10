@@ -64,11 +64,12 @@ public class AddressServiceImpl implements IAddressService {
 	@Override
 	public List<AddressDto> deleteAddressById(long id) {
 		Optional<Address> address = addressRepository.findById(id);
-		long userId = address.get().getUser().getId();
+		User user = address.get().getUser();
 		if (address.get().isStatus()) {
-			return addressConvert.convertToDto(userRepository.findById(userId).get().getAddresses());
+			return addressConvert.convertToDto(userRepository.findById(user.getId()).get().getAddresses());
 		}
-		addressRepository.deleteById(id);
-		return addressConvert.convertToDto(userRepository.findById(userId).get().getAddresses());
+		user.getAddresses().remove(address.get());
+		userRepository.save(user);
+		return addressConvert.convertToDto(userRepository.findById(user.getId()).get().getAddresses());
 	}
 }
