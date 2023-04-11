@@ -42,6 +42,7 @@ public class AddressServiceImpl implements IAddressService {
 		if (addresses.isEmpty()) {
 			addressDto.setStatus(true);
 		}
+		
 		for (Address address : addresses) {
 			if (address.getId() == addressDto.getId()) {
 				BeanUtils.copyProperties(addressDto, address, "createdAt", "createdBy", "id");

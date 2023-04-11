@@ -1,0 +1,84 @@
+select {
+    font-size: 14px;
+    height: 38px;
+}
+thead {
+    text-align: center;
+}
+tbody {
+    font-size: 16px;
+    text-align: center;
+    .badge {
+        display: inline-block;
+        padding: 0.35em 0.65em;
+        font-weight: 700;
+        line-height: 1;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: 0.25rem;
+    }
+    .alert-success {
+        color: #0f5132;
+        background-color: #d1e7dd;
+        border-color: #badbcc;
+    }
+    .alert-danger {
+        color: #842029;
+        background-color: #f8d7da;
+        border-color: #f5c2c7;
+    }
+    .not-process {
+        background-color: #1e90ff;
+        border-color: #1e90ff;
+    }
+    .processing {
+        background-color: #f6a500;
+        border-color: #f6a500;
+    }
+    .shipped {
+        background-color: #cf8db4;
+        border-color: #cf8db4;
+    }
+    .delivered {
+        background-color: #198754;
+        border-color: #198754;
+    }
+    .cancelled {
+        background-color: #ee4b46;
+        border-color: #ee4b46;
+    }
+    a {
+        color: #198754;
+    }
+}
+
+// order detail
+.icon {
+    display: block;
+    position: relative;
+    flex-shrink: 0;
+    margin-right: 10px;
+    background-color: #d1e7dd;
+    border-radius: 50%;
+}
+.icon-sm {
+    width: 48px;
+    height: 48px;
+    line-height: 48px !important;
+    font-size: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-grow: 0;
+}
+.text {
+    h6 {
+        font-weight: 600;
+    }
+    p {
+        padding: 0;
+        margin: 0;
+    }
+}

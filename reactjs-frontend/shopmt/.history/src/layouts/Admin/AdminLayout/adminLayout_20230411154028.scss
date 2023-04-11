@@ -1,0 +1,9 @@
+.container {
+    flex: 6;
+    .content {
+        padding: 30px 3%;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: var(--background-color-content-admin);
+    }
+}
