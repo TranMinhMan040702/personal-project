@@ -63,7 +63,8 @@ public class UserServiceImpl implements IUserService {
 	public UserDto updateUser(UserDto userDto, MultipartFile file) throws Exception {
 		User user = userConvert.convertToEntity(userDto);
 		String avatarOld = user.getAvatar();
-		if ((avatarOld == null || !avatarOld.equals(file.getOriginalFilename())) && file != null) {
+		
+		if ((avatarOld == null || file != null && !avatarOld.equals(file.getOriginalFilename()))) {
 			user.setAvatar(saveAvatarCloudinary(file));
 		}
 		User userResp = userRepository.save(user);

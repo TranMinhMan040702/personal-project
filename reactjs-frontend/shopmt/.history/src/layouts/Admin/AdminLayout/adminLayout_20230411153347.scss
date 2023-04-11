@@ -1,0 +1,7 @@
+.container {
+    flex: 6;
+    .content {
+        padding: 30px;
+        background-color: var(--background-color-content-admin);
+    }
+}
