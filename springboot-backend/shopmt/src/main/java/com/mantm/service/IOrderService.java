@@ -24,4 +24,6 @@ public interface IOrderService {
 
 	List<OrderDto> deleteOrder(long orderId);
 
+	List<OrderDto> findAllOrdersByStatusWithPaginationAndSort(String status);
+
 }

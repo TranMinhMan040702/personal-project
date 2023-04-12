@@ -29,11 +29,18 @@ public class OrderController {
 		return ResponseEntity.ok(orderService.createOrder(dto));
 	}
 	
-	@GetMapping("/order")
-	public ResponseEntity<?> getOrder() {
+	@GetMapping("/admin/order")
+	public ResponseEntity<?> getAllOrder() {
 		return ResponseEntity.ok(orderService.findAllOrders());
 	}
 	
+	@GetMapping("/order")
+	public ResponseEntity<?> getAllOrderByStatus(@RequestParam String status) {
+		return ResponseEntity.ok(orderService.findAllOrdersByStatusWithPaginationAndSort(status));
+	}
+	
+	
+
 	@GetMapping("/order/{id}")
 	public ResponseEntity<?> getOrderById(@PathVariable long id) {
 		return ResponseEntity.ok(orderService.findOrderById(id));

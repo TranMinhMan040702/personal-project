@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -75,13 +78,24 @@ public class OrderServiceImpl implements IOrderService {
 		}
 		return orderDtos;
 	}
-	
+
+	@Override
+	public List<OrderDto> findAllOrdersByStatusWithPaginationAndSort(String status) {
+		List<OrderDto> orderDtos = new ArrayList<>();
+		List<Order> orders = orderRepository.findByStatus(handleStatus(status),
+				PageRequest.of(1, 10).withSort(Sort.by("createdAt")));
+		for (Order order : orders) {
+			orderDtos.add(orderConvert.convertToDto(order));
+		}
+		return orderDtos;
+	}
+
 	@Override
 	public OrderDto findOrderById(long orderId) {
 		Optional<Order> order = orderRepository.findById(orderId);
 		return orderConvert.convertToDto(order.get());
 	}
-	
+
 	@Override
 	public List<OrderDto> findOrderByStatus(long userId, String status) {
 		List<OrderDto> orderDtos = new ArrayList<>();
@@ -100,7 +114,7 @@ public class OrderServiceImpl implements IOrderService {
 		orderRepository.save(order.get());
 		return findAllOrdersByUser(order.get().getUser().getId());
 	}
-	
+
 	@Override
 	public List<OrderDto> deleteOrder(long orderId) {
 		Optional<Order> order = orderRepository.findById(orderId);
