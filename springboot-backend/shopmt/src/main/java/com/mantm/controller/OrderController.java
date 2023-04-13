@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mantm.contains.Containt;
 import com.mantm.dto.OrderDto;
 import com.mantm.exception.ResourceNotFoundException;
 import com.mantm.service.IOrderService;
@@ -34,8 +35,8 @@ public class OrderController {
 	@GetMapping("admin/order")
 	public ResponseEntity<?> getAllOrderByStatus(@RequestParam(required = false) String status,
 			@RequestParam(defaultValue = "0", required = false) Integer page,
-			@RequestParam(defaultValue = "20", required = false) Integer limit,
-			@RequestParam(defaultValue = "createdAt", required = false) String sortBy,
+			@RequestParam(defaultValue = Containt.DEFAULT_LIMIT_SIZE_PAGE, required = false) Integer limit,
+			@RequestParam(defaultValue = Containt.DEFAULT_LIMIT_SORT_BY, required = false) String sortBy,
 			@RequestParam(required = false) String search) {
 		return ResponseEntity.ok(orderService.findAllOrdersByStatusWithPaginationAndSort(status,
 				page, limit, sortBy, search));
