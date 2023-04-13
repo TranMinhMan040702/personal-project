@@ -12,8 +12,6 @@ public interface IOrderService {
 
 	OrderDto createOrder(OrderDto orderDto) throws ResourceNotFoundException;
 
-	List<OrderDto> findAllOrders();
-
 	List<OrderDto> findAllOrdersByUser(long userId);
 
 	List<OrderDto> updateStatus(long orderId, String status);
@@ -24,6 +22,8 @@ public interface IOrderService {
 
 	List<OrderDto> deleteOrder(long orderId);
 
-	List<OrderDto> findAllOrdersByStatusWithPaginationAndSort(String status);
+	List<OrderDto> findAllOrdersByStatusWithPaginationAndSort(String status, Integer page,
+			Integer limit, String sortBy, String search);
+
 
 }

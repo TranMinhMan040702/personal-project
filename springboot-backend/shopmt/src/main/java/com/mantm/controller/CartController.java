@@ -44,8 +44,8 @@ public class CartController {
 		return ResponseEntity.ok(cartService.deleteAllProductInCart(cartItemId));
 	}
 	
-	@PutMapping("cart/{cartId}")
-	public ResponseEntity<?> clearedCart(@PathVariable long cartId) {
-		return ResponseEntity.ok(cartService.clearedCart(cartId));
-	}
+//	@PutMapping("cart/{cartId}")
+//	public ResponseEntity<?> clearedCart(@PathVariable long cartId) {
+//		return ResponseEntity.ok(cartService.clearedCart(cartId));
+//	}
 }

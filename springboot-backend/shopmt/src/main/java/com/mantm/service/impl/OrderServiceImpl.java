@@ -8,16 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.mantm.contains.OrderStatusContain;
 import com.mantm.convert.OrderConvert;
 import com.mantm.dto.OrderDto;
 import com.mantm.dto.OrderItemDto;
 import com.mantm.entity.Order;
 import com.mantm.entity.Product;
-import com.mantm.entity.StatusOrderEnum;
 import com.mantm.entity.User;
 import com.mantm.exception.ResourceNotFoundException;
 import com.mantm.repository.CartRepository;
@@ -25,6 +24,8 @@ import com.mantm.repository.OrderRepository;
 import com.mantm.repository.ProductRepository;
 import com.mantm.repository.UserRepository;
 import com.mantm.service.IOrderService;
+import com.mantm.service.specification.OrderSpecification;
+import com.mantm.utils.HandleStatusOrder;
 
 @Component
 @Transactional
@@ -39,13 +40,34 @@ public class OrderServiceImpl implements IOrderService {
 	@Autowired
 	UserRepository userRepository;
 	@Autowired
+	CartServiceImpl cartServiceImpl;
+	@Autowired
 	OrderConvert orderConvert;
+	
+	@Override
+	public List<OrderDto> findAllOrdersByStatusWithPaginationAndSort(String status, Integer page,
+			Integer limit, String sortBy, String search) {
+
+		List<OrderDto> orderDtos = new ArrayList<>();
+
+		PageRequest paging = PageRequest.of(page, limit, Sort.by(sortBy).descending());
+		Specification<Order> specification = OrderSpecification.getSpecification(status, search);
+
+		Page<Order> orders = orderRepository.findAll(specification, paging);
+
+		for (Order order : orders) {
+			orderDtos.add(orderConvert.convertToDto(order));
+		}
+
+		return orderDtos;
+	}
 
 	@Override
 	public OrderDto createOrder(OrderDto orderDto) throws ResourceNotFoundException {
 		Order order = orderConvert.convertToEntity(orderDto);
 		order = orderRepository.save(order);
 		updateQuantityAndSoldProduct(orderDto.getOrderItems());
+		cartServiceImpl.clearedCart(order.getUser().getCart().getId());
 		return orderConvert.convertToDto(order);
 	}
 
@@ -62,28 +84,8 @@ public class OrderServiceImpl implements IOrderService {
 	public List<OrderDto> findAllOrdersByUser(long userId) {
 		Optional<User> user = userRepository.findById(userId);
 		List<OrderDto> orderDtos = new ArrayList<>();
-		List<Order> orders = orderRepository.findByUser(user.get());
-		for (Order order : orders) {
-			orderDtos.add(orderConvert.convertToDto(order));
-		}
-		return orderDtos;
-	}
-
-	@Override
-	public List<OrderDto> findAllOrders() {
-		List<OrderDto> orderDtos = new ArrayList<>();
-		List<Order> orders = orderRepository.findAll();
-		for (Order order : orders) {
-			orderDtos.add(orderConvert.convertToDto(order));
-		}
-		return orderDtos;
-	}
-
-	@Override
-	public List<OrderDto> findAllOrdersByStatusWithPaginationAndSort(String status) {
-		List<OrderDto> orderDtos = new ArrayList<>();
-		List<Order> orders = orderRepository.findByStatus(handleStatus(status),
-				PageRequest.of(1, 10).withSort(Sort.by("createdAt")));
+		List<Order> orders = orderRepository.findByUser(user.get(),
+				Sort.by("createdAt").descending());
 		for (Order order : orders) {
 			orderDtos.add(orderConvert.convertToDto(order));
 		}
@@ -100,7 +102,10 @@ public class OrderServiceImpl implements IOrderService {
 	public List<OrderDto> findOrderByStatus(long userId, String status) {
 		List<OrderDto> orderDtos = new ArrayList<>();
 		Optional<User> user = userRepository.findById(userId);
-		List<Order> orders = orderRepository.findByUserAndStatus(user.get(), handleStatus(status));
+
+		List<Order> orders = orderRepository.findByUserAndStatus(user.get(),
+				HandleStatusOrder.handleStatus(status), Sort.by("createdAt").descending());
+
 		for (Order order : orders) {
 			orderDtos.add(orderConvert.convertToDto(order));
 		}
@@ -110,7 +115,7 @@ public class OrderServiceImpl implements IOrderService {
 	@Override
 	public List<OrderDto> updateStatus(long orderId, String status) {
 		Optional<Order> order = orderRepository.findById(orderId);
-		order.get().setStatus(handleStatus(status));
+		order.get().setStatus(HandleStatusOrder.handleStatus(status));
 		orderRepository.save(order.get());
 		return findAllOrdersByUser(order.get().getUser().getId());
 	}
@@ -120,27 +125,12 @@ public class OrderServiceImpl implements IOrderService {
 		Optional<Order> order = orderRepository.findById(orderId);
 		orderRepository.delete(order.get());
 		List<OrderDto> orderDtos = new ArrayList<>();
-		List<Order> orders = orderRepository.findByUser(order.get().getUser());
+		List<Order> orders = orderRepository.findByUser(order.get().getUser(),
+				Sort.by("createdAt").descending());
 		for (Order o : orders) {
 			orderDtos.add(orderConvert.convertToDto(o));
 		}
 		return orderDtos;
 	}
 
-	private StatusOrderEnum handleStatus(String status) {
-		switch (status) {
-		case OrderStatusContain.NOT_PROCESSED:
-			return StatusOrderEnum.NOT_PROCESSED;
-		case OrderStatusContain.PROCESSING:
-			return StatusOrderEnum.PROCESSING;
-		case OrderStatusContain.SHIPPED:
-			return StatusOrderEnum.SHIPPED;
-		case OrderStatusContain.DELIVERED:
-			return StatusOrderEnum.DELIVERED;
-		case OrderStatusContain.CANCELLED:
-			return StatusOrderEnum.CANCELLED;
-		default:
-			return StatusOrderEnum.NOT_PROCESSED;
-		}
-	}
 }

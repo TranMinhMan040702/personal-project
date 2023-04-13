@@ -21,45 +21,47 @@ import com.mantm.service.IOrderService;
 @RestController
 @RequestMapping("/api/v1/")
 public class OrderController {
-	
-	@Autowired IOrderService orderService;
-	
+
+	@Autowired
+	IOrderService orderService;
+
 	@PostMapping("/order")
-	public ResponseEntity<?> createOrder(@RequestBody OrderDto dto) throws ResourceNotFoundException {
+	public ResponseEntity<?> createOrder(@RequestBody OrderDto dto)
+			throws ResourceNotFoundException {
 		return ResponseEntity.ok(orderService.createOrder(dto));
 	}
-	
-	@GetMapping("/admin/order")
-	public ResponseEntity<?> getAllOrder() {
-		return ResponseEntity.ok(orderService.findAllOrders());
+
+	@GetMapping("admin/order")
+	public ResponseEntity<?> getAllOrderByStatus(@RequestParam(required = false) String status,
+			@RequestParam(defaultValue = "0", required = false) Integer page,
+			@RequestParam(defaultValue = "20", required = false) Integer limit,
+			@RequestParam(defaultValue = "createdAt", required = false) String sortBy,
+			@RequestParam(required = false) String search) {
+		return ResponseEntity.ok(orderService.findAllOrdersByStatusWithPaginationAndSort(status,
+				page, limit, sortBy, search));
 	}
-	
-	@GetMapping("/order")
-	public ResponseEntity<?> getAllOrderByStatus(@RequestParam String status) {
-		return ResponseEntity.ok(orderService.findAllOrdersByStatusWithPaginationAndSort(status));
-	}
-	
-	
 
 	@GetMapping("/order/{id}")
 	public ResponseEntity<?> getOrderById(@PathVariable long id) {
 		return ResponseEntity.ok(orderService.findOrderById(id));
 	}
-	
+
 	@GetMapping("/order/user")
-	public ResponseEntity<?> getOrderByStatus(@RequestParam long userId, @RequestParam String status) {
+	public ResponseEntity<?> getOrderByStatus(@RequestParam long userId,
+			@RequestParam String status) {
 		return ResponseEntity.ok(orderService.findOrderByStatus(userId, status));
 	}
-	
+
 	@GetMapping("/order/user/{userId}")
 	public ResponseEntity<?> getOrderByUser(@PathVariable long userId) {
 		return ResponseEntity.ok(orderService.findAllOrdersByUser(userId));
 	}
-	
-	@PutMapping("/order") 
+
+	@PutMapping("/order")
 	public ResponseEntity<?> updateStatus(@RequestParam long orderId, @RequestParam String status) {
 		return ResponseEntity.ok(orderService.updateStatus(orderId, status));
 	}
+
 	@DeleteMapping("/order/{id}")
 	public ResponseEntity<?> deleteOrder(@PathVariable long id) {
 		return ResponseEntity.ok(orderService.deleteOrder(id));

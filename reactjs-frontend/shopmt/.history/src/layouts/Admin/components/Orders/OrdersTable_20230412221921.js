@@ -45,11 +45,12 @@ function OrdersTable() {
                 return <span className="badge not-process">Đang xử lý</span>;
         }
     };
-    const handleChange = async (e) => {
-        try {
-        } catch (err) {
-            console.log(err);
-        }
+    const handleChange = async(e) => {
+try {
+await OrderService.
+}catch(err) {
+    console.log(err);
+}
         setState(e.target.value);
     };
     console.log(state);
