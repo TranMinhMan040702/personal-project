@@ -14,12 +14,12 @@ public interface IProductService {
 
 	ProductDto save(ProductDto productRequest, MultipartFile[] files) throws ResourceNotFoundException, Exception;
 
-	List<ProductDto> findAll();
-
 	Map<String, String> deleteProduct(long id) throws ResourceNotFoundException, Exception;
 
 	ProductDto findProductById(long id) throws ResourceNotFoundException;
 
-	List<ProductDto> findByCategory(long categoryId);
+	List<ProductDto> findByCategory(Long categoryId, String search, Double priceMin, Double priceMax);
+
+	List<ProductDto> findAll(Integer page, Integer limit, String sortBy, Double priceMin, Double priceMax, String search);
 
 }

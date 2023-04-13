@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mantm.contains.Containt;
 import com.mantm.dto.ProductDto;
 import com.mantm.exception.ResourceNotFoundException;
 import com.mantm.repository.ImageProductRepository;
@@ -27,51 +28,65 @@ import com.mantm.service.IStorageService;
 @RequestMapping("/api/v1/")
 public class ProductController {
 
-	@Autowired ObjectMapper objectMapper;
-	@Autowired IProductService productService;
-	@Autowired IStorageService storageService;
-	@Autowired ImageProductRepository imageProductRepository;
+	@Autowired
+	ObjectMapper objectMapper;
+	@Autowired
+	IProductService productService;
+	@Autowired
+	IStorageService storageService;
+	@Autowired
+	ImageProductRepository imageProductRepository;
 
 	@GetMapping("products")
-	public ResponseEntity<List<ProductDto>> getProduct() {
-		return ResponseEntity.ok(productService.findAll());
+	public ResponseEntity<List<ProductDto>> getProduct(
+			@RequestParam(required = false, defaultValue = "0") Integer page,
+			@RequestParam(required = false, defaultValue = Containt.DEFAULT_LIMIT_SIZE_PAGE) Integer limit,
+			@RequestParam(required = false, defaultValue = Containt.DEFAULT_LIMIT_SORT_BY) String sortBy,
+			@RequestParam(required = false) Double priceMin,
+			@RequestParam(required = false) Double priceMax,
+			@RequestParam(required = false) String search) {
+		return ResponseEntity
+				.ok(productService.findAll(page, limit, sortBy, priceMin, priceMax, search));
 	}
-	
+
 	@GetMapping("product")
-	public ResponseEntity<?> getProductById(@RequestParam long id) throws ResourceNotFoundException {
+	public ResponseEntity<?> getProductById(@RequestParam long id)
+			throws ResourceNotFoundException {
 		return ResponseEntity.ok(productService.findProductById(id));
 	}
-	
-	@GetMapping("products/category/{id}") 
-	public ResponseEntity<?> getProductByCategory(@PathVariable long id) {
-		return ResponseEntity.ok(productService.findByCategory(id));
+
+	@GetMapping("products/category/{id}")
+	public ResponseEntity<?> getProductByCategory(@PathVariable Long id,
+			@RequestParam(required = false) String search,
+			@RequestParam(required = false) Double priceMin,
+			@RequestParam(required = false) Double priceMax) {
+		return ResponseEntity.ok(productService.findByCategory(id, search, priceMin, priceMax));
 	}
 
 	@PostMapping("/admin/products")
 	public ResponseEntity<?> createProduct(@RequestParam("model") String JsonObject,
-			@RequestParam("files") MultipartFile[] files)
-			throws Exception {
+			@RequestParam("files") MultipartFile[] files) throws Exception {
 
 		ProductDto product = new ProductDto();
 		product = objectMapper.readValue(JsonObject, ProductDto.class);
 
 		return ResponseEntity.ok(productService.save(product, files));
 	}
-	
-	@PostMapping("/admin/products/{id}") 
-	public ResponseEntity<?> updateProduct(@PathVariable long id, 
-			@RequestParam("model") String JsonObject,
-			@RequestParam("files") MultipartFile[] files) throws Exception {
-		
+
+	@PostMapping("/admin/products/{id}")
+	public ResponseEntity<?> updateProduct(@PathVariable long id,
+			@RequestParam("model") String JsonObject, @RequestParam("files") MultipartFile[] files)
+			throws Exception {
+
 		ProductDto product = new ProductDto();
 		product = objectMapper.readValue(JsonObject, ProductDto.class);
 		return ResponseEntity.ok(productService.save(product, files));
 	}
 
 	@DeleteMapping("/admin/products/{id}")
-	public ResponseEntity<Map<String, String>> deleteProduct(@PathVariable long id) throws Exception {
+	public ResponseEntity<Map<String, String>> deleteProduct(@PathVariable long id)
+			throws Exception {
 		return ResponseEntity.ok(productService.deleteProduct(id));
 	}
 
-	
 }
