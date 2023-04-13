@@ -88,21 +88,21 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public List<ProductDto> findAll(Integer page, Integer limit, String sortBy, Double priceMin,
-			Double priceMax, String search) {
+	public List<ProductDto> findAll(Long categoryId, Integer page, Integer limit, String sortBy,
+			Double priceMin, Double priceMax, String search) {
 
-		List<ProductDto> results = new ArrayList<>();
+		List<ProductDto> productDtos = new ArrayList<>();
 		PageRequest pageRequest = PageRequest.of(page, limit, Sort.by(sortBy).descending());
 
-		Specification<Product> specification = ProductSpecification.getSpecification(null, search,
+		Specification<Product> specification = ProductSpecification.getSpecification(categoryId, search,
 				priceMin, priceMax);
 
 		Page<Product> products = productRepository.findAll(specification, pageRequest);
-		
+
 		for (Product product : products) {
-			results.add(productConvert.converToDto(product));
+			productDtos.add(productConvert.converToDto(product));
 		}
-		return results;
+		return productDtos;
 	}
 
 	@Override
@@ -125,9 +125,12 @@ public class ProductServiceImpl implements IProductService {
 			Double priceMax) {
 
 		List<ProductDto> productDtos = new ArrayList<>();
+
 		Specification<Product> specification = ProductSpecification.getSpecification(categoryId,
 				search, priceMin, priceMax);
+
 		List<Product> products = productRepository.findAll(specification);
+
 		for (Product product : products) {
 			productDtos.add(productConvert.converToDto(product));
 		}
