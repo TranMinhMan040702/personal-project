@@ -20,6 +20,6 @@ public interface IProductService {
 
 	List<ProductDto> findByCategory(Long categoryId, String search, Double priceMin, Double priceMax);
 
-	List<ProductDto> findAll(Integer page, Integer limit, String sortBy, Double priceMin, Double priceMax, String search);
+	List<ProductDto> findAll(Long categoryId, Integer page, Integer limit, String sortBy, Double priceMin, Double priceMax, String search);
 
 }
