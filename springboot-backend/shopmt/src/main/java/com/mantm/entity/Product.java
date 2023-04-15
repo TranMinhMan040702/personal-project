@@ -35,7 +35,7 @@ public class Product extends AbstractEntity {
 	@NotNull
 	private String name;
 
-	@Column(name = "description", length = 1000)
+	@Column(name = "description")
 	@NotNull
 	private String description;
 
