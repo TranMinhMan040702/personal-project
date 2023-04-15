@@ -20,7 +20,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.mantm.convert.ProductConvert;
+import com.mantm.convert.ProductResponseConvert;
 import com.mantm.dto.ProductDto;
+import com.mantm.dto.response.ProductResponse;
 import com.mantm.entity.Category;
 import com.mantm.entity.Image_Product;
 import com.mantm.entity.Product;
@@ -50,6 +52,8 @@ public class ProductServiceImpl implements IProductService {
 	Cloudinary cloudinary;
 	@Autowired
 	ProductConvert productConvert;
+	@Autowired
+	ProductResponseConvert productResponseConvert;
 
 	@Override
 	public ProductDto save(ProductDto productReq, MultipartFile[] files) throws Exception {
@@ -88,10 +92,9 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public List<ProductDto> findAll(Long categoryId, Integer page, Integer limit, String sortBy,
+	public ProductResponse findAll(Long categoryId, Integer page, Integer limit, String sortBy,
 			Double priceMin, Double priceMax, String search) {
 
-		List<ProductDto> productDtos = new ArrayList<>();
 		PageRequest pageRequest = PageRequest.of(page, limit, Sort.by(sortBy).descending());
 
 		Specification<Product> specification = ProductSpecification.getSpecification(categoryId, search,
@@ -99,10 +102,7 @@ public class ProductServiceImpl implements IProductService {
 
 		Page<Product> products = productRepository.findAll(specification, pageRequest);
 
-		for (Product product : products) {
-			productDtos.add(productConvert.converToDto(product));
-		}
-		return productDtos;
+		return productResponseConvert.convertToDto(products);
 	}
 
 	@Override

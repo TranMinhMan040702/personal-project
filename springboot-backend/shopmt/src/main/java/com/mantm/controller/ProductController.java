@@ -1,6 +1,5 @@
 package com.mantm.controller;
 
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,16 +37,15 @@ public class ProductController {
 	ImageProductRepository imageProductRepository;
 
 	@GetMapping("products")
-	public ResponseEntity<List<ProductDto>> getProducts(
-			@RequestParam(required =  false) Long categoryId,
+	public ResponseEntity<?> getProducts(@RequestParam(required = false) Long categoryId,
 			@RequestParam(required = false, defaultValue = "0") Integer page,
 			@RequestParam(required = false, defaultValue = Containt.DEFAULT_LIMIT_SIZE_PAGE) Integer limit,
 			@RequestParam(required = false, defaultValue = Containt.DEFAULT_LIMIT_SORT_BY) String sortBy,
 			@RequestParam(required = false) Double priceMin,
 			@RequestParam(required = false) Double priceMax,
 			@RequestParam(required = false) String search) {
-		return ResponseEntity
-				.ok(productService.findAll(categoryId, page, limit, sortBy, priceMin, priceMax, search));
+		return ResponseEntity.ok(productService.findAll(categoryId, page, limit, sortBy, priceMin,
+				priceMax, search));
 	}
 
 	@GetMapping("product")
