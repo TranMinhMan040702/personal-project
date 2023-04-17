@@ -165,7 +165,7 @@ function Category() {
         data.append('model', JSON.stringify(category));
         try {
             await CategoryService.addCategory(data);
-            // setChecked((prev) => (prev = !prev));
+            setChecked((prev) => (prev = !prev));
             setCategory({
                 id: '',
                 name: '',
@@ -176,9 +176,6 @@ function Category() {
             setImage(null);
             document.getElementById('category-image').value = '';
             setChecked((prev) => (prev = !prev));
-            if (isEdit) {
-                setIsEdit((prev) => (prev = !prev));
-            }
             URL.revokeObjectURL(preview);
         } catch (err) {
             console.log(err);
