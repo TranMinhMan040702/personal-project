@@ -9,6 +9,8 @@ public class CategoryDto extends AbstractDto<CategoryDto>{
 
 	private String name;
 	
+	private String image;
+	
 	private boolean isDeleted = false;
 	
 }

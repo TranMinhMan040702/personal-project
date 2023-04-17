@@ -3,20 +3,16 @@ import { useEffect, useMemo, useState } from 'react';
 import DataTable from '../../../../components/Datatable/Datatable';
 import CategoryService from '../../../../services/CategoryService';
 import { field } from '../../../../utils';
-import images from '../../../../assets/images';
 function Category() {
-    const fieldIgnoreCategory = [...field, 'listResult', 'products', 'image'];
+    const fieldIgnoreCategory = [...field, 'listResult', 'products'];
     const [checked, setChecked] = useState(true);
     const [categorise, setCategorise] = useState([]);
     const [listCategoryChecked, setListCategoryChecked] = useState([]);
     const [listIdDelete, setListIdDelete] = useState([]);
     const [isEdit, setIsEdit] = useState(false);
-    const [preview, setPreview] = useState(null);
-    const [image, setImage] = useState(null);
     const [category, setCategory] = useState({
         id: '',
         name: '',
-        image: '',
         deleted: '',
     });
 
@@ -50,13 +46,28 @@ function Category() {
     const GetDataFromTable = (value) => {
         setListCategoryChecked(value);
     };
+
     const handleChange = (e) => {
         setCategory({ ...category, [e.target.name]: e.target.value });
     };
+
     useEffect(() => {
         listIdDelete.length = 0;
         listCategoryChecked.map((item) => setListIdDelete((prev) => [...prev, item.id]));
     }, [listCategoryChecked]);
+
+    // Add Category
+    const AddCategory = async (e) => {
+        e.preventDefault();
+        await CategoryService.addCategory(category)
+            .then((resp) => {
+                setChecked((prev) => (prev = !prev));
+                setCategory({ name: '' });
+            })
+            .catch((err) => {
+                console.log(err.response.data);
+            });
+    };
 
     // delete one category
     const DeleteOneCategory = async (e, category) => {
@@ -99,7 +110,6 @@ function Category() {
                     btn.className = 'btn btn-primary btn-sm text-white';
                     btn.innerText = 'Edit';
                     setCategory({ name: '' });
-                    setImage(null);
                 } else {
                     btn.className = 'btn btn-warning btn-sm text-white';
                     btn.innerText = 'Undo';
@@ -110,76 +120,18 @@ function Category() {
     };
 
     // Edit category
-    // const EditCategory = async (e) => {
-    //     e.preventDefault();
-    //     await CategoryService.updateCategory(category)
-    //         .then((resp) => {
-    //             setIsEdit((prev) => (prev = !prev));
-    //             setCategory({ name: '' });
-    //             setChecked((prev) => (prev = !prev));
-    //             console.log(resp.data);
-    //         })
-    //         .catch((err) => {
-    //             console.log(err.response.data);
-    //         });
-    // };
-
-    useEffect(() => {
-        if (category.image) {
-            setImage(() => {
-                const bits = category.image.split('.');
-                const file = new File([bits[0]], category.image, {
-                    type: 'text/plain',
-                });
-                return { file };
-            });
-        }
-    }, [category]);
-
-    useEffect(() => {
-        return () => {
-            image && URL.revokeObjectURL(preview);
-        };
-    }, [image]);
-
-    const handleUploadImage = (e) => {
-        setImage({ file: e.target.files[0] });
-        setPreview(URL.createObjectURL(e.target.files[0]));
-    };
-
-    const handleDisplayImage = () => {
-        if (category.image && !preview) {
-            return category.image;
-        }
-        return !image ? images.noAvatar : preview;
-    };
-
-    const handleSubmit = async (e) => {
+    const EditCategory = async (e) => {
         e.preventDefault();
-        const data = new FormData();
-        if (image) {
-            data.append('file', image.file);
-        } else {
-            data.append('file', null);
-        }
-        data.append('model', JSON.stringify(category));
-        try {
-            await CategoryService.addCategory(data);
-            setChecked((prev) => (prev = !prev));
-            setCategory({
-                id: '',
-                name: '',
-                image: '',
-                deleted: '',
+        await CategoryService.updateCategory(category)
+            .then((resp) => {
+                setIsEdit((prev) => (prev = !prev));
+                setCategory({ name: '' });
+                setChecked((prev) => (prev = !prev));
+                console.log(resp.data);
+            })
+            .catch((err) => {
+                console.log(err.response.data);
             });
-            setPreview(null);
-            setImage(null);
-            document.getElementById('category-image').value = '';
-            setChecked((prev) => (prev = !prev));
-            URL.revokeObjectURL(preview);
-        } catch (err) {
-            console.log(err);
-        }
     };
 
     const actionColumns = (hooks) => {
@@ -240,40 +192,30 @@ function Category() {
                                     </div>
                                     <div class="mb-3">
                                         <label for="categoryname" class="form-label">
-                                            Category Image
+                                            Category Name
                                         </label>
                                         <input
                                             className="form-control"
-                                            type="file"
+                                            type="text"
+                                            id="categoryname"
                                             required
-                                            name="image"
-                                            id="category-image"
-                                            onChange={(e) => handleUploadImage(e)}
-                                        />
-                                    </div>
-                                    <div className="image-product w-100 my-3">
-                                        <img
-                                            className="img-thumbnail"
-                                            src={handleDisplayImage()}
-                                            alt=""
-                                            style={{
-                                                height: '200px',
-                                                width: '100%',
-                                                objectFit: 'contain',
-                                            }}
+                                            placeholder="Enter category name"
+                                            name="name"
+                                            value={category.name}
+                                            onChange={(e) => handleChange(e)}
                                         />
                                     </div>
                                     <div className="d-flex justify-content-between">
                                         {!isEdit ? (
                                             <button
-                                                onClick={(e) => handleSubmit(e)}
+                                                onClick={(e) => AddCategory(e)}
                                                 class="btn btn-success"
                                             >
                                                 Create Category
                                             </button>
                                         ) : (
                                             <button
-                                                onClick={(e) => handleSubmit(e)}
+                                                onClick={(e) => EditCategory(e)}
                                                 class="btn btn-warning text-white"
                                             >
                                                 Edit Category
