@@ -58,6 +58,19 @@ function Category() {
         listCategoryChecked.map((item) => setListIdDelete((prev) => [...prev, item.id]));
     }, [listCategoryChecked]);
 
+    // Add Category
+    // const AddCategory = async (e) => {
+    //     e.preventDefault();
+    //     await CategoryService.addCategory(category)
+    //         .then((resp) => {
+    //             setChecked((prev) => (prev = !prev));
+    //             setCategory({ name: '' });
+    //         })
+    //         .catch((err) => {
+    //             console.log(err.response.data);
+    //         });
+    // };
+
     // delete one category
     const DeleteOneCategory = async (e, category) => {
         e.preventDefault();
@@ -99,7 +112,6 @@ function Category() {
                     btn.className = 'btn btn-primary btn-sm text-white';
                     btn.innerText = 'Edit';
                     setCategory({ name: '' });
-                    setImage(null);
                 } else {
                     btn.className = 'btn btn-warning btn-sm text-white';
                     btn.innerText = 'Undo';
@@ -110,37 +122,19 @@ function Category() {
     };
 
     // Edit category
-    // const EditCategory = async (e) => {
-    //     e.preventDefault();
-    //     await CategoryService.updateCategory(category)
-    //         .then((resp) => {
-    //             setIsEdit((prev) => (prev = !prev));
-    //             setCategory({ name: '' });
-    //             setChecked((prev) => (prev = !prev));
-    //             console.log(resp.data);
-    //         })
-    //         .catch((err) => {
-    //             console.log(err.response.data);
-    //         });
-    // };
-
-    useEffect(() => {
-        if (category.image) {
-            setImage(() => {
-                const bits = category.image.split('.');
-                const file = new File([bits[0]], category.image, {
-                    type: 'text/plain',
-                });
-                return { file };
+    const EditCategory = async (e) => {
+        e.preventDefault();
+        await CategoryService.updateCategory(category)
+            .then((resp) => {
+                setIsEdit((prev) => (prev = !prev));
+                setCategory({ name: '' });
+                setChecked((prev) => (prev = !prev));
+                console.log(resp.data);
+            })
+            .catch((err) => {
+                console.log(err.response.data);
             });
-        }
-    }, [category]);
-
-    useEffect(() => {
-        return () => {
-            image && URL.revokeObjectURL(preview);
-        };
-    }, [image]);
+    };
 
     const handleUploadImage = (e) => {
         setImage({ file: e.target.files[0] });
@@ -157,11 +151,7 @@ function Category() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const data = new FormData();
-        if (image) {
-            data.append('file', image.file);
-        } else {
-            data.append('file', null);
-        }
+        data.append('file', image.file);
         data.append('model', JSON.stringify(category));
         try {
             await CategoryService.addCategory(data);
@@ -172,11 +162,6 @@ function Category() {
                 image: '',
                 deleted: '',
             });
-            setPreview(null);
-            setImage(null);
-            document.getElementById('category-image').value = '';
-            setChecked((prev) => (prev = !prev));
-            URL.revokeObjectURL(preview);
         } catch (err) {
             console.log(err);
         }
@@ -247,7 +232,6 @@ function Category() {
                                             type="file"
                                             required
                                             name="image"
-                                            id="category-image"
                                             onChange={(e) => handleUploadImage(e)}
                                         />
                                     </div>
@@ -273,7 +257,7 @@ function Category() {
                                             </button>
                                         ) : (
                                             <button
-                                                onClick={(e) => handleSubmit(e)}
+                                                onClick={(e) => EditCategory(e)}
                                                 class="btn btn-warning text-white"
                                             >
                                                 Edit Category

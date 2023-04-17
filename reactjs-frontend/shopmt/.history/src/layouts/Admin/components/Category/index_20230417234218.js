@@ -110,19 +110,19 @@ function Category() {
     };
 
     // Edit category
-    // const EditCategory = async (e) => {
-    //     e.preventDefault();
-    //     await CategoryService.updateCategory(category)
-    //         .then((resp) => {
-    //             setIsEdit((prev) => (prev = !prev));
-    //             setCategory({ name: '' });
-    //             setChecked((prev) => (prev = !prev));
-    //             console.log(resp.data);
-    //         })
-    //         .catch((err) => {
-    //             console.log(err.response.data);
-    //         });
-    // };
+    const EditCategory = async (e) => {
+        e.preventDefault();
+        await CategoryService.updateCategory(category)
+            .then((resp) => {
+                setIsEdit((prev) => (prev = !prev));
+                setCategory({ name: '' });
+                setChecked((prev) => (prev = !prev));
+                console.log(resp.data);
+            })
+            .catch((err) => {
+                console.log(err.response.data);
+            });
+    };
 
     useEffect(() => {
         if (category.image) {
@@ -175,7 +175,6 @@ function Category() {
             setPreview(null);
             setImage(null);
             document.getElementById('category-image').value = '';
-            setChecked((prev) => (prev = !prev));
             URL.revokeObjectURL(preview);
         } catch (err) {
             console.log(err);

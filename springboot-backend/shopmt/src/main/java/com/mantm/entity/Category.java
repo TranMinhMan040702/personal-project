@@ -18,6 +18,9 @@ public class Category extends AbstractEntity {
 	@Column(name = "name", unique = true, length = 32)
 	@NotNull
 	private String name;
+	
+	@Column(name = "image")
+	private String image;
 
 	@Column(name = "is_deleted")
 	private boolean isDeleted = false;

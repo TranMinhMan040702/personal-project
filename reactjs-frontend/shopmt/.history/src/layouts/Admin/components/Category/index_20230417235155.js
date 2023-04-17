@@ -93,7 +93,7 @@ function Category() {
         e.preventDefault();
         const btn = document.getElementById(category.original.id);
         if (category.isSelected) {
-            setCategory({ ...category.original });
+            setCategory({ ...category.original, image: '' });
             setIsEdit((prev) => {
                 if (prev) {
                     btn.className = 'btn btn-primary btn-sm text-white';

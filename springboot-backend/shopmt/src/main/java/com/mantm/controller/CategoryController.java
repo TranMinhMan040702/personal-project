@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mantm.dto.CategoryDto;
 import com.mantm.exception.ResourceNotFoundException;
 import com.mantm.service.ICategoryService;
@@ -24,37 +27,39 @@ import com.mantm.service.ICategoryService;
 @RequestMapping("/api/v1/")
 public class CategoryController {
 
-	@Autowired ICategoryService categoryService;
-	
+	@Autowired
+	ICategoryService categoryService;
+	@Autowired
+	ObjectMapper objectMapper;
 
 	@GetMapping("/categorise")
 	public ResponseEntity<List<CategoryDto>> findAllCategory() {
 		return ResponseEntity.ok(categoryService.findAll());
 	}
-	
-	@GetMapping("/categorise/{id}") 
-	public ResponseEntity<?> findCategoryById(@PathVariable long id) throws ResourceNotFoundException {
+
+	@GetMapping("/categorise/{id}")
+	public ResponseEntity<?> findCategoryById(@PathVariable long id)
+			throws ResourceNotFoundException {
 		return ResponseEntity.ok(categoryService.findCategoryById(id));
 	}
-	
+
 	@PostMapping("/admin/categorise")
-	public CategoryDto createCategory (@RequestBody CategoryDto categoryDto) throws Exception {
-		return categoryService.save(categoryDto);
+	public ResponseEntity<?> saveCategory(@RequestParam("model") String JsonObject,
+			@RequestParam(name = "file", required = false) MultipartFile file) throws Exception {
+
+		CategoryDto categoryDto = new CategoryDto();
+		categoryDto = objectMapper.readValue(JsonObject, CategoryDto.class);
+		return ResponseEntity.ok(categoryService.save(categoryDto, file));
 	}
-	
-	@PutMapping("/admin/categorise/{id}") 
-	public CategoryDto updateCategory(@RequestBody CategoryDto categoryDto, @PathVariable long id) throws Exception {
-		categoryDto.setId(id);
-		return categoryService.save(categoryDto);
-	}
-	
+
 	@DeleteMapping("/admin/categorise/{ids}")
 	public ResponseEntity<Map<String, String>> deleteCategory(@PathVariable List<String> ids) {
 		return ResponseEntity.ok(categoryService.deleteCategory(ids));
 	}
-	
+
 	@PutMapping("/admin/categorise")
-	ResponseEntity<Map<String, String>> deleteSoftCategory(@RequestBody long[] ids) throws ResourceNotFoundException {
+	ResponseEntity<Map<String, String>> deleteSoftCategory(@RequestBody long[] ids)
+			throws ResourceNotFoundException {
 		return ResponseEntity.ok(categoryService.deleteSoftCategory(ids));
-	} 
+	}
 }

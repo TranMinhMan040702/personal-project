@@ -1,17 +1,20 @@
 package com.mantm.service.impl;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
+import com.mantm.convert.CategoryConvert;
 import com.mantm.dto.CategoryDto;
 import com.mantm.entity.Category;
 import com.mantm.exception.ResourceNotFoundException;
@@ -26,6 +29,10 @@ public class CategoryServiceImpl implements ICategoryService {
 	ModelMapper mapper;
 	@Autowired
 	CategoryRepository categoryRepository;
+	@Autowired
+	CategoryConvert categoryConvert;
+	@Autowired
+	Cloudinary cloudinary;
 
 	@Override
 	public List<CategoryDto> findAll() {
@@ -40,24 +47,40 @@ public class CategoryServiceImpl implements ICategoryService {
 
 	@Override
 	public CategoryDto findCategoryById(long id) throws ResourceNotFoundException {
-		Category entity = categoryRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Category not exist with id: " + id));
+		Category entity = categoryRepository.findById(id).orElseThrow(
+				() -> new ResourceNotFoundException("Category not exist with id: " + id));
 		CategoryDto result = mapper.map(entity, CategoryDto.class);
 		return result;
 	}
 
 	@Override
-	public CategoryDto save(CategoryDto categoryDto) {
-		Category entity = new Category();
+	public CategoryDto save(CategoryDto categoryDto, MultipartFile file) throws Exception {
+
+		Category category = categoryConvert.convertToEntity(categoryDto);
+
 		if (categoryDto.getId() != null) {
-			Optional<Category> oldEntity = categoryRepository.findById(categoryDto.getId());
-			BeanUtils.copyProperties(oldEntity, entity);
-			BeanUtils.copyProperties(categoryDto, entity);
+			String imageOld = category.getImage();
+			if ((imageOld == null
+					|| file != null && !imageOld.equals(file.getOriginalFilename()))) {
+				category.setImage(saveImageCloudinary(file));
+			}
 		} else {
-			BeanUtils.copyProperties(categoryDto, entity);
+			category.setImage(saveImageCloudinary(file));
 		}
-		entity = categoryRepository.save(entity);
-		return mapper.map(entity, CategoryDto.class);
+		category = categoryRepository.save(category);
+		return categoryConvert.convertToDto(category);
+	}
+
+	private String saveImageCloudinary(MultipartFile file) {
+		Map<?, ?> r;
+		try {
+			r = this.cloudinary.uploader().upload(file.getBytes(),
+					ObjectUtils.asMap("resource_type", "auto"));
+			return (String) r.get("secure_url");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return "";
 	}
 
 	@Override
@@ -75,8 +98,8 @@ public class CategoryServiceImpl implements ICategoryService {
 	public Map<String, String> deleteSoftCategory(long[] ids) throws ResourceNotFoundException {
 		Map<String, String> resp = new HashMap<>();
 		for (long item : ids) {
-			Category entity = categoryRepository.findById(item)
-					.orElseThrow(() -> new ResourceNotFoundException("Category not exist with id: " + item));
+			Category entity = categoryRepository.findById(item).orElseThrow(
+					() -> new ResourceNotFoundException("Category not exist with id: " + item));
 			entity.setDeleted(true);
 			categoryRepository.save(entity);
 		}

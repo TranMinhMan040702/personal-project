@@ -37,7 +37,7 @@ public class AddressServiceImpl implements IAddressService {
 		Optional<User> user = userRepository.findById(addressDto.getUserId());
 		List<Address> addresses = user.get().getAddresses();
 		if (addressDto.isStatus() && !addresses.isEmpty()) {
-			updateStatusAddress();
+			updateStatusAddress(user.get());
 		}
 		if (addresses.isEmpty()) {
 			addressDto.setStatus(true);
@@ -54,8 +54,8 @@ public class AddressServiceImpl implements IAddressService {
 		return addressConvert.convertToDto(userRepository.save(user.get()).getAddresses());
 	}
 
-	private void updateStatusAddress() {
-		Address address = addressRepository.findByStatus(true);
+	private void updateStatusAddress(User user) {
+		Address address = addressRepository.findByStatusAndUser(true, user);
 		if (address != null) {
 			address.setStatus(false);
 			addressRepository.save(address);
