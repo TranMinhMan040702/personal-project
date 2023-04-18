@@ -176,9 +176,7 @@ function Category() {
             setImage(null);
             document.getElementById('category-image').value = '';
             setChecked((prev) => (prev = !prev));
-            if (isEdit) {
-                setIsEdit((prev) => (prev = !prev));
-            }
+            setIsEdit((prev) => (prev = !prev));
             URL.revokeObjectURL(preview);
         } catch (err) {
             console.log(err);

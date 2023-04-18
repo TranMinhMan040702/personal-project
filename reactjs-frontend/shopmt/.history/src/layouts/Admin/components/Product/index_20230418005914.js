@@ -36,7 +36,8 @@ function Product() {
     const getAllProducts = async (requestParams) => {
         try {
             const response = await ProductService.getProducts(requestParams);
-            setProducts(response.data.products);
+            setProducts(response.data);
+            console.log(response.data);
         } catch (err) {
             console.log(err);
         }
@@ -177,7 +178,7 @@ function Product() {
                                             </div>
                                         );
                                     })}
-                                    {/* <Padding /> */}
+                                    <Padding />
                                 </div>
                             ) : (
                                 <Empty title="Không có sản phẩm" image={images.productEmpty} />

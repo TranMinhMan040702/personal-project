@@ -177,7 +177,7 @@ function Product() {
                                             </div>
                                         );
                                     })}
-                                    {/* <Padding /> */}
+                                    <Padding />
                                 </div>
                             ) : (
                                 <Empty title="Không có sản phẩm" image={images.productEmpty} />

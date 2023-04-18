@@ -25,55 +25,55 @@ public class InsertData {
 	@Autowired
 	DeliveryRepository deliveryRepository;
 	
-	@Test
-	@Order(1)
-	public void testCreateCategory() {
-		
-		// Create Category
-		
-		Category category1 = new Category();
-		category1.setName("Văn học");
-		categoryRepository.save(category1);
-		
-		Category category2 = new Category();
-		category1.setName("Kinh tế");
-		categoryRepository.save(category2);
-		
-		Category category3 = new Category();
-		category1.setName("Chính trị");
-		categoryRepository.save(category3);
-		
-		Category category4 = new Category();
-		category1.setName("Tham khảo");
-		categoryRepository.save(category4);
-		
-		Category category5 = new Category();
-		category1.setName("Truyện tranh");
-		categoryRepository.save(category5);
-		
-		Category category6 = new Category();
-		category1.setName("Nuôi dạy con");
-		categoryRepository.save(category6);
-		
-		Category category7 = new Category();
-		category1.setName("Nấu ăn");
-		categoryRepository.save(category7);
-		
-		Category category8 = new Category();
-		category1.setName("Tâm lý");
-		categoryRepository.save(category8);
-		
-		Category category9 = new Category();
-		category1.setName("Ngoại ngữ");
-		categoryRepository.save(category9);
-		
-		Category category10 = new Category();
-		category1.setName("Kỹ năng sống");
-		categoryRepository.save(category10);
-	}
+//	@Test
+//	@Order(1)
+//	public void testCreateCategory() {
+//		
+//		// Create Category
+//		
+//		Category category1 = new Category();
+//		category1.setName("Văn học");
+//		categoryRepository.save(category1);
+//		
+//		Category category2 = new Category();
+//		category1.setName("Kinh tế");
+//		categoryRepository.save(category2);
+//		
+//		Category category3 = new Category();
+//		category1.setName("Chính trị");
+//		categoryRepository.save(category3);
+//		
+//		Category category4 = new Category();
+//		category1.setName("Tham khảo");
+//		categoryRepository.save(category4);
+//		
+//		Category category5 = new Category();
+//		category1.setName("Truyện tranh");
+//		categoryRepository.save(category5);
+//		
+//		Category category6 = new Category();
+//		category1.setName("Nuôi dạy con");
+//		categoryRepository.save(category6);
+//		
+//		Category category7 = new Category();
+//		category1.setName("Nấu ăn");
+//		categoryRepository.save(category7);
+//		
+//		Category category8 = new Category();
+//		category1.setName("Tâm lý");
+//		categoryRepository.save(category8);
+//		
+//		Category category9 = new Category();
+//		category1.setName("Ngoại ngữ");
+//		categoryRepository.save(category9);
+//		
+//		Category category10 = new Category();
+//		category1.setName("Kỹ năng sống");
+//		categoryRepository.save(category10);
+//	}
 	
 	@Test
-	@Order(2)
+	@Order(1)
 	public void testInsertDelivery() {
 		
 		// Create Delivery

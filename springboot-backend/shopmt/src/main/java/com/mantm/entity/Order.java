@@ -59,4 +59,7 @@ public class Order extends AbstractEntity {
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
 	private List<OrderItem> orderItems;
 
+	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+	private List<Review> reviews;
+	
 }
