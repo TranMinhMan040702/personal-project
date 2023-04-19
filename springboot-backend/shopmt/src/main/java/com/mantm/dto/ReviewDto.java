@@ -11,7 +11,7 @@ public class ReviewDto extends AbstractDto<ReviewDto>{
 
 	private int rating;
 
-	private long userId;
+	private UserReviewDto user;
 	
 	private long orderId;
 

@@ -24,12 +24,14 @@ public class ReviewConvert {
 	OrderRepository orderRepository;
 	@Autowired
 	ProductRepository productRepository;
+	@Autowired
+	UserReviewConvert userReviewConvert;
 
 	public Review converToEntity(ReviewDto reviewDto) {
 		Review entity = new Review();
 		BeanUtils.copyProperties(reviewDto, entity);
 
-		Optional<User> user = userRepository.findById(reviewDto.getUserId());
+		Optional<User> user = userRepository.findById(reviewDto.getUser().getId());
 		Optional<Order> order = orderRepository.findById(reviewDto.getOrderId());
 		Optional<Product> product = productRepository.findById(reviewDto.getProductId());
 
@@ -43,10 +45,10 @@ public class ReviewConvert {
 		ReviewDto dto = new ReviewDto();
 		BeanUtils.copyProperties(review, dto);
 
-		dto.setUserId(review.getUser().getId());
+		dto.setUser(userReviewConvert.convertToDto(review.getUser()));
 		dto.setOrderId(review.getOrder().getId());
 		dto.setProductId(review.getProduct().getId());
-		
+
 		return dto;
 	}
 }

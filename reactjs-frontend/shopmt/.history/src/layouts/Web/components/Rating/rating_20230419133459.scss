@@ -1,0 +1,112 @@
+.product-rating {
+    .product {
+        margin: 0 auto;
+    }
+    .rating-top {
+        h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+        .rating-statistics {
+            width: 500px;
+            .left {
+                margin-left: 46px;
+                h2 {
+                    text-align: center;
+                    font-size: 3rem;
+                    font-weight: 800;
+                    span {
+                        font-size: 1.8rem;
+                        font-weight: 600;
+                    }
+                }
+                .rating-star {
+                    color: var(--star-color);
+                }
+                p {
+                    text-align: center;
+                    font-size: 14px;
+                    color: #7a7e7f;
+                }
+            }
+            .right {
+                span {
+                    font-size: 1.1rem;
+                    display: block;
+                    width: 50px;
+                }
+                .review-rating {
+                    width: 200px;
+                    background-color: var(--star-color);
+                    height: 5px;
+                    margin-right: 8px;
+                }
+            }
+        }
+    }
+    .rating-comment {
+        margin-top: 20px;
+        .comment-option {
+            border-bottom: 1px solid #cdcfd0;
+            font-size: 1rem;
+            a {
+                margin-right: 50px;
+                color: #878788;
+                padding-bottom: 3px;
+            }
+            .active {
+                color: var(--primary-color-web);
+                font-weight: 600;
+                border-bottom: 2px solid var(--primary-color-web);
+            }
+        }
+        .comment {
+            margin-top: 30px;
+            .comment-info {
+                width: 20%;
+                h5 {
+                    font-size: 16px;
+                    font-weight: 600;
+                }
+                p {
+                    font-size: 14px;
+                    color: #7f8081;
+                }
+                .image {
+                    height: 100px;
+                    width: 100px;
+                    border-radius: 50%;
+                    border: 1px solid #7a7e7f;
+                    img {
+                        height: 100%;
+                        width: 100%;
+                        object-fit: contain;
+                    }
+                }
+            }
+            .comment-detail {
+                width: 80%;
+                .comment-rating {
+                    color: var(--star-color);
+                    font-size: 12px;
+                    margin-bottom: 10px;
+                }
+                .comment-content {
+                    font-size: 16px;
+                }
+                .like-report {
+                    font-size: 14px;
+                    a {
+                        color: #7f8081;
+                    }
+                    p {
+                        margin: 5px 5px 0;
+                    }
+                    .like {
+                        margin-right: 40px;
+                    }
+                }
+            }
+        }
+    }
+}
