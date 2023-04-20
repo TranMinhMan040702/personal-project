@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.mantm.dto.ProductDto;
-import com.mantm.dto.response.ProductResponse;
+import com.mantm.dto.response.ProductPaging;
 import com.mantm.exception.ResourceNotFoundException;
 
 @Service
@@ -23,7 +23,7 @@ public interface IProductService {
 	List<ProductDto> findByCategory(Long categoryId, String search, Double priceMin,
 			Double priceMax);
 
-	ProductResponse findAll(Long categoryId, Integer page, Integer limit, String sortBy,
+	ProductPaging findAll(Long categoryId, Integer page, Integer limit, String sortBy,
 			Double priceMin, Double priceMax, String search);
 
 }

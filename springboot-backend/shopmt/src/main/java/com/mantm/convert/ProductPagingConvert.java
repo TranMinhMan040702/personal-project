@@ -8,17 +8,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import com.mantm.dto.ProductDto;
-import com.mantm.dto.response.ProductResponse;
+import com.mantm.dto.response.ProductPaging;
 import com.mantm.entity.Product;
 
 @Component
-public class ProductResponseConvert {
+public class ProductPagingConvert {
 
 	@Autowired
 	ProductConvert productConvert;
 
-	public ProductResponse convertToDto(Page<Product> products) {
-		ProductResponse response = new ProductResponse();
+	public ProductPaging convertToDto(Page<Product> products) {
+		ProductPaging response = new ProductPaging();
 		List<ProductDto> productDtots = new ArrayList<>();
 
 		response.setPage(products.getPageable().getPageNumber());

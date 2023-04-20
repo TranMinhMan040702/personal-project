@@ -11,4 +11,5 @@ import com.mantm.entity.Review;
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 	List<Review> findByProduct(Product product);
+	long countByRating(int rating);
 }
