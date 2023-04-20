@@ -7,7 +7,7 @@ class ReviewService {
         return axiosPrivate.post(REACT_APP_REVIEW_API_URL, review);
     }
     getAllReviewByProduct(productId) {
-        return axios.get(REACT_APP_REVIEW_API_URL + '/product/' + productId);
+        return axios.get(REACT_APP_REVIEW_API_URL + '/product' + productId);
     }
 }
 export default new ReviewService();

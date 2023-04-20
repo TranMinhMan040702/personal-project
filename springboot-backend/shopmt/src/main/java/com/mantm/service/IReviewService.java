@@ -13,4 +13,6 @@ public interface IReviewService {
 
 	List<ReviewDto> getAllReviewByProduct(long productId);
 
+	List<ReviewDto> getAllReviewByUser(long userId);
+
 }
