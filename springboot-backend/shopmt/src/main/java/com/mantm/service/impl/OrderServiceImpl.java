@@ -43,7 +43,7 @@ public class OrderServiceImpl implements IOrderService {
 	CartServiceImpl cartServiceImpl;
 	@Autowired
 	OrderConvert orderConvert;
-	
+
 	@Override
 	public List<OrderDto> findAllOrdersByStatusWithPaginationAndSort(String status, Integer page,
 			Integer limit, String sortBy, String search) {
@@ -60,24 +60,6 @@ public class OrderServiceImpl implements IOrderService {
 		}
 
 		return orderDtos;
-	}
-
-	@Override
-	public OrderDto createOrder(OrderDto orderDto) throws ResourceNotFoundException {
-		Order order = orderConvert.convertToEntity(orderDto);
-		order = orderRepository.save(order);
-		updateQuantityAndSoldProduct(orderDto.getOrderItems());
-		cartServiceImpl.clearedCart(order.getUser().getCart().getId());
-		return orderConvert.convertToDto(order);
-	}
-
-	private void updateQuantityAndSoldProduct(List<OrderItemDto> orderItem) {
-		for (OrderItemDto item : orderItem) {
-			Optional<Product> product = productRepository.findById(item.getProduct().getId());
-			product.get().setQuantity(product.get().getQuantity() - item.getCount());
-			product.get().setSold(item.getCount());
-			productRepository.save(product.get());
-		}
 	}
 
 	@Override
@@ -110,6 +92,24 @@ public class OrderServiceImpl implements IOrderService {
 			orderDtos.add(orderConvert.convertToDto(order));
 		}
 		return orderDtos;
+	}
+
+	@Override
+	public OrderDto createOrder(OrderDto orderDto) throws ResourceNotFoundException {
+		Order order = orderConvert.convertToEntity(orderDto);
+		order = orderRepository.save(order);
+		updateQuantityAndSoldProduct(orderDto.getOrderItems());
+		cartServiceImpl.clearedCart(order.getUser().getCart().getId());
+		return orderConvert.convertToDto(order);
+	}
+
+	private void updateQuantityAndSoldProduct(List<OrderItemDto> orderItem) {
+		for (OrderItemDto item : orderItem) {
+			Optional<Product> product = productRepository.findById(item.getProduct().getId());
+			product.get().setQuantity(product.get().getQuantity() - item.getCount());
+			product.get().setSold(item.getCount());
+			productRepository.save(product.get());
+		}
 	}
 
 	@Override

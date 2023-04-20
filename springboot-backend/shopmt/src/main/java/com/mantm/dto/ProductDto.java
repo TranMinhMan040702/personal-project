@@ -2,8 +2,6 @@ package com.mantm.dto;
 
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 

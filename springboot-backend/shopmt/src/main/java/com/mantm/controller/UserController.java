@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mantm.contains.Containt;
 import com.mantm.dto.AddressDto;
 import com.mantm.dto.UserDto;
 import com.mantm.service.IAddressService;
@@ -25,14 +26,22 @@ import com.mantm.service.IUserService;
 @RequestMapping("/api/v1/")
 public class UserController {
 
-	@Autowired IUserService userService;
-	@Autowired IAddressService addressService;
-	@Autowired ILikeProductService likeProductService;
-	@Autowired ObjectMapper objectMapper;
+	@Autowired
+	IUserService userService;
+	@Autowired
+	IAddressService addressService;
+	@Autowired
+	ILikeProductService likeProductService;
+	@Autowired
+	ObjectMapper objectMapper;
 
-	@GetMapping("users")
-	public ResponseEntity<?> findAllUser() {
-		return ResponseEntity.ok(userService.findAll());
+	@GetMapping("admin/users")
+	public ResponseEntity<?> findAllUser(
+			@RequestParam(defaultValue = "0", required = false) Integer page,
+			@RequestParam(defaultValue = Containt.DEFAULT_LIMIT_SIZE_PAGE, required = false) Integer limit,
+			@RequestParam(defaultValue = Containt.DEFAULT_LIMIT_SORT_BY, required = false) String sortBy,
+			@RequestParam(required = false) String search) {
+		return ResponseEntity.ok(userService.findAll(page, limit, sortBy, search));
 	}
 
 	@GetMapping("users/{id}")
@@ -63,24 +72,25 @@ public class UserController {
 	public ResponseEntity<?> deleteAddress(@PathVariable long id) {
 		return ResponseEntity.ok(addressService.deleteAddressById(id));
 	}
-	
+
 	@GetMapping("users/admin/follow-product")
 	public ResponseEntity<?> getAllLikeProduct() {
 		return ResponseEntity.ok(likeProductService.findAllLikeProduct());
 	}
-	
-	@GetMapping("users/follow-product") 
+
+	@GetMapping("users/follow-product")
 	public ResponseEntity<?> getLikeProductByUser(@RequestParam long userId) {
 		return ResponseEntity.ok(likeProductService.findLikeProductByUser(userId));
 	}
-	
+
 	@PostMapping("users/follow-product")
 	public ResponseEntity<?> likeProduct(@RequestParam long userId, @RequestParam long productId) {
 		return ResponseEntity.ok(likeProductService.likeProduct(userId, productId));
 	}
-	
+
 	@PutMapping("users/follow-product")
-	public ResponseEntity<?> unLikeProduct(@RequestParam long userId, @RequestParam long productId) {
+	public ResponseEntity<?> unLikeProduct(@RequestParam long userId,
+			@RequestParam long productId) {
 		return ResponseEntity.ok(likeProductService.unLikeProduct(userId, productId));
 	}
 

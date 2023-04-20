@@ -20,9 +20,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.mantm.convert.ProductConvert;
-import com.mantm.convert.ProductResponseConvert;
+import com.mantm.convert.ProductPagingConvert;
 import com.mantm.dto.ProductDto;
-import com.mantm.dto.response.ProductResponse;
+import com.mantm.dto.response.ProductPaging;
 import com.mantm.entity.Category;
 import com.mantm.entity.Image_Product;
 import com.mantm.entity.Product;
@@ -53,7 +53,7 @@ public class ProductServiceImpl implements IProductService {
 	@Autowired
 	ProductConvert productConvert;
 	@Autowired
-	ProductResponseConvert productResponseConvert;
+	ProductPagingConvert productResponseConvert;
 
 	@Override
 	public ProductDto save(ProductDto productReq, MultipartFile[] files) throws Exception {
@@ -92,7 +92,7 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public ProductResponse findAll(Long categoryId, Integer page, Integer limit, String sortBy,
+	public ProductPaging findAll(Long categoryId, Integer page, Integer limit, String sortBy,
 			Double priceMin, Double priceMax, String search) {
 
 		PageRequest pageRequest = PageRequest.of(page, limit, Sort.by(sortBy).descending());
