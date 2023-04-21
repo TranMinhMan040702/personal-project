@@ -25,24 +25,27 @@ import com.mantm.service.IDeliveryService;
 @RequestMapping("/api/v1/")
 public class DeliveryController {
 
-	@Autowired IDeliveryService deliveryService;
-	
+	@Autowired
+	IDeliveryService deliveryService;
+
 	@GetMapping("deliverise")
 	public ResponseEntity<List<DeliveryDto>> findAllDelivery() {
 		return ResponseEntity.ok(deliveryService.findAll());
 	}
-	
+
 	@PostMapping("/admin/deliverise")
-	public ResponseEntity<DeliveryDto> createDelivery(@RequestBody @Valid DeliveryDto deliveryDto) throws Exception{
+	public ResponseEntity<DeliveryDto> createDelivery(@RequestBody @Valid DeliveryDto deliveryDto)
+			throws Exception {
 		return ResponseEntity.ok(deliveryService.save(deliveryDto));
 	}
-	
+
 	@PutMapping("/admin/deliverise/{id}")
-	public ResponseEntity<DeliveryDto> updateDelivery(@RequestBody @Valid DeliveryDto deliveryDto, @PathVariable long id) throws Exception {
+	public ResponseEntity<DeliveryDto> updateDelivery(@RequestBody @Valid DeliveryDto deliveryDto,
+			@PathVariable long id) throws Exception {
 		deliveryDto.setId(id);
 		return ResponseEntity.ok(deliveryService.save(deliveryDto));
 	}
-	
+
 	@DeleteMapping("/admin/deliverise/{ids}")
 	public ResponseEntity<Map<String, String>> deleteDelivery(@PathVariable List<String> ids) {
 		return ResponseEntity.ok(deliveryService.deleteDelivery(ids));

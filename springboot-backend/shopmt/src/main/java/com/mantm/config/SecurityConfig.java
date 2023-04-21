@@ -29,19 +29,19 @@ public class SecurityConfig  {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		
-		http.cors().and().csrf().disable();
-//			.authorizeHttpRequests()
-//			.antMatchers(HttpMethod.GET).permitAll()
-//			.antMatchers("/api/v1/auth/**").permitAll()
-//			.antMatchers("/api/v1/images/**").permitAll()
-//			.antMatchers("/api/v1/admin/roles").permitAll()
-//			.antMatchers("/api/v1/admin/**").hasAuthority("ADMIN")
-//			.anyRequest().authenticated()
-//			.and()
-//			.sessionManagement()
-//			.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//			.and()
-//			.authenticationProvider(authenticationProvider);
+		http.cors().and().csrf().disable()
+			.authorizeHttpRequests()
+			.antMatchers(HttpMethod.GET).permitAll()
+			.antMatchers("/api/v1/auth/**").permitAll()
+			.antMatchers("/api/v1/images/**").permitAll()
+			.antMatchers("/api/v1/admin/roles").permitAll()
+			.antMatchers("/api/v1/admin/**").hasAuthority("ADMIN")
+			.anyRequest().authenticated()
+			.and()
+			.sessionManagement()
+			.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+			.and()
+			.authenticationProvider(authenticationProvider);
 		
 		http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 		

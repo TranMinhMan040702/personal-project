@@ -8,4 +8,7 @@ import lombok.Data;
 public class TokenRefreshRequest {
 	@NotBlank
 	private String tokenRefresh;
+	
+	
+	private long userId;
 }

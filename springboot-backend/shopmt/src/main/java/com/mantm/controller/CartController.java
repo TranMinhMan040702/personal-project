@@ -21,29 +21,31 @@ import com.mantm.service.ICartService;
 @RestController
 @RequestMapping("/api/v1/")
 public class CartController {
-	
-	@Autowired ICartService cartService;
-	
+
+	@Autowired
+	ICartService cartService;
+
 	@GetMapping("cart/user/{id}")
 	public ResponseEntity<?> findCartUser(@PathVariable long id) {
 		return ResponseEntity.ok(cartService.findCartUser(id));
 	}
 
 	@PostMapping("cart")
-	public ResponseEntity<?> addToCart(@RequestBody CartItemDto cartItemDto) throws ResourceNotFoundException {
+	public ResponseEntity<?> addToCart(@RequestBody CartItemDto cartItemDto)
+			throws ResourceNotFoundException {
 		return ResponseEntity.ok(cartService.addToCart(cartItemDto));
 	}
-	
+
 	@PutMapping("cart/deleteOne")
 	public ResponseEntity<?> deleteOneProductInCart(@RequestParam long cartItemId) {
 		return ResponseEntity.ok(cartService.deleteOneProductInCart(cartItemId));
 	}
-	
+
 	@DeleteMapping("cart/deleteAll")
 	public ResponseEntity<?> deleteAllProductInCart(@RequestParam long cartItemId) {
 		return ResponseEntity.ok(cartService.deleteAllProductInCart(cartItemId));
 	}
-	
+
 //	@PutMapping("cart/{cartId}")
 //	public ResponseEntity<?> clearedCart(@PathVariable long cartId) {
 //		return ResponseEntity.ok(cartService.clearedCart(cartId));
