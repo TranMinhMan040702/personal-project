@@ -9,6 +9,7 @@ import java.util.Set;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -82,6 +83,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
 		String access_token = jwtUtil.generateToken(userDetails, false);
 		String refresh_token = createdRefreshToken(user.getId());
 
+		authResponse.setStatus(HttpStatus.OK.value());
 		authResponse.setAccessToken(access_token);
 		authResponse.setRefreshToken(refresh_token);
 		authResponse.setRoles(request.getRoles());
@@ -101,6 +103,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
 		String access_token = jwtUtil.generateToken(userDetails, false);
 		String refresh_token = createdRefreshToken(user.getId());
 
+		authResponse.setStatus(HttpStatus.OK.value());
 		authResponse.setAccessToken(access_token);
 		authResponse.setRefreshToken(refresh_token);
 		authResponse.setRoles(getRoleUser(access_token));
@@ -126,6 +129,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
 
 				String access_token = jwtUtil.generateToken(userDetails, false);
 
+				authResponse.setStatus(HttpStatus.OK.value());
 				authResponse.setAccessToken(access_token);
 				authResponse.setRefreshToken(refresh_token);
 				authResponse.setRoles(getRoleUser(access_token));
@@ -134,6 +138,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
 				clearedRefreshToken(request);
 			}
 		}
+		authResponse.setStatus(HttpStatus.FORBIDDEN.value());
 		return authResponse;
 	}
 
@@ -150,7 +155,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
 		Token refresh_token = new Token();
 
 		String refreshToken = RandomStrings.randomAlphanumericString(64);
-		Date expired = new Date(System.currentTimeMillis() + 2 * 60 * 1000);
+		Date expired = new Date(System.currentTimeMillis() + 7 * 24 * 60 * 1000);
 
 		refresh_token.setRefreshToken(refreshToken);
 		refresh_token.setUserId(userId);

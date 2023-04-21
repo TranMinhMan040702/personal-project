@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAuth } from '../../../../hooks';
 import images from '../../../../assets/images';
@@ -14,7 +14,6 @@ import { RequestParamContext } from '../../../../context';
 import AuthService from '../../../../services/AuthService';
 
 function Search() {
-    const navigate = useNavigate();
     const cart = useSelector(cartUser);
     const account = useSelector(accountUser);
     const dispath = useDispatch();
@@ -30,7 +29,6 @@ function Search() {
         dispath(accountSlice.actions.clearedAccount({}));
         dispath(cartSlice.actions.clearedCart({}));
         setAuth({});
-        navigate('/login', { replace: true });
     };
     const logout = async (tokenRequest) => {
         try {

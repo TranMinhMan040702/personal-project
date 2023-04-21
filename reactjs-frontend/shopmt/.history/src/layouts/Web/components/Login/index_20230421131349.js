@@ -41,9 +41,9 @@ function LoginForm() {
             setAuth({ ...user, accessToken, roles, userId });
             setUser({ email: '', password: '' });
             // thunk function
-            dispatch(createAccount(userId));
-            dispatch(getCart(userId));
-            dispatch(getAddresses(userId));
+            dispatch(createAccount(response.data.userId));
+            dispatch(getCart(response.data.userId));
+            dispatch(getAddresses(response.data.userId));
             dispatch(getDeliverise());
             navigate(roles.includes('ADMIN') ? config.routes.admin.home : from, { replace: true });
         } catch (err) {

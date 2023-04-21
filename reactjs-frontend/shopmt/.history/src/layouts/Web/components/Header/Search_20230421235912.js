@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAuth } from '../../../../hooks';
 import images from '../../../../assets/images';
@@ -14,7 +14,6 @@ import { RequestParamContext } from '../../../../context';
 import AuthService from '../../../../services/AuthService';
 
 function Search() {
-    const navigate = useNavigate();
     const cart = useSelector(cartUser);
     const account = useSelector(accountUser);
     const dispath = useDispatch();
@@ -23,6 +22,7 @@ function Search() {
 
     const handleLogout = (e) => {
         e.preventDefault();
+        localStorage.clear();
         logout({
             tokenRefresh: localStorage.getItem('refreshToken'),
             userId: localStorage.getItem('userId'),
@@ -30,12 +30,10 @@ function Search() {
         dispath(accountSlice.actions.clearedAccount({}));
         dispath(cartSlice.actions.clearedCart({}));
         setAuth({});
-        navigate('/login', { replace: true });
     };
     const logout = async (tokenRequest) => {
         try {
             await AuthService.logout(tokenRequest);
-            localStorage.clear();
         } catch (err) {
             console.error(err);
         }

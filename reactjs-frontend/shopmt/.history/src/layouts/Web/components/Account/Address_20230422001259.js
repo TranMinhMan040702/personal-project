@@ -195,7 +195,7 @@ function Address({ account }) {
                         </button>
                     </div>
                     <div className="address-list">
-                        {addresses.length > 0 ? (
+                        {addresses ? (
                             [...addresses]
                                 .sort((a, b) => b.status - a.status)
                                 .map((address, index) => {
@@ -257,7 +257,7 @@ function Address({ account }) {
                                     );
                                 })
                         ) : (
-                            <Empty title="Chưa có địa chỉ" image={images.addressEmpty} />
+                            <Empty title="Hãy thêm địa chỉ" image={images.addressEmpty} />
                         )}
                     </div>
                 </div>

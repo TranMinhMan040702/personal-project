@@ -93,8 +93,8 @@ function Location({ addresses, addressOrder, addressCurrent, setAddressCurrent, 
                             </button>
                         </div>
                     ) : (
-                        <Link to={config.routes.web.user + '/address'} style={{ color: '#0075ff' }}>
-                            Bạn chưa có địa chỉ hãy thêm địa chỉ . . .
+                        <Link to={config.routes.web.user + '/address'}>
+                            Bạn chưa có địa chỉ hãy thêm địa chỉ...
                         </Link>
                     )}
                 </div>

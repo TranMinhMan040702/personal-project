@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
-const location = 'http://localhost:3000/login';
 
 export default axios.create({
     baseURL: BASE_URL,
@@ -29,7 +28,7 @@ axiosPrivate.interceptors.response.use(
                 tokenRefresh: localStorage.getItem('refreshToken'),
                 userId: localStorage.getItem('userId'),
             });
-            console.log(response.data);
+            console.log(response);
             if (response.data.status === 200) {
                 prevRequest.headers['Authorization'] = `Bearer ${response.data.accessToken}`;
                 localStorage.setItem('token', response.data.accessToken);
@@ -39,9 +38,6 @@ axiosPrivate.interceptors.response.use(
                 window.location.reload(true);
             }
             return axiosPrivate(prevRequest);
-        }
-        if (error?.response?.status === 500) {
-            window.location.href = location;
         }
         return Promise.reject(error);
     },

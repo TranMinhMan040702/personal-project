@@ -2,14 +2,8 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import AuthService from '../../../../services/AuthService';
 import { useAuth } from '../../../../hooks';
-import { useDispatch } from 'react-redux';
-import { createAccount } from '../../../../redux/slice/accountSlice';
-import { getCart } from '../../../../redux/slice/cartSlice';
-import { getAddresses } from '../../../../redux/slice/addressSlice';
-import { getDeliverise } from '../../../../redux/slice/deliverySlice';
 import images from '../../../../assets/images';
 function RegisterForm() {
-    const dispatch = useDispatch();
     const { setAuth } = useAuth();
     const navigate = useNavigate();
 
@@ -39,18 +33,12 @@ function RegisterForm() {
                     password,
                 });
                 const accessToken = response?.data?.accessToken;
-                const refreshToken = response?.data?.refreshToken;
                 const roles = response?.data?.roles;
                 const userId = response?.data?.userId;
                 localStorage.setItem('token', accessToken);
-                localStorage.setItem('refreshToken', refreshToken);
-                localStorage.setItem('userId', userId);
-                setAuth({ email, password, accessToken, roles, userId });
-                dispatch(createAccount(userId));
-                dispatch(getCart(userId));
-                dispatch(getAddresses(userId));
-                dispatch(getDeliverise());
+                setAuth({ email, password, accessToken, roles });
                 navigate('/');
+                console.log(response.data);
             } catch (error) {
                 console.log(error);
             }

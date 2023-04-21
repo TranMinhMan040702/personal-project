@@ -2,8 +2,6 @@ import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Modal from '../../../../components/Modal';
 import './location.scss';
-import { Link } from 'react-router-dom';
-import config from '../../../../config';
 
 function Location({ addresses, addressOrder, addressCurrent, setAddressCurrent, setAddressOrder }) {
     const modalHeader = 'Địa chỉ của tôi';
@@ -80,7 +78,7 @@ function Location({ addresses, addressOrder, addressCurrent, setAddressCurrent, 
                         <FontAwesomeIcon icon={faLocationDot} />
                         <h4>Địa chỉ nhận hàng</h4>
                     </div>
-                    {addressOrder ? (
+                    {addressOrder && (
                         <div className="address">
                             <span>{`${addressOrder.username} ${addressOrder.phone}`}</span>
                             {`${addressOrder.street}, ${addressOrder.ward}, ${addressOrder.district}, ${addressOrder.province}`}
@@ -92,10 +90,6 @@ function Location({ addresses, addressOrder, addressCurrent, setAddressCurrent, 
                                 Thay đổi
                             </button>
                         </div>
-                    ) : (
-                        <Link to={config.routes.web.user + '/address'} style={{ color: '#0075ff' }}>
-                            Bạn chưa có địa chỉ hãy thêm địa chỉ . . .
-                        </Link>
                     )}
                 </div>
             </div>

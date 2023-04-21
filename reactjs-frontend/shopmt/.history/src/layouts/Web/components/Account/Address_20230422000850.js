@@ -8,8 +8,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import Loading from '../../../../components/Loading';
 import Modal from '../../../../components/Modal';
 import config from '../../../../config';
-import Empty from '../../../../components/Empty';
-import images from '../../../../assets/images';
 
 function Address({ account }) {
     const addresses = useSelector(addressUser);
@@ -195,7 +193,7 @@ function Address({ account }) {
                         </button>
                     </div>
                     <div className="address-list">
-                        {addresses.length > 0 ? (
+                        {addresses &&
                             [...addresses]
                                 .sort((a, b) => b.status - a.status)
                                 .map((address, index) => {
@@ -255,10 +253,7 @@ function Address({ account }) {
                                             </div>
                                         </div>
                                     );
-                                })
-                        ) : (
-                            <Empty title="Chưa có địa chỉ" image={images.addressEmpty} />
-                        )}
+                                })}
                     </div>
                 </div>
             )}

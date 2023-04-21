@@ -41,7 +41,7 @@ axiosPrivate.interceptors.response.use(
             return axiosPrivate(prevRequest);
         }
         if (error?.response?.status === 500) {
-            window.location.href = location;
+            window.location.href = '';
         }
         return Promise.reject(error);
     },
