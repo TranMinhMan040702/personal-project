@@ -18,4 +18,6 @@ public interface IAuthenticationService {
 
 	AuthResponse refresh(TokenRefreshRequest request);
 
+	void clearedRefreshToken(TokenRefreshRequest request);
+
 }

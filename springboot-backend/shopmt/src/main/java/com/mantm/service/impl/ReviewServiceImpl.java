@@ -14,9 +14,11 @@ import com.mantm.entity.Order;
 import com.mantm.entity.Product;
 import com.mantm.entity.Review;
 import com.mantm.entity.StatusOrderEnum;
+import com.mantm.entity.User;
 import com.mantm.repository.OrderRepository;
 import com.mantm.repository.ProductRepository;
 import com.mantm.repository.ReviewRepository;
+import com.mantm.repository.UserRepository;
 import com.mantm.service.IReviewService;
 
 @Component
@@ -29,6 +31,8 @@ public class ReviewServiceImpl implements IReviewService {
 	ProductRepository productRepository;
 	@Autowired
 	OrderRepository orderRepository;
+	@Autowired
+	UserRepository userRepository;
 	@Autowired
 	ReviewConvert reviewConvert;
 
@@ -53,6 +57,17 @@ public class ReviewServiceImpl implements IReviewService {
 		List<ReviewDto> reviewDtos = new ArrayList<>();
 		Optional<Product> product = productRepository.findById(productId);
 		List<Review> reviews = reviewRepository.findByProduct(product.get());
+		for (Review review : reviews) {
+			reviewDtos.add(reviewConvert.convertToDto(review));
+		}
+		return reviewDtos;
+	}
+	
+	@Override
+	public List<ReviewDto> getAllReviewByUser(long userId) {
+		List<ReviewDto> reviewDtos = new ArrayList<>();
+		Optional<User> user = userRepository.findById(userId);
+		List<Review> reviews = reviewRepository.findByUser(user.get());
 		for (Review review : reviews) {
 			reviewDtos.add(reviewConvert.convertToDto(review));
 		}

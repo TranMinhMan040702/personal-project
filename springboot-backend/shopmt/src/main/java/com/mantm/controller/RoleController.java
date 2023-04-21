@@ -20,21 +20,23 @@ import com.mantm.service.IRoleService;
 @RequestMapping("/api/v1/admin")
 public class RoleController {
 
-	@Autowired IRoleService roleService;
-	
+	@Autowired
+	IRoleService roleService;
+
 	@GetMapping("/roles")
 	public ResponseEntity<?> findAllRoles() {
 		return ResponseEntity.ok(roleService.findAllRole());
 	}
-	
+
 	@PostMapping("/roles")
 	public ResponseEntity<?> createRole(@RequestBody RoleDto roleDto) {
 		return ResponseEntity.ok(roleService.save(roleDto));
 	}
-	
+
 	@DeleteMapping("/roles/{ids}")
-	public ResponseEntity<?> deleteRole(@PathVariable List<String> ids) throws ResourceNotFoundException {
+	public ResponseEntity<?> deleteRole(@PathVariable List<String> ids)
+			throws ResourceNotFoundException {
 		return ResponseEntity.ok(roleService.deleteRole(ids));
 	}
-	
+
 }

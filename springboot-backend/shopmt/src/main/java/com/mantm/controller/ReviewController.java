@@ -21,9 +21,14 @@ public class ReviewController {
 	@Autowired 
 	IReviewService reviewService;
 	
-	@GetMapping("/review/{id}")
+	@GetMapping("/review/product/{id}")
 	public ResponseEntity<?> getAllReviewByProduct(@PathVariable long id) {
 		return ResponseEntity.ok(reviewService.getAllReviewByProduct(id));
+	}
+	
+	@GetMapping("/review/user/{id}")
+	public ResponseEntity<?> getAllReviewByUser(@PathVariable long id) {
+		return ResponseEntity.ok(reviewService.getAllReviewByUser(id));
 	}
 	
 	@PostMapping("/review")

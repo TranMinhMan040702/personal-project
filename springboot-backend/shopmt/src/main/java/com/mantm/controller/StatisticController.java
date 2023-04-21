@@ -14,21 +14,21 @@ import com.mantm.service.IStatisticsService;
 @RestController
 @RequestMapping("/api/v1/")
 public class StatisticController {
-	
+
 	@Autowired
 	IStatisticsService statisticsService;
-	
+
 	@GetMapping("admin/statistic/chartSales")
 	public ResponseEntity<?> statisticRevenue(@RequestParam int year) {
 		return ResponseEntity.ok(statisticsService.statisticRevenue(year));
 	}
-	
+
 	@GetMapping("admin/statistic/total")
 	public ResponseEntity<?> getTotal() {
 		return ResponseEntity.ok(statisticsService.getTotal());
 	}
-	
-	@GetMapping("admin/statistic/chartRating") 
+
+	@GetMapping("admin/statistic/chartRating")
 	public ResponseEntity<?> statisticRating() {
 		return ResponseEntity.ok(statisticsService.statisticRating());
 	}

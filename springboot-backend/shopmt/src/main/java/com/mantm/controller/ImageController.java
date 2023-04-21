@@ -21,12 +21,14 @@ import com.mantm.service.IStorageService;
 @RestController
 @RequestMapping("/api/v1/")
 public class ImageController {
-	
-	@Autowired IStorageService storageService;
-	
+
+	@Autowired
+	IStorageService storageService;
+
 	@GetMapping("images/{filename:.+}")
 	@ResponseBody
-	public ResponseEntity<Resource> serverFiles(@PathVariable String filename, HttpServletRequest request) {
+	public ResponseEntity<Resource> serverFiles(@PathVariable String filename,
+			HttpServletRequest request) {
 		Resource file = storageService.loadAsResource(filename);
 		String contentType = null;
 		try {

@@ -7,9 +7,11 @@ import org.springframework.stereotype.Repository;
 
 import com.mantm.entity.Product;
 import com.mantm.entity.Review;
+import com.mantm.entity.User;
 
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 	List<Review> findByProduct(Product product);
+	List<Review> findByUser(User user);
 	long countByRating(int rating);
 }
