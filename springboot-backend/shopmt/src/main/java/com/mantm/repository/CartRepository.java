@@ -7,6 +7,6 @@ import com.mantm.entity.Cart;
 import com.mantm.entity.User;
 
 @Repository
-public interface CartRepository extends JpaRepository<Cart, Long>{
-	Cart findByUser (User user);
+public interface CartRepository extends JpaRepository<Cart, Long> {
+	Cart findByUser(User user);
 }

@@ -18,7 +18,7 @@ import com.mantm.dto.OrderDto;
 import com.mantm.exception.ResourceNotFoundException;
 import com.mantm.service.IOrderService;
 
-@CrossOrigin("http://localhost:3000/")
+@CrossOrigin({ "https://thunderous-basbousa-75b1ca.netlify.app/", "http://localhost:3000/" })
 @RestController
 @RequestMapping("/api/v1/")
 public class OrderController {

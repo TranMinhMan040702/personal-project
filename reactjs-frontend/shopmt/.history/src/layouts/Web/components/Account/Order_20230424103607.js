@@ -293,7 +293,7 @@ function Order() {
                                                 />
                                             </div>
                                         </div>
-                                        {order.status === 'DELIVERED' && !item.rating && (
+                                        {order.status === 'DELIVERED' && (
                                             <div className="control">
                                                 <Link
                                                     to={linkReviewProduct(

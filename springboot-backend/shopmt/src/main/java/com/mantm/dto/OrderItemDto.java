@@ -10,5 +10,6 @@ public class OrderItemDto extends AbstractDto<OrderItemDto>{
 	private long orderId;
 	private int count;
 	private ProductDto product;
+	private boolean rating;
 	
 }

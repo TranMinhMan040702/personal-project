@@ -281,7 +281,7 @@ function Order() {
                                                     alt="product"
                                                 />
                                             </div>
-                                            <div className="name-des mx-1">
+                                            <div className="name-des mx-3">
                                                 <h5>{item.product.name}</h5>
                                                 <div
                                                     className="description"
@@ -293,18 +293,11 @@ function Order() {
                                                 />
                                             </div>
                                         </div>
-                                        {order.status === 'DELIVERED' && !item.rating && (
-                                            <div className="control">
-                                                <Link
-                                                    to={linkReviewProduct(
-                                                        item.product.id,
-                                                        order.id,
-                                                    )}
-                                                >
-                                                    Đánh giá
-                                                </Link>
-                                            </div>
-                                        )}
+                                        <div className="control">
+                                            <Link to={linkReviewProduct(item.product.id, order.id)}>
+                                                Đánh giá
+                                            </Link>
+                                        </div>
                                     </div>
                                 );
                             })}

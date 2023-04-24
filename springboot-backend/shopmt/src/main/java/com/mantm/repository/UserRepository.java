@@ -7,9 +7,8 @@ import org.springframework.stereotype.Repository;
 import com.mantm.entity.User;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User>{
-	
-	User findByEmail(String email);
+public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
 
+	User findByEmail(String email);
 
 }

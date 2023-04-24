@@ -10,7 +10,8 @@ import com.mantm.entity.Category;
 import com.mantm.entity.Product;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpecificationExecutor<Product>{
-	List<Product> findByCategory (Category category); 
-	
+public interface ProductRepository
+		extends JpaRepository<Product, Long>, JpaSpecificationExecutor<Product> {
+	List<Product> findByCategory(Category category);
+
 }

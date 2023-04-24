@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mantm.dto.DeliveryDto;
 import com.mantm.service.IDeliveryService;
 
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin({ "https://thunderous-basbousa-75b1ca.netlify.app/", "http://localhost:3000/" })
 @RestController
 @RequestMapping("/api/v1/")
 public class DeliveryController {

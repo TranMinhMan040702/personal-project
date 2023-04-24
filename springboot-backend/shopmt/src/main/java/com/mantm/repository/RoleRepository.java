@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.mantm.entity.Role;
 
 @Repository
-public interface RoleRepository extends JpaRepository<Role, Long>{
+public interface RoleRepository extends JpaRepository<Role, Long> {
 	Role findByName(String name);
 }
