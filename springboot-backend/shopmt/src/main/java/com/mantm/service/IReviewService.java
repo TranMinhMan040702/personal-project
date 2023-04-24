@@ -9,7 +9,7 @@ import com.mantm.dto.ReviewDto;
 @Service
 public interface IReviewService {
 
-	ReviewDto createReview(ReviewDto reviewDto);
+	ReviewDto saveReview(ReviewDto reviewDto);
 
 	List<ReviewDto> getAllReviewByProduct(long productId);
 

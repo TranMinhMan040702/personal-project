@@ -16,8 +16,8 @@ import com.mantm.dto.request.TokenRefreshRequest;
 import com.mantm.exception.ResourceNotFoundException;
 import com.mantm.service.IAuthenticationService;
 
+@CrossOrigin({ "https://thunderous-basbousa-75b1ca.netlify.app/", "http://localhost:3000/" })
 @RestController
-@CrossOrigin("http://localhost:3000")
 @RequestMapping("/api/v1/auth")
 public class AuthController {
 

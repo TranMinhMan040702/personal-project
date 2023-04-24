@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.mantm.entity.Delivery;
 
 @Repository
-public interface DeliveryRepository extends JpaRepository<Delivery, Long>{
+public interface DeliveryRepository extends JpaRepository<Delivery, Long> {
 
 }

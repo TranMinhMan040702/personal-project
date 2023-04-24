@@ -13,27 +13,32 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mantm.dto.ReviewDto;
 import com.mantm.service.IReviewService;
 
-@CrossOrigin("http://localhost:3000/")
+@CrossOrigin({ "https://thunderous-basbousa-75b1ca.netlify.app/", "http://localhost:3000/" })
 @RestController
 @RequestMapping("/api/v1/")
 public class ReviewController {
 
-	@Autowired 
+	@Autowired
 	IReviewService reviewService;
-	
+
 	@GetMapping("/review/product/{id}")
 	public ResponseEntity<?> getAllReviewByProduct(@PathVariable long id) {
 		return ResponseEntity.ok(reviewService.getAllReviewByProduct(id));
 	}
-	
+
 	@GetMapping("/review/user/{id}")
 	public ResponseEntity<?> getAllReviewByUser(@PathVariable long id) {
 		return ResponseEntity.ok(reviewService.getAllReviewByUser(id));
 	}
-	
+
 	@PostMapping("/review")
 	public ResponseEntity<?> postReview(@RequestBody ReviewDto reviewDto) {
-		return ResponseEntity.ok(reviewService.createReview(reviewDto));
+		return ResponseEntity.ok(reviewService.saveReview(reviewDto));
 	}
-	
+
+	@PostMapping("/review/edit")
+	public ResponseEntity<?> editReview(@RequestBody ReviewDto reviewDto) {
+		return ResponseEntity.ok(reviewService.saveReview(reviewDto));
+	}
+
 }

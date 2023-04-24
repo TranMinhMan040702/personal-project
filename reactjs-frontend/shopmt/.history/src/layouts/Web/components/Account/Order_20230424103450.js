@@ -293,18 +293,11 @@ function Order() {
                                                 />
                                             </div>
                                         </div>
-                                        {order.status === 'DELIVERED' && !item.rating && (
-                                            <div className="control">
-                                                <Link
-                                                    to={linkReviewProduct(
-                                                        item.product.id,
-                                                        order.id,
-                                                    )}
-                                                >
-                                                    Đánh giá
-                                                </Link>
-                                            </div>
-                                        )}
+                                        <div className="control">
+                                            <Link to={linkReviewProduct(item.product.id, order.id)}>
+                                                Đánh giá
+                                            </Link>
+                                        </div>
                                     </div>
                                 );
                             })}

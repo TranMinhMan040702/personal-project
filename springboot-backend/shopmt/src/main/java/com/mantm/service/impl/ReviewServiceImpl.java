@@ -37,16 +37,31 @@ public class ReviewServiceImpl implements IReviewService {
 	ReviewConvert reviewConvert;
 
 	@Override
-	public ReviewDto createReview(ReviewDto reviewDto) {
+	public ReviewDto saveReview(ReviewDto reviewDto) {
 		Optional<Order> order = orderRepository.findById(reviewDto.getOrderId());
+		Optional<Product> product = productRepository.findById(reviewDto.getProductId());
+		Optional<Review> review = Optional.of(new Review());
+
 		if (order.get().getStatus() != StatusOrderEnum.DELIVERED) {
 			reviewDto.setApproved(false);
 			return reviewDto;
 		} else {
-			Review review = reviewConvert.converToEntity(reviewDto);
-			review = reviewRepository.save(review);
+			if (reviewDto.getId() == null) {
+				Review reviewCheck = reviewRepository.findByOrderAndProduct(order.get(),
+						product.get());
+				if (reviewCheck != null) {
+					reviewDto.setApproved(false);
+					return reviewDto;
+				}
+				review = Optional.of(reviewConvert.converToEntity(reviewDto));
+				review = Optional.of(reviewRepository.save(review.get()));
+			} else {
+				review = reviewRepository.findById(reviewDto.getId());
+				review.get().setContent(reviewDto.getContent());
+				review.get().setRating(reviewDto.getRating());
+			}
 			updateRatingProduct(productRepository.findById(reviewDto.getProductId()).get());
-			ReviewDto resp = reviewConvert.convertToDto(review);
+			ReviewDto resp = reviewConvert.convertToDto(review.get());
 			resp.setApproved(true);
 			return resp;
 		}
@@ -62,7 +77,7 @@ public class ReviewServiceImpl implements IReviewService {
 		}
 		return reviewDtos;
 	}
-	
+
 	@Override
 	public List<ReviewDto> getAllReviewByUser(long userId) {
 		List<ReviewDto> reviewDtos = new ArrayList<>();

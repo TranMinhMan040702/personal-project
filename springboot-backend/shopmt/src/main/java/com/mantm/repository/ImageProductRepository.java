@@ -8,10 +8,10 @@ import org.springframework.stereotype.Repository;
 import com.mantm.entity.Image_Product;
 
 @Repository
-public interface ImageProductRepository extends JpaRepository<Image_Product, Long>{
+public interface ImageProductRepository extends JpaRepository<Image_Product, Long> {
 	@Transactional
 	void deleteByProductId(long id);
-	
+
 	@Transactional
 	void deleteByPath(long id);
 }
