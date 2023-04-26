@@ -58,57 +58,78 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
 	public AuthResponse register(@RequestBody RegisterRequest request)
 			throws ResourceNotFoundException {
 
-		User user = new User();
-		List<Role> roles = new ArrayList<>();
-		Cart cart = new Cart();
 		AuthResponse authResponse = new AuthResponse();
 
-		for (String role : request.getRoles()) {
-			Role roleEntity = roleRepository.findByName(role);
-			if (roleEntity == null) {
-				throw new ResourceNotFoundException("Cannot find role");
+		if (!checkUserExist(request.getEmail())) {
+			User user = new User();
+			List<Role> roles = new ArrayList<>();
+			Cart cart = new Cart();
+
+			for (String role : request.getRoles()) {
+				Role roleEntity = roleRepository.findByName(role);
+				if (roleEntity == null) {
+					throw new ResourceNotFoundException("Cannot find role");
+				}
+				roles.add(roleEntity);
 			}
-			roles.add(roleEntity);
+
+			BeanUtils.copyProperties(request, user, "password");
+			user.setPassword(passwordEncoder.encode(request.getPassword()));
+			user.setRoles(roles);
+			user.setCart(cart);
+
+			user = userRepository.save(user);
+
+			UserDetails userDetails = customUserDetailsService.loadUserByUsername(user.getEmail());
+
+			String access_token = jwtUtil.generateToken(userDetails, false);
+			String refresh_token = createdRefreshToken(user.getId());
+
+			authResponse.setStatus(HttpStatus.OK.value());
+			authResponse.setAccessToken(access_token);
+			authResponse.setRefreshToken(refresh_token);
+			authResponse.setRoles(request.getRoles());
+			authResponse.setUserId(user.getId());
+		} else {
+			authResponse.setStatus(HttpStatus.BAD_REQUEST.value());
 		}
 
-		BeanUtils.copyProperties(request, user, "password");
-		user.setPassword(passwordEncoder.encode(request.getPassword()));
-		user.setRoles(roles);
-		user.setCart(cart);
-
-		user = userRepository.save(user);
-
-		UserDetails userDetails = customUserDetailsService.loadUserByUsername(user.getEmail());
-
-		String access_token = jwtUtil.generateToken(userDetails, false);
-		String refresh_token = createdRefreshToken(user.getId());
-
-		authResponse.setStatus(HttpStatus.OK.value());
-		authResponse.setAccessToken(access_token);
-		authResponse.setRefreshToken(refresh_token);
-		authResponse.setRoles(request.getRoles());
-		authResponse.setUserId(user.getId());
 		return authResponse;
 	}
 
 	@Override
 	public AuthResponse authenticate(AuthRequest request) {
 		AuthResponse authResponse = new AuthResponse();
-		authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
 
-		UserDetails userDetails = customUserDetailsService.loadUserByUsername(request.getEmail());
-		User user = userRepository.findByEmail(request.getEmail());
+		if (checkUserExist(request.getEmail())) {
+			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+					request.getEmail(), request.getPassword()));
 
-		String access_token = jwtUtil.generateToken(userDetails, false);
-		String refresh_token = createdRefreshToken(user.getId());
+			UserDetails userDetails = customUserDetailsService
+					.loadUserByUsername(request.getEmail());
+			User user = userRepository.findByEmail(request.getEmail());
 
-		authResponse.setStatus(HttpStatus.OK.value());
-		authResponse.setAccessToken(access_token);
-		authResponse.setRefreshToken(refresh_token);
-		authResponse.setRoles(getRoleUser(access_token));
-		authResponse.setUserId(user.getId());
+			String access_token = jwtUtil.generateToken(userDetails, false);
+			String refresh_token = createdRefreshToken(user.getId());
+
+			authResponse.setStatus(HttpStatus.OK.value());
+			authResponse.setAccessToken(access_token);
+			authResponse.setRefreshToken(refresh_token);
+			authResponse.setRoles(getRoleUser(access_token));
+			authResponse.setUserId(user.getId());
+		} else {
+			authResponse.setStatus(HttpStatus.NOT_FOUND.value());
+		}
+
 		return authResponse;
+	}
+
+	@Override
+	public boolean checkUserExist(String email) {
+		User user = userRepository.findByEmail(email);
+		if (user != null)
+			return true;
+		return false;
 	}
 
 	@Override
