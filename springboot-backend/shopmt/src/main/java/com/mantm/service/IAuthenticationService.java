@@ -20,4 +20,6 @@ public interface IAuthenticationService {
 
 	void clearedRefreshToken(TokenRefreshRequest request);
 
+	boolean checkUserExist(String email);
+
 }
