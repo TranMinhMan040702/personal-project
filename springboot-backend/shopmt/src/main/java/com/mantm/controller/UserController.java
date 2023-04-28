@@ -17,6 +17,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mantm.contains.Containt;
 import com.mantm.dto.AddressDto;
 import com.mantm.dto.UserDto;
+import com.mantm.dto.request.ResetPasswordRequest;
 import com.mantm.service.IAddressService;
 import com.mantm.service.ILikeProductService;
 import com.mantm.service.IUserService;
@@ -58,6 +59,13 @@ public class UserController {
 		return ResponseEntity.ok(userService.updateUser(user, file));
 	}
 
+	// Reset Password
+	@PostMapping("/users/reset-password")
+	public ResponseEntity<?> resetPassword(@RequestBody ResetPasswordRequest request) {
+		return ResponseEntity.ok(userService.resetPassword(request));
+	}
+
+	// Address
 	@GetMapping("users/addresses/{id}")
 	public ResponseEntity<?> findAddresses(@PathVariable long id) {
 		return ResponseEntity.ok(addressService.findAddressByUserId(id));
@@ -73,6 +81,7 @@ public class UserController {
 		return ResponseEntity.ok(addressService.deleteAddressById(id));
 	}
 
+	// Like product
 	@GetMapping("users/admin/follow-product")
 	public ResponseEntity<?> getAllLikeProduct() {
 		return ResponseEntity.ok(likeProductService.findAllLikeProduct());

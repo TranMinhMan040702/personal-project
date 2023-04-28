@@ -9,6 +9,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,6 +22,8 @@ import com.mantm.convert.AddressConvert;
 import com.mantm.convert.UserConvert;
 import com.mantm.convert.UserPagingConvert;
 import com.mantm.dto.UserDto;
+import com.mantm.dto.request.ResetPasswordRequest;
+import com.mantm.dto.response.ResetPasswordResponse;
 import com.mantm.dto.response.UserPaging;
 import com.mantm.entity.User;
 import com.mantm.repository.AddressRepository;
@@ -48,6 +53,8 @@ public class UserServiceImpl implements IUserService {
 	IStorageService storageService;
 	@Autowired
 	Cloudinary cloudinary;
+	@Autowired
+	PasswordEncoder passwordEncoder;
 
 	@Override
 	public UserPaging findAll(Integer page, Integer limit, String sortBy, String search) {
@@ -71,7 +78,7 @@ public class UserServiceImpl implements IUserService {
 		User user = userConvert.convertToEntity(userDto);
 		String avatarOld = user.getAvatar();
 
-		if ((avatarOld == null || file != null && !avatarOld.equals(file.getOriginalFilename()))) {
+		if (file != null && !file.getOriginalFilename().equals(avatarOld)) {
 			user.setAvatar(saveAvatarCloudinary(file));
 		}
 		User userResp = userRepository.save(user);
@@ -90,6 +97,26 @@ public class UserServiceImpl implements IUserService {
 		return "";
 	}
 
+	@Override
+	public ResetPasswordResponse resetPassword(ResetPasswordRequest resetPasswordRequest) {
+		ResetPasswordResponse response = new ResetPasswordResponse();
+		User user = userRepository.findByEmail(resetPasswordRequest.getEmail());
+
+		if (user != null) {
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+			String passwordCurrent = resetPasswordRequest.getPasswordCurrent();
+			if (encoder.matches(passwordCurrent, user.getPassword())) {
+				user.setPassword(passwordEncoder.encode(resetPasswordRequest.getPasswordNew()));
+				userRepository.save(user);
+				response.setStatus(HttpStatus.OK.value());
+				response.setMessage("Reset Password Success");
+				return response;
+			}
+		}
+		response.setStatus(HttpStatus.BAD_REQUEST.value());
+		response.setMessage("Reset Password Fail");
+		return response;
+	}
 	// WHEN SAVE IMAGE LOCAL
 //	private String saveAvatarLocal(MultipartFile file, String avatarOld) {
 //		try {

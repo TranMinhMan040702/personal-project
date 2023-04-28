@@ -9,7 +9,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 
-import com.mantm.entity.Category;
 import com.mantm.entity.Delivery;
 import com.mantm.repository.CategoryRepository;
 import com.mantm.repository.DeliveryRepository;
