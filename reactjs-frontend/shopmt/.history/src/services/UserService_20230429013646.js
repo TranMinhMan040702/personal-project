@@ -1,5 +1,4 @@
 import { axiosPrivate } from '../api/axios';
-import axios from '../api/axios';
 const REACT_APP_USER_API_URL = process.env.REACT_APP_USER_API_URL;
 const REACT_APP_USER_ADMIN_API_URL = process.env.REACT_APP_USER_ADMIN_API_URL;
 const URL_RESETPASSWORD = REACT_APP_USER_API_URL + '/reset-password';
@@ -18,7 +17,7 @@ class UserService {
         return axiosPrivate.post(URL_RESETPASSWORD, resetPassword);
     }
     forgotPassword(resetPassword) {
-        return axios.post(URL_FORGOTPASSWORD, resetPassword);
+        return axiosPrivate.post(URL_FORGOTPASSWORD, resetPassword);
     }
 }
 

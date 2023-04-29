@@ -3,28 +3,18 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-import accountSlice from '../../../../redux/slice/accountSlice';
-import cartSlice from '../../../../redux/slice/cartSlice';
-import { useDispatch } from 'react-redux';
 import getUrlVars from '../../../../utils/getUrlVars';
 import UserService from '../../../../services/UserService';
-import { useAuth } from '../../../../hooks';
-import AuthService from '../../../../services/AuthService';
 
 function SetNewPassword() {
-    const dispatch = useDispatch();
-    const { setAuth } = useAuth();
+    const [seePassword, setSeePassword] = useState(false);
     const location = useLocation().search;
     const params = getUrlVars(location);
-    const navigate = useNavigate();
-    const [seePassword, setSeePassword] = useState(false);
     const [resetPassword, setResetPassword] = useState({
         email: params.email,
         code: params.code,
         passwordNew: '',
     });
-
     const handleChange = (e) => {
         setResetPassword((prev) => {
             return { ...prev, passwordNew: e.target.value };
@@ -42,36 +32,13 @@ function SetNewPassword() {
             return !prev;
         });
     };
-    const handleLogout = () => {
-        logout({
-            tokenRefresh: localStorage.getItem('refreshToken'),
-            userId: localStorage.getItem('userId'),
-        });
-        dispatch(accountSlice.actions.clearedAccount({}));
-        dispatch(cartSlice.actions.clearedCart({}));
-        setAuth({});
-        navigate('/login', { replace: true });
-    };
-    const logout = async (tokenRequest) => {
-        try {
-            await AuthService.logout(tokenRequest);
-            localStorage.clear();
-        } catch (err) {
-            console.error(err);
-        }
-    };
     const handleSetNewPassword = async (e) => {
-        e.preventDefault();
         try {
-            const response = await UserService.forgotPassword(resetPassword);
-            if (response.data.status === 200) {
-                handleLogout();
-            }
+            await UserService.forgotPassword(resetPassword);
         } catch (err) {
             console.log(err);
         }
     };
-
     console.log(resetPassword);
     return (
         <div className="login-register background" style={{ height: '100vh' }}>

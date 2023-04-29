@@ -1,6 +1,7 @@
 package com.mantm.service.impl;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
 
@@ -18,18 +19,17 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import com.mantm.convert.AddressConvert;
 import com.mantm.convert.UserConvert;
 import com.mantm.convert.UserPagingConvert;
 import com.mantm.dto.UserDto;
 import com.mantm.dto.request.ResetPasswordRequest;
 import com.mantm.dto.response.ResetPasswordResponse;
 import com.mantm.dto.response.UserPaging;
+import com.mantm.entity.Reset_Password;
 import com.mantm.entity.User;
-import com.mantm.repository.AddressRepository;
-import com.mantm.repository.RoleRepository;
+import com.mantm.repository.ResetPasswordRepository;
 import com.mantm.repository.UserRepository;
-import com.mantm.service.IStorageService;
+import com.mantm.service.IResetPasswordService;
 import com.mantm.service.IUserService;
 import com.mantm.service.specification.UserSpecification;
 
@@ -38,23 +38,21 @@ import com.mantm.service.specification.UserSpecification;
 public class UserServiceImpl implements IUserService {
 
 	@Autowired
-	UserRepository userRepository;
+	private UserRepository userRepository;
 	@Autowired
-	RoleRepository roleRepository;
+	private UserConvert userConvert;
 	@Autowired
-	AddressRepository addressRepository;
+	private UserPagingConvert userPagingConvert;
+//	@Autowired
+//	private IStorageService storageService;
 	@Autowired
-	UserConvert userConvert;
+	private Cloudinary cloudinary;
 	@Autowired
-	AddressConvert addressConvert;
+	private PasswordEncoder passwordEncoder;
 	@Autowired
-	UserPagingConvert userPagingConvert;
+	private ResetPasswordRepository resetPasswordRepository;
 	@Autowired
-	IStorageService storageService;
-	@Autowired
-	Cloudinary cloudinary;
-	@Autowired
-	PasswordEncoder passwordEncoder;
+	private IResetPasswordService resetPasswordService;
 
 	@Override
 	public UserPaging findAll(Integer page, Integer limit, String sortBy, String search) {
@@ -117,6 +115,33 @@ public class UserServiceImpl implements IUserService {
 		response.setMessage("Reset Password Fail");
 		return response;
 	}
+
+	@Override
+	public ResetPasswordResponse forgotPassword(ResetPasswordRequest resetPasswordRequest) {
+		ResetPasswordResponse response = new ResetPasswordResponse();
+		User user = userRepository.findByEmail(resetPasswordRequest.getEmail());
+
+		Reset_Password reset_Password = resetPasswordRepository.findByCodeAndEmail(
+				resetPasswordRequest.getCode(), resetPasswordRequest.getEmail());
+
+		if (reset_Password != null && !reset_Password.getExpired().before(new Date())) {
+			user.setPassword(passwordEncoder.encode(resetPasswordRequest.getPasswordNew()));
+			userRepository.save(user);
+			resetPasswordService.cleared(resetPasswordRequest.getCode(),
+					resetPasswordRequest.getEmail());
+			response.setStatus(HttpStatus.OK.value());
+			response.setMessage("Reset Password Success");
+			return response;
+		}
+		if (reset_Password.getExpired().before(new Date())) {
+			resetPasswordService.cleared(resetPasswordRequest.getCode(),
+					resetPasswordRequest.getEmail());
+		}
+		response.setStatus(HttpStatus.BAD_REQUEST.value());
+		response.setMessage("Reset Password Fail");
+		return response;
+	}
+
 	// WHEN SAVE IMAGE LOCAL
 //	private String saveAvatarLocal(MultipartFile file, String avatarOld) {
 //		try {

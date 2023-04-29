@@ -22,6 +22,7 @@ function SetNewPassword() {
     const [resetPassword, setResetPassword] = useState({
         email: params.email,
         code: params.code,
+        passwordCurrent: '',
         passwordNew: '',
     });
 
