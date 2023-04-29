@@ -22,6 +22,7 @@ function SetNewPassword() {
     const [resetPassword, setResetPassword] = useState({
         email: params.email,
         code: params.code,
+        passwordCurrent: '',
         passwordNew: '',
     });
 
@@ -61,7 +62,6 @@ function SetNewPassword() {
         }
     };
     const handleSetNewPassword = async (e) => {
-        e.preventDefault();
         try {
             const response = await UserService.forgotPassword(resetPassword);
             if (response.data.status === 200) {

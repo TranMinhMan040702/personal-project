@@ -13,4 +13,6 @@ public interface IEmailService {
 
 	Map<Object, Object> checkOtp(int code);
 
+	Map<Object, Object> sendEmailResetPassword(String email);
+
 }

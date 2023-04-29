@@ -7,8 +7,8 @@ class EmailService {
     sendEmail(data) {
         return axios.post(URL_SEND_MAIL, data);
     }
-    sendEmailForgotPassword(email) {
-        return axios.post(URL_SEND_MAIL_FORGOTPASSWORD + '?email=' + email);
+    sendEmailResetPassword(email) {
+        return axios.post;
     }
     checkOtp(code) {
         return axios.post(URL_CHECK_OTP + code);

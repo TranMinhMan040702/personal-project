@@ -17,7 +17,6 @@ import UserPage from '../pages/Web/User';
 import Login from '../pages/Web/Login';
 import Register from '../pages/Web/Register';
 import SetPasswordNewPage from '../pages/Web/SetPasswordNew';
-import ForgotPasswordPage from '../pages/Web/ForgotPassword';
 
 const privateRoutes = [
     // Route Admin
@@ -107,13 +106,7 @@ const privateRoutes = [
     },
     {
         path: config.routes.web.reset,
-        component: ForgotPasswordPage,
-        layout: ForgotPasswordLayout,
-        roles: ['USER'],
-    },
-    {
-        path: config.routes.web.reset + ':slug',
-        component: ForgotPasswordPage,
+        component: ResetPassword,
         layout: ForgotPasswordLayout,
         roles: ['USER'],
     },

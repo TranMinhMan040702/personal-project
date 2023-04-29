@@ -3,6 +3,8 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { accountUser } from '../../../../redux/selectors';
 import { useNavigate } from 'react-router-dom';
 import accountSlice from '../../../../redux/slice/accountSlice';
 import cartSlice from '../../../../redux/slice/cartSlice';
@@ -61,7 +63,6 @@ function SetNewPassword() {
         }
     };
     const handleSetNewPassword = async (e) => {
-        e.preventDefault();
         try {
             const response = await UserService.forgotPassword(resetPassword);
             if (response.data.status === 200) {

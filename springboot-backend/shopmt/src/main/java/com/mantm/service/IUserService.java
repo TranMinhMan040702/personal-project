@@ -20,4 +20,6 @@ public interface IUserService {
 
 	ResetPasswordResponse resetPassword(ResetPasswordRequest resetPasswordRequest);
 
+	ResetPasswordResponse forgotPassword(ResetPasswordRequest resetPasswordRequest);
+
 }

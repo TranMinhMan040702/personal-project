@@ -65,6 +65,11 @@ public class UserController {
 		return ResponseEntity.ok(userService.resetPassword(request));
 	}
 
+	@PostMapping("/users/forgot-password")
+	public ResponseEntity<?> forgotPassword(@RequestBody ResetPasswordRequest request) {
+		return ResponseEntity.ok(userService.forgotPassword(request));
+	}
+
 	// Address
 	@GetMapping("users/addresses/{id}")
 	public ResponseEntity<?> findAddresses(@PathVariable long id) {
