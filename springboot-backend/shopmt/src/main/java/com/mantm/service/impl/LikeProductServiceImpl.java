@@ -23,11 +23,11 @@ import com.mantm.service.ILikeProductService;
 public class LikeProductServiceImpl implements ILikeProductService {
 
 	@Autowired
-	UserRepository userRepository;
+	private UserRepository userRepository;
 	@Autowired
-	ProductRepository productRepository;
+	private ProductRepository productRepository;
 	@Autowired
-	LikeProductConvert likeProductConvert;
+	private LikeProductConvert likeProductConvert;
 
 	@Override
 	public LikeProductDto likeProduct(long userId, long productId) {

@@ -32,17 +32,17 @@ import com.mantm.utils.HandleStatusOrder;
 public class OrderServiceImpl implements IOrderService {
 
 	@Autowired
-	OrderRepository orderRepository;
+	private OrderRepository orderRepository;
 	@Autowired
-	ProductRepository productRepository;
+	private ProductRepository productRepository;
 	@Autowired
 	CartRepository cartRepository;
 	@Autowired
-	UserRepository userRepository;
+	private UserRepository userRepository;
 	@Autowired
-	CartServiceImpl cartServiceImpl;
+	private CartServiceImpl cartServiceImpl;
 	@Autowired
-	OrderConvert orderConvert;
+	private OrderConvert orderConvert;
 
 	@Override
 	public List<OrderDto> findAllOrdersByStatusWithPaginationAndSort(String status, Integer page,

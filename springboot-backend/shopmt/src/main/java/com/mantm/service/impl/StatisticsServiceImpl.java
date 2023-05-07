@@ -23,11 +23,11 @@ import com.mantm.service.specification.OrderSpecification;
 public class StatisticsServiceImpl implements IStatisticsService {
 
 	@Autowired
-	OrderRepository orderRepository;
+	private OrderRepository orderRepository;
 	@Autowired
-	ProductRepository productRepository;
+	private ProductRepository productRepository;
 	@Autowired
-	ReviewRepository reviewRepository;
+	private ReviewRepository reviewRepository;
 
 	@Override
 	public List<Double> statisticRevenue(int year) {

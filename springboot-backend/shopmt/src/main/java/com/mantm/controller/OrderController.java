@@ -24,7 +24,7 @@ import com.mantm.service.IOrderService;
 public class OrderController {
 
 	@Autowired
-	IOrderService orderService;
+	private IOrderService orderService;
 
 	@PostMapping("/order")
 	public ResponseEntity<?> createOrder(@RequestBody OrderDto dto)

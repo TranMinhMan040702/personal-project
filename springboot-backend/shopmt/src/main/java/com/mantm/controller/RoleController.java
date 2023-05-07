@@ -21,7 +21,7 @@ import com.mantm.service.IRoleService;
 public class RoleController {
 
 	@Autowired
-	IRoleService roleService;
+	private IRoleService roleService;
 
 	@GetMapping("/roles")
 	public ResponseEntity<?> findAllRoles() {

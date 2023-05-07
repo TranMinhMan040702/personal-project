@@ -23,7 +23,7 @@ import com.mantm.service.ICartService;
 public class CartController {
 
 	@Autowired
-	ICartService cartService;
+	private ICartService cartService;
 
 	@GetMapping("cart/user/{id}")
 	public ResponseEntity<?> findCartUser(@PathVariable long id) {

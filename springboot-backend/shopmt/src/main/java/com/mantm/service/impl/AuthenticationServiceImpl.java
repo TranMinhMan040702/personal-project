@@ -39,19 +39,19 @@ import com.mantm.utils.RandomStrings;
 public class AuthenticationServiceImpl implements IAuthenticationService {
 
 	@Autowired
-	CustomUserDetailsService customUserDetailsService;
+	private CustomUserDetailsService customUserDetailsService;
 	@Autowired
-	UserRepository userRepository;
+	private UserRepository userRepository;
 	@Autowired
-	RoleRepository roleRepository;
+	private RoleRepository roleRepository;
 	@Autowired
-	TokenRepository tokenRepository;
+	private TokenRepository tokenRepository;
 	@Autowired
-	JwtUtil jwtUtil;
+	private JwtUtil jwtUtil;
 	@Autowired
-	AuthenticationManager authenticationManager;
+	private AuthenticationManager authenticationManager;
 	@Autowired
-	PasswordEncoder passwordEncoder;
+	private PasswordEncoder passwordEncoder;
 
 	@Override
 	@Transactional(rollbackFor = ResourceNotFoundException.class)

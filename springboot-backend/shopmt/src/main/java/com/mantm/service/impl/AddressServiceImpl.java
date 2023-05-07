@@ -21,11 +21,11 @@ import com.mantm.service.IAddressService;
 public class AddressServiceImpl implements IAddressService {
 
 	@Autowired
-	UserRepository userRepository;
+	private UserRepository userRepository;
 	@Autowired
-	AddressRepository addressRepository;
+	private AddressRepository addressRepository;
 	@Autowired
-	AddressConvert addressConvert;
+	private AddressConvert addressConvert;
 
 	@Override
 	public List<AddressDto> findAddressByUserId(long userId) {
