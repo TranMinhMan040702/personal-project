@@ -28,9 +28,9 @@ import com.mantm.service.ICategoryService;
 public class CategoryController {
 
 	@Autowired
-	ICategoryService categoryService;
+	private ICategoryService categoryService;
 	@Autowired
-	ObjectMapper objectMapper;
+	private ObjectMapper objectMapper;
 
 	@GetMapping("/categorise")
 	public ResponseEntity<List<CategoryDto>> findAllCategory() {

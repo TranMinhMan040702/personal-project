@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.mantm.dto.ProductDto;
+import com.mantm.dto.request.UpdateQuantityAndPriceProduct;
 import com.mantm.dto.response.ProductPaging;
 import com.mantm.exception.ResourceNotFoundException;
 
@@ -25,5 +26,7 @@ public interface IProductService {
 
 	ProductPaging findAll(Long categoryId, Integer page, Integer limit, String sortBy,
 			Double priceMin, Double priceMax, String search);
+
+	ProductDto updateQuantityAndPrice(UpdateQuantityAndPriceProduct request);
 
 }

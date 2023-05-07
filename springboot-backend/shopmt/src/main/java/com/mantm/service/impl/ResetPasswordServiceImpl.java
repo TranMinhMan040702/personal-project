@@ -13,7 +13,7 @@ import com.mantm.service.IResetPasswordService;
 public class ResetPasswordServiceImpl implements IResetPasswordService {
 
 	@Autowired
-	ResetPasswordRepository resetPasswordRepository;
+	private ResetPasswordRepository resetPasswordRepository;
 
 	@Override
 	public void save(String code, String email, Date expired) {

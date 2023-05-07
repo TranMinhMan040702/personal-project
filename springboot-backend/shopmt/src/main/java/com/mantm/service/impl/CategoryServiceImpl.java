@@ -26,13 +26,13 @@ import com.mantm.service.ICategoryService;
 public class CategoryServiceImpl implements ICategoryService {
 
 	@Autowired
-	ModelMapper mapper;
+	private ModelMapper mapper;
 	@Autowired
-	CategoryRepository categoryRepository;
+	private CategoryRepository categoryRepository;
 	@Autowired
-	CategoryConvert categoryConvert;
+	private CategoryConvert categoryConvert;
 	@Autowired
-	Cloudinary cloudinary;
+	private Cloudinary cloudinary;
 
 	@Override
 	public List<CategoryDto> findAll() {

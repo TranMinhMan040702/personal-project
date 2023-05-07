@@ -22,7 +22,7 @@ import com.mantm.service.IAuthenticationService;
 public class AuthController {
 
 	@Autowired
-	IAuthenticationService authenticationService;
+	private IAuthenticationService authenticationService;
 
 	@PostMapping("/register")
 	public ResponseEntity<?> register(@RequestBody RegisterRequest request)

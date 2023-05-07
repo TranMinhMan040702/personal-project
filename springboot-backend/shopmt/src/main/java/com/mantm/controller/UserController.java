@@ -28,13 +28,13 @@ import com.mantm.service.IUserService;
 public class UserController {
 
 	@Autowired
-	IUserService userService;
+	private IUserService userService;
 	@Autowired
-	IAddressService addressService;
+	private IAddressService addressService;
 	@Autowired
-	ILikeProductService likeProductService;
+	private ILikeProductService likeProductService;
 	@Autowired
-	ObjectMapper objectMapper;
+	private ObjectMapper objectMapper;
 
 	@GetMapping("admin/users")
 	public ResponseEntity<?> findAllUser(

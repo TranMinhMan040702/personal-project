@@ -23,7 +23,7 @@ import com.mantm.service.IStorageService;
 public class ImageController {
 
 	@Autowired
-	IStorageService storageService;
+	private IStorageService storageService;
 
 	@GetMapping("images/{filename:.+}")
 	@ResponseBody

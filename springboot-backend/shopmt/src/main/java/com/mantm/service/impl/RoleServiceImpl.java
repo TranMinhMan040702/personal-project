@@ -22,7 +22,7 @@ import com.mantm.service.IRoleService;
 public class RoleServiceImpl implements IRoleService {
 
 	@Autowired
-	RoleRepository roleRepository;
+	private RoleRepository roleRepository;
 
 	@Override
 	public List<RoleDto> findAllRole() {

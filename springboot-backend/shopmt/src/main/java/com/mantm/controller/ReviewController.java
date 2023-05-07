@@ -19,7 +19,7 @@ import com.mantm.service.IReviewService;
 public class ReviewController {
 
 	@Autowired
-	IReviewService reviewService;
+	private IReviewService reviewService;
 
 	@GetMapping("/review/product/{id}")
 	public ResponseEntity<?> getAllReviewByProduct(@PathVariable long id) {

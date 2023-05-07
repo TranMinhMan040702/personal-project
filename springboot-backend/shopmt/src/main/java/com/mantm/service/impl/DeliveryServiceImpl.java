@@ -23,10 +23,10 @@ import com.mantm.service.IDeliveryService;
 public class DeliveryServiceImpl implements IDeliveryService {
 
 	@Autowired
-	ModelMapper mapper;
+	private ModelMapper mapper;
 
 	@Autowired
-	DeliveryRepository deliveryRepository;
+	private DeliveryRepository deliveryRepository;
 
 	@Override
 	public DeliveryDto save(DeliveryDto deliveryDto) {

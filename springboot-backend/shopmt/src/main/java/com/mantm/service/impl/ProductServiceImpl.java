@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
@@ -22,6 +23,7 @@ import com.cloudinary.utils.ObjectUtils;
 import com.mantm.convert.ProductConvert;
 import com.mantm.convert.ProductPagingConvert;
 import com.mantm.dto.ProductDto;
+import com.mantm.dto.request.UpdateQuantityAndPriceProduct;
 import com.mantm.dto.response.ProductPaging;
 import com.mantm.entity.Category;
 import com.mantm.entity.Image_Product;
@@ -41,19 +43,19 @@ public class ProductServiceImpl implements IProductService {
 	@Autowired
 	ModelMapper mapper;
 	@Autowired
-	IStorageService storageService;
+	private IStorageService storageService;
 	@Autowired
-	ProductRepository productRepository;
+	private ProductRepository productRepository;
 	@Autowired
-	CategoryRepository categoryRepository;
+	private CategoryRepository categoryRepository;
 	@Autowired
-	ImageProductRepository imageProductRepository;
+	private ImageProductRepository imageProductRepository;
 	@Autowired
-	Cloudinary cloudinary;
+	private Cloudinary cloudinary;
 	@Autowired
-	ProductConvert productConvert;
+	private ProductConvert productConvert;
 	@Autowired
-	ProductPagingConvert productResponseConvert;
+	private ProductPagingConvert productResponseConvert;
 
 	@Override
 	public ProductDto save(ProductDto productReq, MultipartFile[] files) throws Exception {
@@ -91,6 +93,15 @@ public class ProductServiceImpl implements IProductService {
 		return productConvert.converToDto(entity);
 	}
 
+	@Override
+	public ProductDto updateQuantityAndPrice(UpdateQuantityAndPriceProduct request) {
+		Optional<Product> product = productRepository.findById(request.getId());
+		product.get().setQuantity(request.getQuantity());
+		product.get().setPrice(request.getPrice());
+		Product productRep = productRepository.save(product.get());
+		return productConvert.converToDto(productRep);
+	}
+	
 	@Override
 	public ProductPaging findAll(Long categoryId, Integer page, Integer limit, String sortBy,
 			Double priceMin, Double priceMax, String search) {

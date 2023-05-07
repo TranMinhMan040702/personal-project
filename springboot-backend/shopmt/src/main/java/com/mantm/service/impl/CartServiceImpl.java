@@ -26,17 +26,17 @@ import com.mantm.service.ICartService;
 public class CartServiceImpl implements ICartService {
 
 	@Autowired
-	UserRepository userRepository;
+	private UserRepository userRepository;
 	@Autowired
-	CartRepository cartRepository;
+	private CartRepository cartRepository;
 	@Autowired
-	CartItemRepository cartItemRepository;
+	private CartItemRepository cartItemRepository;
 	@Autowired
 	ProductConvert productConvert;
 	@Autowired
-	CartItemConvert cartItemConvert;
+	private CartItemConvert cartItemConvert;
 	@Autowired
-	CartConvert cartConvert;
+	private CartConvert cartConvert;
 
 	@Override
 	public CartDto findCartUser(long userId) {

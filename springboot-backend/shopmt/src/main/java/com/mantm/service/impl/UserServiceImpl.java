@@ -51,6 +51,7 @@ public class UserServiceImpl implements IUserService {
 	private PasswordEncoder passwordEncoder;
 	@Autowired
 	private ResetPasswordRepository resetPasswordRepository;
+
 	@Autowired
 	private IResetPasswordService resetPasswordService;
 

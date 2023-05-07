@@ -26,15 +26,15 @@ import com.mantm.service.IReviewService;
 public class ReviewServiceImpl implements IReviewService {
 
 	@Autowired
-	ReviewRepository reviewRepository;
+	private ReviewRepository reviewRepository;
 	@Autowired
-	ProductRepository productRepository;
+	private ProductRepository productRepository;
 	@Autowired
-	OrderRepository orderRepository;
+	private OrderRepository orderRepository;
 	@Autowired
-	UserRepository userRepository;
+	private UserRepository userRepository;
 	@Autowired
-	ReviewConvert reviewConvert;
+	private ReviewConvert reviewConvert;
 
 	@Override
 	public ReviewDto saveReview(ReviewDto reviewDto) {

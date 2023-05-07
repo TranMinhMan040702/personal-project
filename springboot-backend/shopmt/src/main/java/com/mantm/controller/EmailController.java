@@ -23,7 +23,7 @@ public class EmailController {
 	@Autowired
 	private IEmailService emailService;
 	@Autowired
-	IAuthenticationService authenticationService;
+	private IAuthenticationService authenticationService;
 
 	@PostMapping("email/sendMail")
 	public ResponseEntity<?> sendEmail(@RequestBody EmailDetails details) {

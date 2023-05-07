@@ -16,7 +16,7 @@ import com.mantm.service.IStatisticsService;
 public class StatisticController {
 
 	@Autowired
-	IStatisticsService statisticsService;
+	private IStatisticsService statisticsService;
 
 	@GetMapping("admin/statistic/chartSales")
 	public ResponseEntity<?> statisticRevenue(@RequestParam int year) {
