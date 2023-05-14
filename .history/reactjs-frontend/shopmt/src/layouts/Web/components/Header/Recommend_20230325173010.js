@@ -6,16 +6,16 @@ function Navbar() {
                 <div className="recommend">
                     <ul className="d-flex align-items-center">
                         <li>
-                            <Link to="/">Đồ ăn tuổi thơ</Link>
+                            <Link to="/">Văn học</Link>
                         </li>
                         <li>
-                            <Link to="/">Bánh que cay</Link>
+                            <Link to="/">Chính trị</Link>
                         </li>
                         <li>
-                            <Link to="/">Bánh tráng</Link>
+                            <Link to="/">Sách tham khảo</Link>
                         </li>
                         <li>
-                            <Link to="/">Khô bò - heo</Link>
+                            <Link to="/">Kinh tế</Link>
                         </li>
                         <li>
                             <Link to="/">Sách ngoại ngữ</Link>

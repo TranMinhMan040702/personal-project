@@ -1,7 +1,10 @@
 version: '3.8'
 services:
-  server:
-    build: .
+  backend:
+    container_name: backend-spring-boot
+    build: 
+      context: ./springboot-backend/shopmt
+      dockerfile: Dockerfile
     restart: always
     ports:
       - 8081:8081
@@ -18,5 +21,5 @@ services:
       MYSQL_USER: shopmt
       MYSQL_PASSWORD: 123456
     volumes:
-      - ./backup:/docker-entrypoint-initdb.d
+      - ./backup.sql:/docker-entrypoint-initdb.d/backup.sql
       
