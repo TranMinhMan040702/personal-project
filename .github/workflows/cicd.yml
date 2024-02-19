@@ -11,7 +11,7 @@ jobs:
       steps:
        - name: Deploy EC2
          run: |
-           if [ -n "personal-project" ]; then
+           if [ -d "personal-project" ]; then
              cd personal-project
              git pull https://github.com/TranMinhMan040702/personal-project.git && echo "Pull successful"
              cd ../
