@@ -6,6 +6,8 @@ services:
     restart: always
     ports:
       - 3306:3306
+    networks:
+      - db
     environment:
       MYSQL_ROOT_PASSWORD: 123456
       MYSQL_DATABASE: shopmt
@@ -13,6 +15,7 @@ services:
       MYSQL_PASSWORD: 123456
     volumes:
       - ./springboot-backend/shopmt/backup.sql:/docker-entrypoint-initdb.d/backup.sql
+  
   backend:
     container_name: backend-spring-boot
     build: 
@@ -21,8 +24,11 @@ services:
     restart: always
     ports:
       - 8081:8081
+    networks:
+      - db
     depends_on:
       - mysqldb
+
   frontend:
     container_name: frontend-reactjs
     build: 
@@ -33,5 +39,9 @@ services:
       - 3000:3000
     depends_on:
       - backend
+
+networks:
+  db:
+    driver: bridge
 
       
