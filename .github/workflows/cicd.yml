@@ -1,0 +1,29 @@
+name: CICD
+
+on:
+   push:
+      branches: [master]
+
+jobs:
+   deploy:
+      runs-on:
+         - aws-ec2
+      steps:
+         - name: Clone or pull project
+            scripts: |
+              if [ -n "personal-project" ]; then
+                cd personal-project
+                git pull https://github.com/TranMinhMan040702/personal-project.git && echo "Pull successful"
+                cd ../
+              else
+                git clone https://github.com/TranMinhMan040702/personal-project.git && echo "Clone successful"
+              fi
+              cd personal-project/
+
+        - name: Delete old container
+            run: sudo docker ps -a --format '{{.ID}}' | xargs -r sudo docker rm
+
+        - name: Start new container
+            run: sudo docker-compose up -d --build
+
+
