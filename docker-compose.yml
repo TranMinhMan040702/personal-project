@@ -3,23 +3,23 @@ services:
   mysqldb:
     image: "mysql:8.0.33"
     container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: shopmt
+      MYSQL_USER: shopmt
+      MYSQL_PASSWORD: password
     restart: always
     ports:
       - 3307:3306
     networks:
       - db
-    environment:
-      MYSQL_ROOT_PASSWORD: 123456
-      MYSQL_DATABASE: shopmt
-      MYSQL_USER: shopmt
-      MYSQL_PASSWORD: 123456
     volumes:
       - ./springboot-backend/shopmt/backup.sql:/docker-entrypoint-initdb.d/backup.sql
   
   backend:
     container_name: backend-spring-boot
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/shopmt?allowPublicKeyRetrieval=true&useSSL=false
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/shopmt?autoReconnect=true
     build: 
       context: ./springboot-backend/shopmt
       dockerfile: Dockerfile
@@ -45,5 +45,8 @@ services:
 networks:
   db:
     driver: bridge
+
+volumes:
+  db:
 
       
