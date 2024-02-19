@@ -10,6 +10,7 @@ jobs:
          - aws-ec2
       steps:
        - name: Deploy EC2
+         uses: actions/checkout@v3
          script: |
           if [ -n "personal-project" ]; then
             cd personal-project
