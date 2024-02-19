@@ -24,6 +24,8 @@ services:
     restart: always
     ports:
       - 8081:8081
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/shopmt
     networks:
       - db
     depends_on:
