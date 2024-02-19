@@ -5,7 +5,7 @@ services:
     container_name: db
     restart: always
     ports:
-      - 3306:3306
+      - 3307:3306
     networks:
       - db
     environment:
