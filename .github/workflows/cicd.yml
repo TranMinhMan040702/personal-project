@@ -10,7 +10,7 @@ jobs:
          - aws-ec2
       steps:
          - name: Clone or pull project
-            scripts: |
+            script: |
               if [ -n "personal-project" ]; then
                 cd personal-project
                 git pull https://github.com/TranMinhMan040702/personal-project.git && echo "Pull successful"
