@@ -14,13 +14,6 @@ import com.mantm.service.IStorageService;
 public class StorageConfig {
 	
 	@Bean
-	CommandLineRunner init(IStorageService storageService, RoleRepository roleRepository) {
-		return (args -> {
-			storageService.init();
-		});
-	}
-	
-	@Bean
 	public CommonsMultipartResolver commonsMultipartResolver() {
 		CommonsMultipartResolver resolver = new CommonsMultipartResolver();
 		resolver.setDefaultEncoding("UTF-8");

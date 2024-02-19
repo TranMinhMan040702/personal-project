@@ -1,4 +1,12 @@
-FROM openjdk:17
+FROM maven:3.8-openjdk-17-slim
+
+WORKDIR /app
+
+COPY .mvn/ .mvn
+COPY mvnw pom.xml ./
+RUN mvn dependency:go-offline -B
+COPY src ./src
+RUN mvn package -DskipTests
 EXPOSE 8081
-ADD target/spring-boot-docker.jar spring-boot-docker.jar
-ENTRYPOINT ["java", "-jar", "spring-boot-docker.jar"]
+
+ENTRYPOINT ["java", "-jar", "./target/spring-boot-docker.jar"]
